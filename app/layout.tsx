@@ -1,12 +1,19 @@
 import "./globals.css";
+import Navigation from "./components/Navigation";
+
 interface Props {
   children: React.ReactNode;
 }
 
-export default function RootLayout({ children }: Readonly<Props>) {
+const RootLayout: React.FC<Props> = ({ children }) => {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body className="flex flex-col items-center ">
+        <Navigation />
+        <div className="mt-[80px] px-[20px]">{children}</div>
+      </body>
     </html>
   );
-}
+};
+
+export default RootLayout;

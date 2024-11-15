@@ -1,4 +1,7 @@
-const ArrowRigth: React.FC = () => {
+interface ArrowRigthProps {
+  color?: string;
+}
+const ArrowRigth: React.FC<ArrowRigthProps> = ({ color }) => {
   return (
     <svg
       width="16"
@@ -9,14 +12,14 @@ const ArrowRigth: React.FC = () => {
     >
       <path
         d="M7.84619 2.50766L13.6 7.99994L7.84619 13.4922"
-        stroke="#fff"
+        stroke={color}
         strokeWidth="1.28571"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
       <path
         d="M13.6003 8L2.40039 8"
-        stroke="#fff"
+        stroke={color}
         strokeWidth="1.28571"
         strokeLinecap="round"
         strokeLinejoin="round"

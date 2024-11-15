@@ -5,3 +5,18 @@
 * {
   margin: 0;
 }
+@keyframes scroll-reverse {
+  0% {
+    transform: translateX(-49%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.animate-scroll-reverse {
+  display: flex;
+  animation: scroll-reverse 15s linear infinite;
+  width: calc(200%);
+}
+
