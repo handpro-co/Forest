@@ -1,4 +1,10 @@
-const Sum: React.FC = () => {
+import React from "react";
+
+interface SumProps {
+  color?: string;
+}
+
+const Sum: React.FC<SumProps> = ({ color }) => {
   return (
     <svg
       width="16"
@@ -9,7 +15,7 @@ const Sum: React.FC = () => {
     >
       <path
         d="M4 6L8 10L12 6"
-        stroke="#333333"
+        stroke={color || "#333"}
         strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -17,4 +23,5 @@ const Sum: React.FC = () => {
     </svg>
   );
 };
+
 export default Sum;
