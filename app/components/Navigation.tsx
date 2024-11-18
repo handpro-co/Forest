@@ -7,6 +7,7 @@ import Navigation_contact_us_button from "./layout/Navigation_contact_us_button"
 import navigation_options_data from "@/app/components/data/navigation_options_data";
 import Navigation_click_option_screen from "./layout/Navigation_click_option_screen";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 type Option = {
   optionId: number;
@@ -31,7 +32,9 @@ const Navigation: React.FC = () => {
   return (
     <div className="border-b-[1px] border-[#ECEBE3] h-[80px] w-full fixed top-0 flex justify-between items-center px-[24px] py-[18px] bg-[#fff] z-[999]">
       <div className="h-[44px] flex gap-[32px] sm:w-[80%] md:w-[60%] lg:w-[40%] xl:w-[30%] 2xl:w-[25%]">
-        <Logo />
+        <Link href={"./"}>
+          <Logo />
+        </Link>
 
         <div className="hidden md:flex h-[40px] items-center gap-[12px]">
           <div className="w-[40px] h-[40px] rounded-[50%] overflow-hidden flex items-center justify-center bg-[#ECEBE3]">
