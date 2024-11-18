@@ -30,12 +30,12 @@ const newsData = [
 
 const News: React.FC = () => {
   return (
-    <div className="w-full max-w-[1440px] h-[608px] flex flex-col items-center gap-[32px] p-[24px]">
-      <div className="flex flex-col items-center gap-[24px]">
+    <div className="w-full   h-auto flex flex-col items-center gap-[32px] p-[24px]">
+      <div className="w-full flex flex-col items-center gap-[24px] cursor-pointer">
         <div className="font-700 text-[26px] text-[#333] leading-[31.43px]">
           Мэдээ мэдээлэл
         </div>
-        <div className="w-auto flex gap-[12px]">
+        <div className="w-auto flex flex-wrap gap-[12px] md:justify-center">
           <div className="bg-[#DEFF94] text-[#333] py-[20px] px-[24px] rounded-[12px]">
             Мэдээлэл
           </div>
@@ -58,9 +58,12 @@ const News: React.FC = () => {
       </div>
 
       {/* Grid Layout for News Items */}
-      <div className="w-full grid lg:grid-cols-4 gap-[24px]">
+      <div className="w-full grid md:grid-cols-2 lg:grid-cols-4 gap-[24px]">
         {newsData.map((news, index) => (
-          <div key={index} className="flex flex-col gap-[25px] p-[8px]">
+          <div
+            key={index}
+            className="flex flex-col gap-[25px] p-[8px] rounded-[20px] cursor-pointer hover:bg-[#ECEBE3] "
+          >
             <img
               src={news.image}
               className="rounded-[16px]"
