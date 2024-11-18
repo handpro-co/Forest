@@ -32,7 +32,7 @@ const News: React.FC = () => {
   const filteredNews = newsData.filter(
     (news) => news.category === categories[selectedCategoryIndex]
   );
-  const last4News = filteredNews.slice(-3);
+  const last4News = filteredNews.slice(-4);
   return (
     <div className="w-full h-auto flex flex-col items-center gap-[32px] p-[24px]">
       <div className="w-full flex flex-col items-center gap-[24px] cursor-pointer">
