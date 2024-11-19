@@ -12,7 +12,7 @@ const PhotoNews: React.FC = () => {
           src={Banner.src}
           alt="Banner"
         />
-        <div className="w-[65%] mt-[50px] flex flex-col gap-[64px]">
+        <div className="w-full lg:w-[65%] mt-[50px] flex flex-col gap-[64px]">
           <div className="flex flex-col gap-[24px] ">
             <div className="border-t-[1px] border-[#94D1B0] border-dashed" />
             <div className="flex justify-between items-end">

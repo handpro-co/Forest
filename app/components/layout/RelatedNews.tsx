@@ -3,11 +3,11 @@ import NewsCard from "./NewsCard";
 import Billiontree from "@/app/ServiceIconPNG/billionTree.png";
 const ReletadNews: React.FC = () => {
   return (
-    <div className="flex flex-col gap-[24px] mt-[100px]">
+    <div className="w-[80%] flex flex-col gap-[24px] mt-[100px]">
       <div className="font-700 text-[24px] leading-[29.02px] text-[#333333] ">
         Холбоотой мэдээлэл
       </div>
-      <div className="flex gap-[16px]">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[16px]">
         <NewsCard
           image={Billiontree.src}
           date="2023-03-01 14:47:57"

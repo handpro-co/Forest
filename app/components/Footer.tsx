@@ -17,7 +17,7 @@ const Footer: React.FC = () => {
           </div>
         </div>
         <div className="flex gap-[64px] md:gap-[10%] flex-col md:flex-row w-[100%] lg:w-[50%] ">
-          <div className="flex flex-col gap-[24px] w-[45%]">
+          <div className="flex flex-col gap-[24px] w-full text-center lg:w-[45%] lg:text-left">
             <div className="px-[6px] font-semibold leading-[19.34px] text-[#333333]">
               Үйлчилгээ
             </div>
@@ -36,7 +36,7 @@ const Footer: React.FC = () => {
               </div>
             </div>
           </div>
-          <div className="flex flex-col gap-[24px] w-[45%]">
+          <div className="flex flex-col gap-[24px] w-full text-center lg:text-left lg:w-[45%]">
             <div className="px-[6px] font-semibold leading-[19.34px] text-[#333333]">
               Холбоо барих
             </div>

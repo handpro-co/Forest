@@ -1,5 +1,5 @@
 type Option = {
-  optionId: number;
+  optionId: string | number;
   name: string;
 };
 
@@ -24,9 +24,10 @@ const navigationOptionsData = (): MockData[] => {
       id: 2,
       title: "Мэдээлэл",
       options: [
-        { optionId: 1, name: "Видео мэдзэ" },
-        { optionId: 2, name: "Фото мадзз" },
-        { optionId: 3, name: "Арга хэмжаа" },
+        { optionId: "VideoNews", name: "Видео мэдзэ" },
+        { optionId: "PhotoNews", name: "Фото мадзз" },
+        { optionId: "BasicNews", name: "Энгийн мэдээ" },
+        { optionId: "imageOnly", name: "Арга хэмжаа" },
         { optionId: 4, name: "Цахим сэтгуул, судалгааны тайлан" },
         { optionId: 5, name: "Сэтгэл ханамжийн судалгаа" },
       ],

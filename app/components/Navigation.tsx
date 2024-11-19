@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 
 type Option = {
-  optionId: number;
+  optionId: number | string;
   name: string;
 };
 
