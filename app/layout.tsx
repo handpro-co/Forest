@@ -8,9 +8,9 @@ interface Props {
 const RootLayout: React.FC<Props> = ({ children }) => {
   return (
     <html lang="en">
-      <body className="flex flex-col items-center ">
+      <body className="w-full flex flex-col items-center mx-auto 2xl:w-[80%] ">
         <Navigation />
-        <div className="mt-[80px] px-[20px] flex flex-col gap-[150px] lg:gap-[50px]">
+        <div className="w-full mt-[80px] px-[20px] flex flex-col gap-[150px] lg:gap-[50px]">
           {children}
         </div>
         <Footer />

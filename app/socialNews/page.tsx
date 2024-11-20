@@ -1,10 +1,9 @@
-import Image from "next/image"; 
+import Image from "next/image";
 import { LuPrinter } from "react-icons/lu";
 import { TbBrandFacebook } from "react-icons/tb";
 import RelatedNews from "@/app/components/layout/RelatedNews";
-import Banner from "./components/photos/VideoNewsBanner.png";
-
-const VideoNews: React.FC = () => {
+import Banner from "@/app/socialNews/Photos/SocialNewsBanner.png";
+const SocialNews: React.FC = () => {
   return (
     <div className="w-[100vw] flex flex-col items-center">
       <div className="w-[80%]">
@@ -12,7 +11,7 @@ const VideoNews: React.FC = () => {
           src={Banner}
           alt="Banner"
           className="w-full rounded-[16px] h-[50vh] object-cover"
-          priority 
+          priority
         />
 
         <div className="w-full lg:w-[65%] mt-[50px] flex flex-col gap-[64px]">
@@ -54,16 +53,13 @@ const VideoNews: React.FC = () => {
 
           <div className="w-full flex flex-col gap-[48px]">
             <div className="text-base leading-[22px] text-[#666666]">
-              {`"Ойн салбарын" 100 жилийн ойд зориулсан зорилтот нэвтрүүлгийн
-              дугаар-1 Ойн салбарын түүхэн хөгжил, ой гэх тодорхойлолт хэрхэн
-              шинэчлэгдэх шаардлагатай талаар болон мод, сөөгийн онцлог, ялгаа
-              гэсэн сэдвийн хүрээнд ахмад ойн аж ахуйн инженер, Байгаль орчны
-              гавьяат ажилтан, доктор, профессор Д.Энхсайхан оролцлоо.`}
+              #Байгаль орчин, аялал жуулчлалын яам #Тэрбум мод #Монгол Улсын
+              Ерөнхийлөгчийн Тамгын газар #Улаанбаатар хотын Захирагчийн ажлын
+              алба #Нийслэлийн Байгаль орчны газар
             </div>
-
             <div className="w-full relative pb-[56.25%] h-0">
               <iframe
-                src="https://www.youtube.com/embed/8Qs9qzur53s"
+                src="https://drive.google.com/file/d/1DT-gMN9K-tIeSUh1KtGEMGiHqO4ef-i8/preview"
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
@@ -81,5 +77,4 @@ const VideoNews: React.FC = () => {
     </div>
   );
 };
-
-export default VideoNews;
+export default SocialNews;

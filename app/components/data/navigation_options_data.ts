@@ -28,8 +28,8 @@ const navigationOptionsData = (): MockData[] => {
         { optionId: "PhotoNews", name: "Фото мадзз" },
         { optionId: "BasicNews", name: "Энгийн мэдээ" },
         { optionId: "imageOnly", name: "Арга хэмжаа" },
-        { optionId: 4, name: "Цахим сэтгуул, судалгааны тайлан" },
-        { optionId: 5, name: "Сэтгэл ханамжийн судалгаа" },
+        { optionId: "socialNews", name: "Цахим сэтгуул, судалгааны тайлан" },
+        { optionId: "Feedback", name: "Сэтгэл ханамжийн судалгаа" },
       ],
     },
     {
