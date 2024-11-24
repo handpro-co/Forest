@@ -1,0 +1,37 @@
+
+
+.mic-animation {
+  width: 5rem;
+  height: 5rem;
+  background-color: #73e571; /* Tailwind Red-500 */
+  border-radius: 50%;
+  animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+.chat-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  max-height: 50vh;
+  overflow-y: auto;
+}
+
+.mic-animation {
+  animation: ping 1s infinite;
+}
+
+@keyframes ping {
+  0% {
+    transform: scale(0);
+    opacity: 0.5;
+  }
+  75% {
+    transform: scale(1);
+    opacity: 0.25;
+  }
+  100% {
+    transform: scale(0);
+    opacity: 0;
+  }
+}
+
