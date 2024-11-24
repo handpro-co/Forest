@@ -18,7 +18,7 @@ const CategoryItem: React.FC<CategoryItemProps> = ({
       onClick={() => onClick(index)}
       className={`${
         selectedCategoryIndex === index ? "bg-[#DEFF94]" : ""
-      } text-[#333] py-[20px] px-[24px] rounded-[12px] cursor-pointer`}
+      } text-[#333] py-[20px] px-[24px] rounded-[12px] cursor-pointer  whitespace-nowrap`}
     >
       {category}
     </div>

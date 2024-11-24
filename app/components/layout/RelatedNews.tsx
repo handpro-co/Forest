@@ -60,8 +60,8 @@ const RelatedNews: React.FC<Props> = ({ newsData }) => {
         Холбоотой мэдээлэл
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[16px]">
-        {paginatedNews.map((item) => (
-          <div key={item.id}>
+        {paginatedNews.map((item, index) => (
+          <div key={index}>
             <Link href={`/PhotoNews/?id=${item.id}`}>
               <NewsCard
                 image={item.image}
