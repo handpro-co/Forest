@@ -3,8 +3,8 @@ import Banner from "./components/photos/Banner.png";
 import { LuPrinter } from "react-icons/lu";
 import { TbBrandFacebook } from "react-icons/tb";
 import RelatedNews from "@/app/components/layout/RelatedNews";
-import { newsData } from "@/app/components/data/news";
-import { useEffect ,  useState } from "react";
+import newsData from "@/app/components/data/news";
+import { useEffect, useState } from "react";
 
 const BasicNews: React.FC = () => {
   const [goData, setGoData] = useState<any>([]);

@@ -72,7 +72,7 @@ const SocialNews: React.FC = () => {
         </div>
 
         <div>
-          <RelatedNews />
+          <RelatedNews newsData={null} />
         </div>
       </div>
     </div>
