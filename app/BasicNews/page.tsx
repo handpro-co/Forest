@@ -1,9 +1,17 @@
-import Us from "./components/photos/Us.png";
+"use client";
 import Banner from "./components/photos/Banner.png";
 import { LuPrinter } from "react-icons/lu";
 import { TbBrandFacebook } from "react-icons/tb";
 import RelatedNews from "@/app/components/layout/RelatedNews";
+import { newsData } from "@/app/components/data/news";
+import { useEffect ,  useState } from "react";
+
 const BasicNews: React.FC = () => {
+  const [goData, setGoData] = useState<any>([]);
+  useEffect(() => {
+    const data = newsData;
+    setGoData(data);
+  }, []);
   return (
     <div className="w-[100vw] flex flex-col items-center">
       <div className="w-[80%]">
@@ -123,7 +131,7 @@ const BasicNews: React.FC = () => {
           </div>
         </div>
         <div>
-          <RelatedNews />
+          <RelatedNews newsData={goData} />
         </div>
       </div>
     </div>

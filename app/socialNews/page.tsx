@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import { LuPrinter } from "react-icons/lu";
 import { TbBrandFacebook } from "react-icons/tb";
