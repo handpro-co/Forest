@@ -3,7 +3,7 @@ import "./globals.css";
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
 import AILink from "./components/AILink";
-import AI from "./AI/page";
+import AI from "./ai/page";
 import { useState } from "react";
 import { IoCloseSharp } from "react-icons/io5";
 
@@ -41,10 +41,10 @@ const RootLayout: React.FC<Props> = ({ children }) => {
             className="fixed  top-[50%] left-[50%] w-[80%] h-[100vh]  z-[10000] flex justify-center items-center transform -translate-x-[50%] -translate-y-[50%]"
             onClick={closeAI}
           >
-            <div className="relative bg-black/50 w-full h-[80%]  p-[40px] rounded-[24px] shadow-lg overflow-hidden">
+            <div className="relative bg-white w-full h-[80%]  p-[40px] rounded-3xl  shadow-xl overflow-hidden">
               {/* Close Button */}
               <button
-                className="absolute top-2 right-2 text-[40px] font-bold text-[white]"
+                className="absolute top-2 right-2 text-[40px] font-bold text-gray-300"
                 onClick={() => setShowAI(false)}
               >
                 <IoCloseSharp />
