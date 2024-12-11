@@ -122,7 +122,7 @@ const Chatgpt: React.FC = () => {
                 alt="Logo"
               />
               <div className="text-[#113032] text-[16px] font-bold ">
-                Хуульч мазаалай
+                Ойн Охин
               </div>
             </div>
             <div className="flex items-center gap-[15px]">
