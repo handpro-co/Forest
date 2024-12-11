@@ -1,189 +1,221 @@
 "use client";
-import React, { useState, useEffect, useRef } from "react";
-import "./style.css";
-import ReactPlayer from "react-player";
-import { CiMicrophoneOn } from "react-icons/ci";
+import { MdOpenInNew, MdClose } from "react-icons/md";
+import { BsSend } from "react-icons/bs";
+import { useState, useEffect, useRef, ChangeEvent, KeyboardEvent } from "react";
+import { io, Socket } from "socket.io-client";
+import { marked } from "marked";
+import Be from "@/public/iconAI.png";
+const socket: Socket = io("https://backendlg-kznv.onrender.com/", {
+  transports: ["websocket"],
+});
 
-const AI: React.FC = () => {
-  const [currentVideo, setCurrentVideo] = useState("/AIvideo.mp4");
-  const [text, setText] = useState("Та асуултаа асууна уу.");
-  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
-  const [showMicAnimation, setShowMicAnimation] = useState(false);
-  const [chat, setChat] = useState<{ user: string; response: string }[]>([]);
-  const [currentTypingResponse, setCurrentTypingResponse] = useState("");
+interface Message {
+  ask: string;
+  response: string;
+  isTyping: boolean;
+}
 
-  const chatBoxRef = useRef<HTMLDivElement>(null); // for auto-scrolling
+const Chatgpt: React.FC = () => {
+  const [chat, setChat] = useState<string>("");
+  const [showChat, setShowChat] = useState<boolean>(false);
+  const [messages, setMessages] = useState<Message[]>([]);
+  const messagesEndRef = useRef<HTMLDivElement | null>(null);
+  const [show, setShow] = useState<boolean>(false);
+  const Bear = Be.src;
+  const sendMessage = (): void => {
+    if (chat.trim() === "") return;
 
-  useEffect(() => {
-    const handleKeyPress = (event: KeyboardEvent) => {
-      switch (event.key) {
-        case "1":
-          playVideo(
-            "/001.mp4",
-            "Сайн байна уу? Ойн газрын виртуал хөтөч өө!",
-            " Сайн, сайнa байцгаана уу? Та бүхэнд Ой, Модны салбар үүсэж хөгжсөний 100 жилийн ойн баярын мэнд хүргэе! Та асуултаа асууна уу?"
-          );
-          break;
-        case "2":
-          playVideo(
-            "/002.mp4",
-            "Виртуал хөтөч өө бидэнд Ой, модны салбарын үүсэл хөгжлийн талаар мэдээлэл өгөөч?",
-            " Ардын Засгийн газрын 1924 оны тушаалаар анхны 4 ойн анги байгуулах шийдвэр гарч, Монгол улсад эдүгээ үеийн ой, модны салбарын суурийг тавьснаас хойш нэгэн зууны хугацаа өнгөрөөд байна. Ой, модны салбар нь 1960-аад оны их бүтээн байгуулалтын он жилүүдэд улсын хэмжээний мод, модон материалын хэрэгцээг бүрэн хангах мод бэлтгэлийн газар, модон эдлэлийн үйлдвэрүүд ажиллаж хөгжлийн оргил үедээ хүрч байлаа. Нийгэм, эдийн засгийн шилжилтийн үед ой, модны салбарт хүндхэн сорилт бэрхшээл тулгарч мод бэлтгэлийн, ой агнуурын аж ахуйнууд хувьчлагдан тарж бутарсан хүндхэн үе бас бидэнд тохиож байсан бол өдгөө түүхэн зуун жилийг өртөөчилж та бүхэн дараагийн 100 жилийн босгыг угтаж байна."
-          );
-          break;
-        case "3":
-          playVideo(
-            "/003.mp4",
-            "“Тэрбум мод” үндэсний хөдөлгөөний хэрэгжилтийн талаар бидэнд товч мэдээлэл өгөөч?",
-            " Монгол Улсын Ерөнхийлөгч Ухнаагийн Хүрэлсүх эх дэлхий, байгаль орчноо хайрлан, зохицон амьдрах монгол уламжлал, зан заншлаа эрхэмлэн, дэлхийн уур амьсгалын өөрчлөлтийн нөлөөллийг бууруулах, ой, усны нөөцийг хамгаалж нэмэгдүүлэх, экологийн тэнцвэрт байдлыг хангах зорилгоор “Тэрбум мод” үндэсний хөдөлгөөнийг санаачлан өрнүүлэх талаар “Засгийн газарт чиглэл өгөх тухай” 2021 оны 10 дугаар сарын 04-ний өдрийн 58 дугаар зарлигийг гаргасан билээ. “Тэрбум мод” үндэсний хөдөлгөөнийг хэрэгжүүлэн 1.5 тэрбум мод тарихаар төлөвлөснөөс аймаг, нийслэлийн Засаг дарнар 44.1% буюу 680 сая мод, уул уурхайн томоохон 22 аж ахуйн нэгж 39.6% буюу 610 сая мод, төрийн байгууллагууд 10.5 хувь 162.1 сая мод, банк санхүүгийн байгууллагууд 5.8% буюу 88.6 сая мод тарихаар гэрээ байгуулан ажиллаж байгаа бөгөөд “Тэрбум мод” үндэсний хөдөлгөөнийг хэрэгжүүлж эхэлснээс хойш 83.9 сая модыг шууд болон дүйцүүлэх хэлбэрээр тарьж, зохих арчилгаа, хамгааллын ажлыг гүйцэтгээд байна."
-          );
-          break;
-        case "4":
-          playVideo(
-            "/004.mp4",
-            "Өөрийнхөө талаар бидэнд танилцуулаач, Ойн газарт ямар үүрэг гүйцэтгэдэг вэ?",
-            " Би бол хиймэл оюун ухаанаар бүтээгдсэн Ойн газрын виртуал хөтөч. Хүмүүс намайг Ойн газрын шинэ охин гэж хочилдог. Ойн газрын цахим хуудсаар дамжуулан олон нийтэд мэдээ мэдээлэл өгөх зорилготой бүтээгдсэн бөгөөд нэмэлт хөгжүүлэлт хийгдэж байгууллагын веб хуудасны текст чатбот хэсэгт та бүхэнд мэдээлэл өгөхөөр хөгжүүлэгдэж байна."
-          );
-          break;
-        case "5":
-          playVideo(
-            "/005.mp4",
-            "Мэдээлэл өгсөнд баярлалаа, баяртай виртуал хөтөч өө.",
-            " Асуулт асуусан танд ч бас баярлалаа. Та бүхэнд 100 жилийн Ойн баяраа сайхан тэмдэглээрэй, баярлалаа. Баяртай"
-          );
-          break;
-        default:
-          break;
+    const newMessage: Message = { ask: chat, response: "", isTyping: true };
+    setMessages((prevMessages) => [...prevMessages, newMessage]);
+
+    try {
+      socket.emit("ask", chat);
+    } catch (error) {
+      console.error("Error sending message:", error);
+    }
+
+    setChat("");
+    setShowChat(true);
+  };
+
+  const formatResponse = async (text: string): Promise<string> => {
+    let cleanedText = text.replace(/【[^】]*?】/g, "");
+
+    let parsedHtml = await marked.parse(cleanedText);
+
+    return parsedHtml;
+  };
+
+  const typeResponse = async (response: string): Promise<void> => {
+    const lastIndex = messages.length - 1;
+    const newMessages = [...messages];
+
+    const typing = async (
+      index: number,
+      text: string,
+      delay: number = 20
+    ): Promise<void> => {
+      if (index < text.length) {
+        newMessages[lastIndex].response += text.charAt(index);
+        setMessages([...newMessages]);
+        setTimeout(() => typing(index + 1, text, delay), delay);
+      } else {
+        newMessages[lastIndex].isTyping = false;
+        setMessages([...newMessages]);
       }
     };
 
-    window.addEventListener("keydown", handleKeyPress);
+    // Ensure formatResponse is awaited if it's asynchronous
+    const formattedResponse = await formatResponse(response);
+    typing(0, formattedResponse);
+  };
+
+  useEffect(() => {
+    socket.on("response", (response: string) => {
+      setMessages((prevMessages) => {
+        const newMessages = [...prevMessages];
+        const lastMessage = newMessages[newMessages.length - 1];
+        if (lastMessage) {
+          lastMessage.isTyping = false;
+        }
+        return [...newMessages];
+      });
+
+      typeResponse(response);
+    });
 
     return () => {
-      window.removeEventListener("keydown", handleKeyPress);
+      socket.off("response");
     };
-  }, []);
+  }, [messages]);
 
-  const simulateTyping = (response: string) => {
-    let index = 0;
-    setCurrentTypingResponse("");
-
-    const interval = setInterval(() => {
-      setCurrentTypingResponse((prev) => prev + response[index]);
-      index++;
-
-      if (index === response.length) {
-        clearInterval(interval);
-        setChat((prevChat) => [...prevChat, { user: "", response }]);
-      }
-    }, 50);
-  };
-
-  const playVideo = (
-    videoSrc: string,
-    userMessage: string,
-    aiResponse: string
-  ) => {
-    setText("Асуултад хариулж байна...");
-    setCurrentVideo(videoSrc);
-    setIsVideoPlaying(true);
-    setShowMicAnimation(true);
-
-    setTimeout(() => {
-      setShowMicAnimation(false);
-    }, 10000);
-
-    setChat((prevChat) => [...prevChat, { user: userMessage, response: "" }]);
-    simulateTyping(aiResponse);
-
-    const video = document.getElementById("videoElement") as HTMLVideoElement;
-    video.src = videoSrc;
-    video.play();
-
-    video.onended = () => {
-      setText("Таны асуултад хариуллаа. Таньд өөр асуулт байна уу?");
-      setIsVideoPlaying(false);
-    };
+  const newChat = (): void => {
+    setMessages([]);
+    setChat("");
+    setShowChat(true);
   };
 
   useEffect(() => {
-    if (chatBoxRef.current) {
-      chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight; // Auto-scroll to bottom
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
+  const showChatGpt = (): void => {
+    setShow(true);
+  };
+
+  const handleKeyPress = (e: KeyboardEvent<HTMLTextAreaElement>): void => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      sendMessage();
     }
-  }, [chat]); // Runs whenever the chat state changes
+  };
 
   return (
-    <div className="flex items-start justify-start h-screen">
-      <div className="text-center w-[65%] h-screen">
-        <video className="w-full h-full" id="videoElement" loop={false}>
-          <source src={currentVideo} type="video/mp4" />
-        </video>
-      </div>
-
-      <div className="w-[35%] h-screen overflow-auto p-4 flex flex-col items-center  ">
-        <h2 className="text-xl font-bold mb-4 text-[#fff]">Чат</h2>
-        <div className="relative w-full h-[70%] shadow-lg rounded-[24px] bg-white py-[50px]">
-          <div
-            className=" w-full chat-box  py-[20px] px-[20px]  max-h-[90%] overflow-y-auto "
-            ref={chatBoxRef}
-          >
-            {chat.map((message, index) => (
-              <div key={index} className="mb-4">
-                {message.user && (
-                  <div className="flex justify-end">
-                    <p className="w-[80%] text-blue-500 font-semibold text-left bg-blue-50 p-[10px] rounded-lg">
-                      {message.user}
-                    </p>
-                  </div>
-                )}
-                <div className="flex items-center">
-                  {index === chat.length - 1 && !message.response ? (
-                    <div className="flex  mt-4">
-                      <div className="rounded-full w-[40px] h-[40px]  mr-2">
-                        <img
-                          src="/iconAI.png"
-                          className="animate-spin-slow w-full h-full "
-                          alt=""
-                        />
-                      </div>
-                      <p className="w-[80%] text-green-500 p-[10px] rounded-lg bg-green-100">
-                        {currentTypingResponse}
-                      </p>
-                    </div>
-                  ) : (
-                    message.response && (
-                      <div className="flex ">
-                        <div className="rounded-full w-[40px] h-[40px] bg-green-200 mr-2">
-                       
-                          <img
-                            src="/iconAI.png"
-                            className="animate-spin-slow w-full h-full "
-                            alt=""
-                          />
-                        </div>
-                        <p className="w-[80%] text-green-500 p-[10px] rounded-lg bg-green-100">
-                          {message.response}
-                        </p>
-                      </div>
-                    )
-                  )}
-                </div>
+    <>
+      {show ? (
+        <div className="z-[201] shadow-md fixed bottom-[5%] pt-[24px] px-[12px] pb-[12px] flex flex-col justify-between rounded-[16px] right-[5%] w-[90%] h-[80%] bg-[#fff] md:w-[50%] md:h-[50%] lg:w-[40%] lg:h-[50%] 2xl:w-[25%] 2xl:h-[50%]">
+          <div className="w-full h-[9%] bg-white border-b-[1px] pb-[10px] border-[#F4F4F4] flex justify-between">
+            <div className="w-full flex gap-[8px] items-center">
+              <img
+                src={Bear}
+                className="w-[36px] h-[36px] bg-center object-cover rounded-[50%]"
+                alt="Logo"
+              />
+              <div className="text-[#113032] text-[16px] font-bold ">
+                Хуульч мазаалай
               </div>
-            ))}
+            </div>
+            <div className="flex items-center gap-[15px]">
+              <MdOpenInNew
+                className="cursor-pointer w-[24px] h-[20px] text-[#759090] duration-[0.3s] hover:w-[27px] hover:h-[27px] hover:text-[#226fd8] hover:rotate-90"
+                onClick={newChat}
+              />
+              <MdClose
+                className="cursor-pointer w-[24px] h-[24px] text-[#759090] duration-[500ms] transform hover:scale-125 hover:rotate-180 hover:text-[#226fd8]"
+                onClick={() => setShow(false)}
+              />
+            </div>
           </div>
-          <div className="absolute bottom-[5%] right-[50%]  translate-x-1/2 flex justify-center mt-4">
-            <div
-              className={`w-[50px] h-[50px] bg-green-400 rounded-full flex items-center justify-center ${
-                showMicAnimation ? "animate-pulse" : ""
-              }`}
-            >
-              <CiMicrophoneOn size={30} color="white" />
+
+          <div className="w-full flex flex-col justify-end h-[85%] overflow-hidden bg-[#fff] gap-[10px]">
+            <div className="w-full h-full overflow-y-auto">
+              {messages.map((item, i) => (
+                <div key={i} className="flex flex-col w-full">
+                  <div className="flex justify-end">
+                    {item.ask.length > 0 && (
+                      <div className="mt-[5px] w-auto max-w-[70%] inline bg-[#F4F4F4] pr-[15px] pl-[15px] pt-[12px] pb-[12px] rounded-[20px] flex justify-end">
+                        <div className="w-full break-words whitespace-normal text-left font-regular">
+                          {item.ask}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                  <div className="flex gap-[8px] items-start">
+                    <div
+                      style={{
+                        backgroundImage: Bear ? `url(${Bear})` : "",
+                        backgroundSize: "cover",
+                        backgroundPosition: "center",
+                      }}
+                      className="w-[26px] h-[26px] rounded-[50%] shadow-2xl"
+                    ></div>
+                    <div className="mt-[5px] w-auto max-w-[70%] inline bg-[#fff] border-[1px] border-[#f4f4f4] pr-[15px] pl-[15px] pt-[12px] pb-[12px] rounded-[20px]">
+                      {item.isTyping ? (
+                        <div className="flex font-regular gap-[8px] items-start">
+                          <div className="w-full text-left">
+                            <div className="dot dot-1"></div>
+                            <div className="dot dot-2"></div>
+                            <div className="dot dot-3"></div>
+                          </div>
+                        </div>
+                      ) : (
+                        <div
+                          className="w-full font-regular break-words whitespace-normal text-left"
+                          dangerouslySetInnerHTML={{ __html: item.response }}
+                        />
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ))}
+              <div ref={messagesEndRef} />
+            </div>
+            <div className="w-full relative">
+              <textarea
+                onKeyPress={handleKeyPress}
+                value={chat}
+                className="w-full border-[0.5px] shadow-md rounded-[20px] pl-[24px] pr-[50px] py-[10px] overflow-auto"
+                placeholder="Асуултаа оруулна уу..."
+                onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
+                  setChat(e.target.value)
+                }
+              />
+              <div
+                onClick={sendMessage}
+                className="absolute bottom-[27%] right-[5%] w-[30px] h-[30px] cursor-pointer p-[5px] rounded-[50%]"
+              >
+                <BsSend className="w-full h-[100%] opacity-[50%] cursor-pointer hover:text-[blue]" />
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
+      ) : (
+        <div className="fixed bottom-[5%] right-[5%] flex items-center gap-[10px] z-[20]">
+          <div>
+            <div
+              onClick={showChatGpt}
+              style={{
+                backgroundImage: `url(${Bear})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+              }}
+              className="w-[76px] h-[76px] bg-gray-500 z-[12] rounded-[50%] shadow-lg cursor-pointer duration-200 hover:w-[86px] hover:h-[86px]"
+            />
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 
-export default AI;
+export default Chatgpt;

@@ -109,12 +109,12 @@ const AllNewsCards: React.FC = () => {
       {/* Category Navigation */}
       <div className="w-full flex items-center justify-between px-4">
         {/* Left Arrow */}
-        <div className="w-[40px] h-[40px] rounded-[50%] bg-[#F2F5EB] flex justify-center items-center cursor-pointer transform rotate-180">
+        <div className="min-w-[40px] h-[40px] rounded-[50%] bg-[#F2F5EB] flex justify-center items-center cursor-pointer transform rotate-180">
           <ArrowRigth color="#333333" />
         </div>
 
         {/* Categories */}
-        <div className="flex gap-[16px] flex-wrap justify-center lg:justify-start overflow-x-auto">
+        <div className="flex gap-[16px] flex-nowrap justify-start overflow-x-auto scrollbar-thin scrollbar-thumb-[#ccc] scrollbar-track-[#f0f0f0] hover:scrollbar-thumb-[#aaa] py-2 px-4 rounded-lg">
           {categories.length > 0 ? (
             categories.map((category, i) => (
               <CategoryItem
@@ -131,7 +131,7 @@ const AllNewsCards: React.FC = () => {
         </div>
 
         {/* Right Arrow */}
-        <div className="w-[40px] h-[40px] rounded-[50%] bg-[#F2F5EB] flex justify-center items-center cursor-pointer">
+        <div className="min-w-[40px] h-[40px] rounded-[50%] bg-[#F2F5EB] flex justify-center items-center cursor-pointer">
           <ArrowRigth color="#333333" />
         </div>
       </div>
