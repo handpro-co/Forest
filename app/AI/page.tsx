@@ -209,7 +209,7 @@ const Chatgpt: React.FC = () => {
                 backgroundSize: "cover",
                 backgroundPosition: "center",
               }}
-              className="w-[76px] h-[76px] bg-gray-500 z-[12] rounded-[50%] shadow-lg cursor-pointer duration-200 hover:w-[86px] hover:h-[86px]"
+              className="w-[76px] h-[76px] bg-gray-500 z-[12] rounded-[50%] shadow-lg cursor-pointer duration-200 hover:scale-110"
             />
           </div>
         </div>
