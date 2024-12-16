@@ -4,10 +4,9 @@ import CategoryItem from "./layout/Catergory_Button";
 import React, { useEffect, useState } from "react";
 import ArrowRigth from "../icons/ArrowRigth";
 import NewsCard from "./layout/NewsCard";
-import Sum from "../icons/SumIcon";
 import { fetchCategories } from "@/app/components/data/fetchCategory";
 import { fetchNews } from "@/app/components/data/fetchNews";
-import Link from "next/link";
+ 
 
 interface NewsDataType {
   date: string;
@@ -136,16 +135,15 @@ const AllNewsCards: React.FC = () => {
         ))}
       </div>
 
-      {/* View All Link */}
       <div className="flex justify-center items-center">
-        <Link href="/allNews">
+        <a href="/allNews">
           <div className="inline-flex items-center gap-[16px] bg-[#ECEBE3] p-[16px] rounded-[50px] cursor-pointer mt-8">
-            <span className="text-[#333] font-medium text-[16px] leading-[18.83px]">
+            <span className="text-[#333] font-medium text-[16px] ">
               Бүгдийн харах
             </span>
             <ArrowRigth color="#333" />
           </div>
-        </Link>
+        </a>
       </div>
     </div>
   );

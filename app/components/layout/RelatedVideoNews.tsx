@@ -1,10 +1,9 @@
 import { useState } from "react";
 import ArrowRigth from "@/app/icons/ArrowRigth";
 import NewsCard from "./NewsCard";
-import Link from "next/link";
 
 interface NewsItem {
-  id: number; // Added `id` to the NewsItem type
+  id: number;
   image: string;
   date: string;
   title: string;
@@ -15,21 +14,17 @@ interface Props {
 }
 
 const RelatedVideoNews: React.FC<Props> = ({ newsData }) => {
-  const itemsPerPage = 3; // Number of items per page
-  const [currentPage, setCurrentPage] = useState(0); // Current page index
+  const itemsPerPage = 3;
+  const [currentPage, setCurrentPage] = useState(0);
 
-  // Calculate the start and end indices for slicing the news data
   const startIndex = currentPage * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
 
-  // Paginated news items for the current page
   const paginatedNews = newsData.slice(startIndex, endIndex);
 
-  // Determine if there are previous or next pages
   const hasPreviousPage = currentPage > 0;
   const hasNextPage = endIndex < newsData.length;
 
-  // Handlers for navigation
   const goToPreviousPage = () => {
     if (hasPreviousPage) {
       setCurrentPage((prev) => prev - 1);
@@ -50,18 +45,17 @@ const RelatedVideoNews: React.FC<Props> = ({ newsData }) => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[16px]">
         {paginatedNews.map((item) => (
           <div key={item.id}>
-            <Link href={`/VideoNews/?id=${item.id}`}>
+            <a href={`/VideoNews/?id=${item.id}`}>
               <NewsCard
                 image={item.image}
                 date={item.date}
                 title={item.title}
               />
-            </Link>
+            </a>
           </div>
         ))}
       </div>
       <div className="flex justify-end gap-[16px]">
-        {/* Left Arrow */}
         <div
           onClick={goToPreviousPage}
           className={`cursor-pointer w-[50px] h-[50px] bg-[#ECEBE3] flex justify-center items-center rounded-[50%] transform rotate-180 ${
@@ -71,7 +65,6 @@ const RelatedVideoNews: React.FC<Props> = ({ newsData }) => {
           <ArrowRigth color="#333333" />
         </div>
 
-        {/* Right Arrow */}
         <div
           onClick={goToNextPage}
           className={`cursor-pointer w-[50px] h-[50px] bg-[#ECEBE3] flex justify-center items-center rounded-[50%] ${

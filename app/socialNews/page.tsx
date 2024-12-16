@@ -47,13 +47,13 @@ const SocialNews: React.FC = () => {
                 </div>
               </div>
             </div>
-            <div className="text-2xl font-bold leading-[40.96px] text-[#333333]">
+            <div className="text-2xl font-bold  text-[#333333]">
               БАЙГАЛЬ ОРЧНЫ ГАВЬЯАТ АЖИЛТАН, ДОКТОР, ПРОФЕССОР Д.ЭНХСАЙХАН
             </div>
           </div>
 
           <div className="w-full flex flex-col gap-[48px]">
-            <div className="text-base leading-[22px] text-[#666666]">
+            <div className="text-[#666666]">
               #Байгаль орчин, аялал жуулчлалын яам #Тэрбум мод #Монгол Улсын
               Ерөнхийлөгчийн Тамгын газар #Улаанбаатар хотын Захирагчийн ажлын
               алба #Нийслэлийн Байгаль орчны газар

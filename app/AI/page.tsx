@@ -200,7 +200,7 @@ const Chatgpt: React.FC = () => {
           </div>
         </div>
       ) : (
-        <div className="fixed bottom-[5%] right-[5%] flex items-center gap-[10px] z-[20]">
+        <div className="fixed bottom-[5%] right-[5%] flex items-center gap-[10px] z-[200]">
           <div>
             <div
               onClick={showChatGpt}
@@ -209,7 +209,7 @@ const Chatgpt: React.FC = () => {
                 backgroundSize: "cover",
                 backgroundPosition: "center",
               }}
-              className="w-[76px] h-[76px] bg-gray-500 z-[12] rounded-[50%] shadow-lg cursor-pointer duration-200 hover:scale-110"
+              className="w-[76px] h-[76px] z-[12] rounded-[50%] shadow-lg cursor-pointer duration-200 hover:scale-110"
             />
           </div>
         </div>

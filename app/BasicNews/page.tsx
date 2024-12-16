@@ -25,7 +25,7 @@ const BasicNews: React.FC = () => {
             <div className="border-t-[1px] border-[#94D1B0] border-dashed" />
             <div className="flex justify-between items-end">
               <div className="flex items-center gap-[8px]">
-                <span className="flex items-center text-[#14B75F] text-[14px] font-500 leading-[16.48px]">
+                <span className="flex items-center text-[#14B75F] text-[14px] font-500 ">
                   2024-08-28
                 </span>
                 <div className="flex flex-col gap-[2px] justify-center items-center">
@@ -33,32 +33,32 @@ const BasicNews: React.FC = () => {
                   <span className="w-[2px] h-[2px] bg-[#14B75F] rounded-[50%]" />
                   <span className="w-[2px] h-[2px] bg-[#14B75F] rounded-[50%]" />
                 </div>
-                <span className="flex items-center text-[#14B75F] text-[14px] font-500 leading-[16.48px]">
+                <span className="flex items-center text-[#14B75F] text-[14px] font-500 ">
                   Зурагт мэдээ
                 </span>
               </div>
               <div className="flex gap-[12px]">
                 <div className="flex gap-[8px]">
                   <TbBrandFacebook style={{ color: "#666666" }} />
-                  <span className="text-[14px] font-500 leading-[16.48px] text-[#666666]">
+                  <span className="text-[14px] font-500 text-[#666666]">
                     Хуваалцах
                   </span>
                 </div>
                 <div className="flex gap-[8px]">
                   <LuPrinter style={{ color: "#666666" }} />
-                  <span className="text-[14px] font-500 leading-[16.48px] text-[#666666]">
+                  <span className="text-[14px] font-500  text-[#666666]">
                     Хуваалцах
                   </span>
                 </div>
               </div>
             </div>
-            <div className="text-[32px] leading-[40.96px] text-[#333333] font-700">
+            <div className="text-[32px]  text-[#333333] font-700">
               ДЭЛХИЙН БАНКНЫ ЗҮГЭЭС ТӨСӨЛ ХӨТӨЛБӨРӨӨР ДАМЖУУЛАН ХӨРӨНГӨ
               ОРУУЛАЛТЫГ НЭМЭГДҮҮЛЭХ БОЛОМЖ ИХ БУЙГ ОНЦЛОВ
             </div>
           </div>
           <div className="w-full  flex flex-col gap-[48px]">
-            <div className="font-400 leading-[22px] text-[16px] text-[#666666]">
+            <p className="font-400  text-[#666666]">
               Монгол Улсын Их Хурлын чуулганы 2024 оны 01 дүгээр сарын 17-ны
               өдрийн нэгдсэн хуралдаанаар Хүүхдийн эрхийн тухай хуульд нэмэлт,
               өөрчлөлт оруулах тухай хуулийг хэлэлцэн баталсан. Хүүхдийн эрхийн
@@ -126,8 +126,7 @@ const BasicNews: React.FC = () => {
               цахим хаягаар 2024 оны 09 дүгээр сарын 16-ны өдрийн дотор ирүүлнэ
               үү. Хавсралт хэсгээс стандартын төслийг бүрэн эхээр нь татаж авна
               уу.
-            </div>
-            <div className="w-full h-auto flex flex-col gap-5">text bichih</div>
+            </p>
           </div>
         </div>
         <div>

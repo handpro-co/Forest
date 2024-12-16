@@ -1,7 +1,6 @@
 import { useState } from "react";
 import ArrowRigth from "@/app/icons/ArrowRigth";
 import NewsCard from "./NewsCard";
-import Link from "next/link";
 
 interface NewsItem {
   id: number; // Added `id` to the NewsItem type
@@ -44,19 +43,19 @@ const RelatedBasicNews: React.FC<Props> = ({ newsData }) => {
 
   return (
     <div className="w-[80%] flex flex-col gap-[24px] mt-[100px]">
-      <div className="font-700 text-[24px] leading-[29.02px] text-[#333333]">
+      <div className="font-700 text-[24px]  text-[#333333]">
         Холбоотой мэдээлэл
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[16px]">
         {paginatedNews.map((item) => (
           <div key={item.id}>
-            <Link href={`/BasicNews/?id=${item.id}`}>
+            <a href={`/BasicNews/?id=${item.id}`}>
               <NewsCard
                 image={item.image}
                 date={item.date}
                 title={item.title}
               />
-            </Link>
+            </a>
           </div>
         ))}
       </div>

@@ -1,7 +1,6 @@
 import { useState } from "react";
 import ArrowRigth from "@/app/icons/ArrowRigth";
 import NewsCard from "./NewsCard";
-import Link from "next/link";
 
 interface NewsItem {
   id: number;
@@ -19,7 +18,6 @@ const RelatedNews: React.FC<Props> = ({ newsData }) => {
   const [currentPage, setCurrentPage] = useState(0); // Current page index
 
   if (!newsData || newsData.length === 0) {
-    // Handle empty or null data
     return (
       <div className="w-[80%] flex flex-col gap-[24px] mt-[100px] text-center">
         <div className="font-700 text-[24px] leading-[29.02px] text-[#333333]">
@@ -62,18 +60,17 @@ const RelatedNews: React.FC<Props> = ({ newsData }) => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[16px]">
         {paginatedNews.map((item, index) => (
           <div key={index}>
-            <Link href={`/PhotoNews/?id=${item.id}`}>
+            <a href={`/PhotoNews/?id=${item.id}`}>
               <NewsCard
                 image={item.image}
                 date={item.date}
                 title={item.title}
               />
-            </Link>
+            </a>
           </div>
         ))}
       </div>
       <div className="flex justify-end gap-[16px]">
-        {/* Left Arrow */}
         <div
           onClick={goToPreviousPage}
           className={`cursor-pointer w-[50px] h-[50px] bg-[#ECEBE3] flex justify-center items-center rounded-[50%] transform rotate-180 ${
@@ -83,7 +80,6 @@ const RelatedNews: React.FC<Props> = ({ newsData }) => {
           <ArrowRigth color="#333333" />
         </div>
 
-        {/* Right Arrow */}
         <div
           onClick={goToNextPage}
           className={`cursor-pointer w-[50px] h-[50px] bg-[#ECEBE3] flex justify-center items-center rounded-[50%] ${

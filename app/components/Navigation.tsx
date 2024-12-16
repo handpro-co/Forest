@@ -11,9 +11,17 @@ import Navigation_contact_us_button from "./layout/Navigation_contact_us_button"
 import navigation_options_data from "@/app/components/data/navigation_options_data";
 import Navigation_click_option_screen from "./layout/Navigation_click_option_screen";
 import { useEffect, useState } from "react";
-import Link from "next/link";
+
 import { IoAccessibility } from "react-icons/io5";
 import cursorImg from "@/public/cursor-png-1127.png";
+import { useAtom } from "jotai";
+import {
+  isAcc,
+  isAccLetter,
+  isAccLeading,
+  isAccCursor,
+  isAccLink,
+} from "./hook/accessibility";
 
 type Option = {
   optionId: number | string;
@@ -40,19 +48,17 @@ const Navigation: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showA11y, setShowA11y] = useState<boolean>(false);
   const [selectedIndexes, setSelectedIndexes] = useState<number[]>([]);
-  const [cursorSize, setCursorSize] = useState<number>(16);
-  const [cursorImage, setCursorImage] = useState<string>("");
+
+  const [isLink, setIsLink] = useAtom(isAccLink);
+  const [screeenAcci, setScreeenAcci] = useAtom(isAcc);
+  const [isLeading, setIsLeading] = useAtom(isAccLeading);
+  const [isAccLetterSpace, setIsAccLetterSpace] = useAtom(isAccLetter);
+  const [isCursor, setIsCursor] = useAtom(isAccCursor);
 
   useEffect(() => {
     const data = navigation_options_data();
     setDatas(data);
   }, []);
-
-  useEffect(() => {
-    if (cursorImage && cursorSize) {
-      document.body.style.cursor = `url(${cursorImage}) ${cursorSize} ${cursorSize}, auto`;
-    }
-  }, [cursorSize, cursorImage]);
 
   const showModal = () => setShowA11y(!showA11y);
 
@@ -64,25 +70,22 @@ const Navigation: React.FC = () => {
     );
 
     switch (index) {
+      case 0:
+        break;
       case 1:
-        console.log("1");
+        setIsLink((prevAcci) => !prevAcci);
         break;
       case 2:
-        setCursorSize((prevSize) => prevSize + 2);
-        setCursorImage(cursorImg.src);
-        console.log("cursor:", cursorImage);
+        setIsCursor((prevAcci) => !prevAcci);
         break;
       case 3:
-        console.log("Font size increased");
+        setScreeenAcci((prevAcci) => !prevAcci);
         break;
       case 4:
-        console.log("Line spacing increased");
+        setIsLeading((prevAcci) => !prevAcci);
         break;
       case 5:
-        console.log("5");
-        break;
-      case 6:
-        console.log("6");
+        setIsAccLetterSpace((prevAcci) => !prevAcci);
         break;
       default:
         console.log("Other accessibility setting clicked");
@@ -93,9 +96,9 @@ const Navigation: React.FC = () => {
   return (
     <nav className="w-full border-b-[1px] border-[#ECEBE3] h-[80px] fixed top-0 flex justify-between items-center px-[24px] py-[18px] bg-[#fff] z-[999] 2xl:w-[85%]">
       <div className="h-[44px] flex gap-[32px] sm:w-[80%] md:w-[60%] lg:w-[40%] xl:w-[30%] 2xl:w-[25%]">
-        <Link href="./">
+        <a href="./">
           <Logo />
-        </Link>
+        </a>
 
         <div className="hidden md:flex h-[40px] items-center gap-[12px]">
           <button
@@ -126,7 +129,7 @@ const Navigation: React.FC = () => {
                   <button
                     key={i}
                     onClick={() => handleItemClick(i)}
-                    className={`w-[200px] h-[120px] px-[26px] flex flex-col items-center justify-center gap-[12px] rounded-[16px] border-[1px] hover:scale-105 ${
+                    className={`w-[200px] h-[120px] px-[26px] flex flex-col items-center justify-center gap-[12px] rounded-[16px] border-[1px] hover:scale-105 custom-link ${
                       selectedIndexes.includes(i)
                         ? "bg-[#14B75F] text-[white]"
                         : "bg-[#fff] text-[#333]"
@@ -162,7 +165,7 @@ const Navigation: React.FC = () => {
               options={item.options}
             />
           ))}
-          <div className="text-[15px] font-[500] text-[#333333] rounded-[12px] leading-[17.66px] items-center flex p-[8px] hover:bg-[#ECEBE3]">
+          <div className="text-[15px] font-[500] text-[#333333] rounded-[12px]  items-center flex p-[8px] hover:bg-[#ECEBE3]">
             Холбоо барих
           </div>
         </li>
@@ -190,7 +193,7 @@ const Navigation: React.FC = () => {
                   />
                 </div>
               ))}
-              <div className="text-[15px] font-[500] text-[#333333] leading-[17.66px] text-center p-[8px] hover:bg-[#ECEBE3]">
+              <div className="text-[15px] font-[500] text-[#333333]  text-center p-[8px] hover:bg-[#ECEBE3]">
                 Холбоо барих
               </div>
               <div className="flex justify-center items-center md:hidden">

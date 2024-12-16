@@ -17,7 +17,7 @@ const AnimateLogos: React.FC = () => {
 
   return (
     <div className="w-full   h-[84px]">
-      <div className="text-[26px] font-700 leading-[31.43px] text-[#333333] text-center">
+      <div className="text-[26px] font-700  text-[#333333] text-center">
         Хамтрагч байгууллагууд
       </div>
       <div className="overflow-hidden w-full h-[84px]">

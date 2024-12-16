@@ -7,7 +7,7 @@ const Service: React.FC = () => {
   return (
     <div className="mt-[84px] w-full">
       <div className="w-full py-[64px] px-[24px] rounded-[24px] bg-[#081103]">
-        <div className="text-[#FCFFF5] text-[26px] leading-[31.43px] font-700 text-center">
+        <div className="text-[#FCFFF5] text-[26px]  font-700 text-center">
           Үзүүлэх үйлчилгээ
         </div>
         <div className="w-full grid grid-cols-1  lg:grid-cols-2 gap-[64px] mt-6">

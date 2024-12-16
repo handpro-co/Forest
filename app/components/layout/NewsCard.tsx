@@ -12,7 +12,7 @@ const NewsCard: React.FC<NewsCardProps> = ({ image, date, title }) => {
       <div className="gap-[16px] flex flex-col pb-[12px] pl-[8px]">
         <div className="text-[#666] text-[14px]">{date}</div>
         <div className="flex gap-[12px] items-center justify-between">
-          <div className="text-[#333] text-[16px] break-words max-w-[85%] overflow-hidden">
+          <div className="text-[#333]  break-words max-w-[85%] overflow-hidden">
             <div className="line-clamp-3">{title}</div>
           </div>
           <div className="min-w-[32px] min-h-[32px] bg-[#DEFF94] rounded-[50%] flex justify-center items-center">
