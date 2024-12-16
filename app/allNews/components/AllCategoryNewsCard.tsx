@@ -15,46 +15,42 @@ interface NewsDataType {
   category: string;
 }
 
-interface CategoryType { 
+interface CategoryType {
   id: number;
   name: string;
 }
 
 const AllNewsCards: React.FC = () => {
-  const [newsData, setNewsData] = useState<NewsDataType[]>([]); // Store fetched news
-  const [categories, setCategories] = useState<CategoryType[]>([]); // Store categories as objects
+  const [newsData, setNewsData] = useState<NewsDataType[]>([]);
+  const [categories, setCategories] = useState<CategoryType[]>([]);
   const [selectedCategoryIndex, setSelectedCategoryIndex] = useState<number>(0);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const itemsPerPage = 16;
 
-  // Fetch categories and initial news (on load)
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const fetchedCategories = await fetchCategories(); // Fetch categories
+        const fetchedCategories = await fetchCategories();
         const categoriesArray: CategoryType[] = [];
 
-        // Fetch and map categories
         if (fetchedCategories?.Value) {
           Object.values(fetchedCategories.Value).forEach((category: any) => {
             categoriesArray.push({
               id: category.id,
-              name: category.name || "Unknown", // Default name if undefined
+              name: category.name || "Unknown",
             });
           });
         }
 
-        // Set categories
         setCategories(categoriesArray);
 
-        // Fetch news for the first category by default
         if (categoriesArray.length > 0) {
           fetchNewsForCategory(categoriesArray[0].id);
         }
       } catch (error) {
         console.error("Error fetching data:", error);
-        setCategories([]); // Fallback to an empty array on error
-        setNewsData([]); // Fallback to an empty array for news data
+        setCategories([]);
+        setNewsData([]);
       }
     };
 
@@ -63,40 +59,40 @@ const AllNewsCards: React.FC = () => {
 
   const fetchNewsForCategory = async (id: number) => {
     try {
-      const fetchedNews = await fetchNews({ id }); // Pass category ID to fetch news
+      const fetchedNews = await fetchNews({ id });
       const newsArray: NewsDataType[] = [];
 
-      // Fetch and map news
       if (fetchedNews?.Value) {
         Object.values(fetchedNews.Value).forEach((newsItem: any) => {
           newsArray.push({
             date: newsItem.c_date,
             title: newsItem.title,
             image: newsItem.image,
-            category: newsItem.name || "Unknown", // Default category name if undefined
+            category: newsItem.name || "Unknown",
           });
         });
       }
 
       // Set news data
       setNewsData(newsArray);
+      console.log("newsarray", newsArray);
     } catch (error) {
       console.error("Error fetching news:", error);
-      setNewsData([]); // Fallback to an empty array on error
+      setNewsData([]);
     }
   };
 
-  // Handle category selection
   const handleCategoryClick = (index: number) => {
     setSelectedCategoryIndex(index);
-    setCurrentPage(1); // Reset to the first page when switching categories
-    fetchNewsForCategory(categories[index].id); // Fetch news for the selected category
+    setCurrentPage(1);
+    fetchNewsForCategory(categories[index].id);
   };
 
   // Pagination logic
   const indexOfLastNews = currentPage * itemsPerPage;
   const indexOfFirstNews = indexOfLastNews - itemsPerPage;
   const currentNews = newsData.slice(indexOfFirstNews, indexOfLastNews);
+  console.log(currentNews);
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
@@ -106,20 +102,17 @@ const AllNewsCards: React.FC = () => {
 
   return (
     <div className="w-full h-auto flex flex-col gap-[50px]">
-      {/* Category Navigation */}
       <div className="w-full flex items-center justify-between px-4">
-        {/* Left Arrow */}
         <div className="min-w-[40px] h-[40px] rounded-[50%] bg-[#F2F5EB] flex justify-center items-center cursor-pointer transform rotate-180">
           <ArrowRigth color="#333333" />
         </div>
 
-        {/* Categories */}
         <div className="flex gap-[16px] flex-nowrap justify-start overflow-x-auto scrollbar-thin scrollbar-thumb-[#ccc] scrollbar-track-[#f0f0f0] hover:scrollbar-thumb-[#aaa] py-2 px-4 rounded-lg">
           {categories.length > 0 ? (
             categories.map((category, i) => (
               <CategoryItem
-                key={category.id} // Use the unique id as the key
-                category={category.name} // Pass the category name as a prop
+                key={category.id}
+                category={category.name}
                 index={i}
                 selectedCategoryIndex={selectedCategoryIndex}
                 onClick={handleCategoryClick}
@@ -129,14 +122,11 @@ const AllNewsCards: React.FC = () => {
             <p>No categories available</p>
           )}
         </div>
-
-        {/* Right Arrow */}
         <div className="min-w-[40px] h-[40px] rounded-[50%] bg-[#F2F5EB] flex justify-center items-center cursor-pointer">
           <ArrowRigth color="#333333" />
         </div>
       </div>
 
-      {/* News Cards */}
       <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-[50px]">
         {currentNews.map((news, i) => (
           <div key={i}>
@@ -145,10 +135,8 @@ const AllNewsCards: React.FC = () => {
         ))}
       </div>
 
-      {/* Pagination */}
       <div className="w-full flex justify-center lg:justify-end">
         <div className="flex">
-          {/* Previous Page */}
           <button
             onClick={() => handlePageChange(currentPage - 1)}
             disabled={currentPage === 1}
@@ -159,7 +147,6 @@ const AllNewsCards: React.FC = () => {
             </div>
           </button>
 
-          {/* Page Numbers */}
           {Array.from({ length: totalPages }, (_, index) => index + 1).map(
             (page) => (
               <button
@@ -176,7 +163,6 @@ const AllNewsCards: React.FC = () => {
             )
           )}
 
-          {/* Next Page */}
           <button
             onClick={() => handlePageChange(currentPage + 1)}
             disabled={currentPage === totalPages}

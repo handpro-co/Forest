@@ -99,7 +99,7 @@ const ImageOnly: React.FC = () => {
                 </div>
               </div>
             </div>
-            <div className="font-normal leading-[22px] text-[16px] text-[#666666]">
+            <div className="font-normal  text-[#666666]">
               Монгол Улсын Их Хурлын чуулганы 2024 оны 01 дүгээр сарын 17-ны
               өдрийн нэгдсэн хуралдаанаар Хүүхдийн эрхийн тухай хуульд нэмэлт,
               өөрчлөлт оруулах тухай хуулийг хэлэлцэн баталсан...
@@ -107,7 +107,7 @@ const ImageOnly: React.FC = () => {
           </div>
         </div>
         <div>
-          <RelatedNews />
+          <RelatedNews newsData={null} />
         </div>
       </div>
     </div>

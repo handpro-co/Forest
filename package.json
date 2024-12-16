@@ -10,6 +10,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "jotai": "^2.10.3",
     "marked": "^15.0.3",
     "next": "^15.0.3",
     "package.json": "^2.0.1",
