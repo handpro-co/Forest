@@ -24,7 +24,7 @@ const Homee: React.FC = () => {
       className="flex flex-col justify-center w-full h-[80vh] bg-cover bg-center rounded-[24px] px-[56px] gap-[96px]"
       style={{ backgroundImage: `url(${photo.src})` }}
     >
-      <div className="flex text-[56px] font-600 font-semiBold text-[#fff] lg:w-[30%]">
+      <div className="flex text-[56px] font-600 font-bold text-[#fff] lg:w-[30%]">
         Амьдралын орчинг сайжруулна
       </div>
       <div className="w-auto flex flex-col gap-[40px]">

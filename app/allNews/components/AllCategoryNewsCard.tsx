@@ -1,7 +1,7 @@
 "use client";
 
 import CategoryItem from "../../components/layout/Catergory_Button";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import ArrowRigth from "../../icons/ArrowRigth";
 import NewsCard from "../../components/layout/NewsCard";
 import Sum from "../../icons/SumIcon";
@@ -26,6 +26,9 @@ const AllNewsCards: React.FC = () => {
   const [selectedCategoryIndex, setSelectedCategoryIndex] = useState<number>(0);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const itemsPerPage = 16;
+  const [catchIndex, setCatchIndex] = useState<number>(0);
+
+  const categoryListRef = useRef<HTMLDivElement>(null); // Reference to category list
 
   useEffect(() => {
     const fetchData = async () => {
@@ -75,7 +78,6 @@ const AllNewsCards: React.FC = () => {
 
       // Set news data
       setNewsData(newsArray);
-      console.log("newsarray", newsArray);
     } catch (error) {
       console.error("Error fetching news:", error);
       setNewsData([]);
@@ -85,14 +87,22 @@ const AllNewsCards: React.FC = () => {
   const handleCategoryClick = (index: number) => {
     setSelectedCategoryIndex(index);
     setCurrentPage(1);
+    setCatchIndex(index);
     fetchNewsForCategory(categories[index].id);
+
+    // Scroll the category list to ensure the active category is visible
+    if (categoryListRef.current) {
+      const categoryItem = categoryListRef.current.children[
+        index
+      ] as HTMLElement;
+      categoryItem?.scrollIntoView({ behavior: "smooth", inline: "center" });
+    }
   };
 
   // Pagination logic
   const indexOfLastNews = currentPage * itemsPerPage;
   const indexOfFirstNews = indexOfLastNews - itemsPerPage;
   const currentNews = newsData.slice(indexOfFirstNews, indexOfLastNews);
-  console.log(currentNews);
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
@@ -100,14 +110,52 @@ const AllNewsCards: React.FC = () => {
 
   const totalPages = Math.ceil(newsData.length / itemsPerPage);
 
+  const handleNextCategory = () => {
+    if (catchIndex < categories.length - 1) {
+      setSelectedCategoryIndex(catchIndex + 1);
+      setCatchIndex(catchIndex + 1);
+      fetchNewsForCategory(categories[catchIndex + 1].id);
+      if (categoryListRef.current) {
+        const categoryItem = categoryListRef.current.children[catchIndex + 1] as HTMLElement;
+        categoryItem?.scrollIntoView({
+          behavior: "smooth",
+          inline: "center",
+        });
+      }
+    }
+  };
+
+  const handlePrevCategory = () => {
+    if (catchIndex > 0) {
+      setSelectedCategoryIndex(catchIndex - 1);
+      setCatchIndex(catchIndex - 1);
+      fetchNewsForCategory(categories[catchIndex - 1].id);
+         if (categoryListRef.current) {
+           const categoryItem = categoryListRef.current.children[
+          catchIndex - 1
+           ] as HTMLElement;
+           categoryItem?.scrollIntoView({
+             behavior: "smooth",
+             inline: "center",
+           });
+         }
+    }
+  };
+
   return (
     <div className="w-full h-auto flex flex-col gap-[50px]">
       <div className="w-full flex items-center justify-between px-4">
-        <div className="min-w-[40px] h-[40px] rounded-[50%] bg-[#F2F5EB] flex justify-center items-center cursor-pointer transform rotate-180">
+        <button
+          onClick={handlePrevCategory}
+          className="min-w-[40px] h-[40px] rounded-[50%] bg-[#F2F5EB] flex justify-center items-center cursor-pointer transform rotate-180"
+        >
           <ArrowRigth color="#333333" />
-        </div>
+        </button>
 
-        <div className="flex gap-[16px] flex-nowrap justify-start overflow-x-auto scrollbar-thin scrollbar-thumb-[#ccc] scrollbar-track-[#f0f0f0] hover:scrollbar-thumb-[#aaa] py-2 px-4 rounded-lg">
+        <div
+          ref={categoryListRef}
+          className="flex gap-[16px] flex-nowrap justify-start overflow-x-auto scrollbar-thin scrollbar-thumb-[#ccc] scrollbar-track-[#f0f0f0] hover:scrollbar-thumb-[#aaa] py-2 px-4 rounded-lg"
+        >
           {categories.length > 0 ? (
             categories.map((category, i) => (
               <CategoryItem
@@ -122,12 +170,16 @@ const AllNewsCards: React.FC = () => {
             <p>No categories available</p>
           )}
         </div>
-        <div className="min-w-[40px] h-[40px] rounded-[50%] bg-[#F2F5EB] flex justify-center items-center cursor-pointer">
+
+        <button
+          onClick={handleNextCategory}
+          className="min-w-[40px] h-[40px] rounded-[50%] bg-[#F2F5EB] flex justify-center items-center cursor-pointer"
+        >
           <ArrowRigth color="#333333" />
-        </div>
+        </button>
       </div>
 
-      <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-[50px]">
+      <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-x-[16px] gap-y-[50px]">
         {currentNews.map((news, i) => (
           <div key={i}>
             <NewsCard image={news.image} date={news.date} title={news.title} />

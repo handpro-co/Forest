@@ -157,7 +157,7 @@ const Navigation: React.FC = () => {
       </div>
 
       <ul className="flex gap-[16px]">
-        <li className="h-auto hidden lg:flex gap-[8px] items-center">
+        <li className="h-auto hidden xl:flex gap-[8px] items-center">
           {datas.map((item) => (
             <Navigation_hover_option
               key={item.id}
@@ -170,7 +170,7 @@ const Navigation: React.FC = () => {
           </div>
         </li>
 
-        <li className="lg:hidden flex items-center">
+        <li className="xl:hidden flex items-center">
           <button
             className={`text-[#333] p-[8px] rounded-[12px] ${
               isMenuOpen ? "bg-[#ECEBE3]" : "bg-[#fff]"
