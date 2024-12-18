@@ -6,13 +6,12 @@ import ArrowRigth from "../icons/ArrowRigth";
 import NewsCard from "./layout/NewsCard";
 import { fetchCategories } from "@/app/components/data/fetchCategory";
 import { fetchNews } from "@/app/components/data/fetchNews";
- 
 
 interface NewsDataType {
   date: string;
   title: string;
   image: string;
-  category: string;
+  category: number;
 }
 
 interface CategoryType {
@@ -26,7 +25,8 @@ const AllNewsCards: React.FC = () => {
   const [selectedCategoryIndex, setSelectedCategoryIndex] = useState<number>(0);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const itemsPerPage = 16;
-
+  const [path, setPath] = useState<number | undefined>();
+  const [categoryId, setCategoryId] = useState<number | undefined>(1);
   // Fetch categories and initial news (on load)
   useEffect(() => {
     const fetchData = async () => {
@@ -73,7 +73,7 @@ const AllNewsCards: React.FC = () => {
             date: newsItem.c_date,
             title: newsItem.title,
             image: newsItem.image,
-            category: newsItem.name || "Unknown", // Default category name if undefined
+            category: newsItem.id || "Unknown", // Default category name if undefined
           });
         });
       }
@@ -88,21 +88,53 @@ const AllNewsCards: React.FC = () => {
 
   // Handle category selection
   const handleCategoryClick = (index: number) => {
+    setCategoryId(categories[index].id);
     setSelectedCategoryIndex(index);
     setCurrentPage(1); // Reset to the first page when switching categories
     fetchNewsForCategory(categories[index].id); // Fetch news for the selected category
+    const selectedCategory = categories[index].id;
   };
 
   // Pagination logic
   const indexOfLastNews = currentPage * itemsPerPage;
   const indexOfFirstNews = indexOfLastNews - itemsPerPage;
   const currentNews = newsData.slice(indexOfFirstNews, indexOfLastNews);
+  console.log("currentNews", currentNews);
 
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page);
-  };
+  // const handlePageChange = (page: number) => {
+  //   setCurrentPage(page);
+  // };
 
   const totalPages = Math.ceil(newsData.length / itemsPerPage);
+
+  const jumpPage = ({ categoryId }: any, { p }: any): void => {
+    if (p !== null && p !== undefined) {
+      switch (parseInt(categoryId, 10)) {
+        case 1014:
+          window.location.href = `/VideoNews?id=${p}`;
+          break;
+        case 1013:
+          window.location.href = `/PhotoNews?id=${p}`;
+          break;
+        case 2018:
+          window.location.href = `/socialNews?id=${p}`;
+          break;
+        case 2022:
+          window.location.href = `/imageOnly?id=${p}`;
+          break;
+        case 1:
+          window.location.href = `/BasicNews?id=${p}`;
+          break;
+        default:
+          console.error("Invalid category ID:", categoryId);
+          break;
+      }
+    } else {
+      console.error("Invalid parameter for 'p':", p);
+    }
+  };
+
+  console.log("patj", categoryId);
 
   return (
     <div className="w-full h-auto flex flex-col gap-[50px]">
@@ -129,9 +161,15 @@ const AllNewsCards: React.FC = () => {
       {/* News Cards */}
       <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-[50px]">
         {currentNews.slice(0, 4).map((news, i) => (
-          <div key={i}>
+          <a
+            onClick={() => {
+              setPath(news.category);
+              jumpPage(categoryId, path);
+            }}
+            key={i}
+          >
             <NewsCard image={news.image} date={news.date} title={news.title} />
-          </div>
+          </a>
         ))}
       </div>
 

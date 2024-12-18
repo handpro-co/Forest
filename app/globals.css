@@ -1,6 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+/* :root{
+  back
+} */
 
 * {
   margin: 0;
@@ -36,4 +39,7 @@
 
 .animate-spin-slow {
   animation: spin-slow 5s linear infinite;
+}
+body.inverted {
+  filter: invert(100%);
 }

@@ -21,6 +21,7 @@ import {
   isAccLeading,
   isAccCursor,
   isAccLink,
+  isInvert,
 } from "./hook/accessibility";
 
 type Option = {
@@ -54,6 +55,7 @@ const Navigation: React.FC = () => {
   const [isLeading, setIsLeading] = useAtom(isAccLeading);
   const [isAccLetterSpace, setIsAccLetterSpace] = useAtom(isAccLetter);
   const [isCursor, setIsCursor] = useAtom(isAccCursor);
+  const [isColorInvert, setIsColorInvert] = useAtom(isInvert);
 
   useEffect(() => {
     const data = navigation_options_data();
@@ -71,11 +73,12 @@ const Navigation: React.FC = () => {
 
     switch (index) {
       case 0:
+        setIsColorInvert((prevAcci) => !prevAcci);        
         break;
       case 1:
         setIsLink((prevAcci) => !prevAcci);
         break;
-      case 2:
+      case 2: 
         setIsCursor((prevAcci) => !prevAcci);
         break;
       case 3:

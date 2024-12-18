@@ -11,6 +11,7 @@ import {
   isAccLeading,
   isAccCursor,
   isAccLink,
+  isInvert,
 } from "./components/hook/accessibility";
 
 interface Props {
@@ -20,6 +21,7 @@ interface Props {
 const RootLayout: React.FC<Props> = ({ children }) => {
   const [showAI, setShowAI] = useState<boolean>(false);
 
+  const [screenColor, setScreenColor] = useAtom(isInvert);
   const [screenAcc, setScreenAcc] = useAtom(isAcc);
   const [isLeading, setIsLeading] = useAtom(isAccLeading);
   const [isLetter, setIsLetter] = useAtom(isAccLetter);
@@ -32,13 +34,14 @@ const RootLayout: React.FC<Props> = ({ children }) => {
       link.style.textDecoration = isLink ? "underline" : "none";
     });
 
+    document.body.style.filter = screenColor ? "invert(90%)" : "invert(0)";
     document.body.style.fontSize = screenAcc ? "20px" : "16px";
     document.body.style.lineHeight = isLeading ? "2.5" : "normal";
     document.body.style.letterSpacing = isLetter ? "2px" : "normal";
     document.body.style.cursor = isCursor
       ? `url(/assets/Cursor.svg) 16 16, auto`
       : "auto";
-  }, [screenAcc, isLeading, isLetter, isCursor, isLink]);
+  }, [screenAcc, isLeading, isLetter, isCursor, isLink, screenColor]);
 
   return (
     <html lang="en">
