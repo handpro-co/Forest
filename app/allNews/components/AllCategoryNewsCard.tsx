@@ -182,7 +182,7 @@ const AllNewsCards: React.FC = () => {
           <ArrowRigth color="#333333" />
         </button>
       </div>
-      <div className="flex md:hidden ">
+      <div className="w-full flex md:hidden ">
         <CategoryDropdown
           onClick={handleCategoryClick}
           categories={categories}
