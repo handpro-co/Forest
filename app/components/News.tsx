@@ -1,8 +1,8 @@
 "use client";
 
 import CategoryItem from "./layout/Catergory_Button";
-import React, { useEffect, useState } from "react";
-import ArrowRigth from "../icons/ArrowRigth";
+import React, { useEffect, useState, useRef } from "react";
+import ArrowRight from "../icons/ArrowRigth"; // Corrected typo (ArrowRigth -> ArrowRight)
 import NewsCard from "./layout/NewsCard";
 import { fetchCategories } from "@/app/components/data/fetchCategory";
 import { fetchNews } from "@/app/components/data/fetchNews";
@@ -25,8 +25,13 @@ const AllNewsCards: React.FC = () => {
   const [selectedCategoryIndex, setSelectedCategoryIndex] = useState<number>(0);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const itemsPerPage = 16;
+
   const [path, setPath] = useState<number | undefined>();
   const [categoryId, setCategoryId] = useState<number | undefined>(1);
+
+  const categoryListRef = useRef<HTMLDivElement>(null); // Reference to category list
+
+
   // Fetch categories and initial news (on load)
   useEffect(() => {
     const fetchData = async () => {
@@ -92,7 +97,20 @@ const AllNewsCards: React.FC = () => {
     setSelectedCategoryIndex(index);
     setCurrentPage(1); // Reset to the first page when switching categories
     fetchNewsForCategory(categories[index].id); // Fetch news for the selected category
+
     const selectedCategory = categories[index].id;
+
+
+    if (categoryListRef.current) {
+      const categoryItem = categoryListRef.current.children[
+        index
+      ] as HTMLElement;
+      categoryItem?.scrollIntoView({
+        behavior: "smooth",
+        inline: "center",
+      });
+    }
+
   };
 
   // Pagination logic
@@ -141,7 +159,10 @@ const AllNewsCards: React.FC = () => {
       {/* Category Navigation */}
       <div className="w-full flex items-center justify-between px-4">
         {/* Categories with smooth horizontal scroll */}
-        <div className="flex gap-[16px] flex-nowrap justify-start overflow-x-auto scrollbar-thin scrollbar-thumb-[#ccc] scrollbar-track-[#f0f0f0] hover:scrollbar-thumb-[#aaa] py-2 px-4 rounded-lg">
+        <div
+          className="flex gap-[16px] flex-nowrap justify-start overflow-x-auto scrollbar-thin scrollbar-thumb-[#ccc] scrollbar-track-[#f0f0f0] hover:scrollbar-thumb-[#aaa] py-2 px-4 rounded-lg"
+          ref={categoryListRef} // Attach ref to the scroll container
+        >
           {categories.length > 0 ? (
             categories.map((category, i) => (
               <CategoryItem
@@ -176,10 +197,10 @@ const AllNewsCards: React.FC = () => {
       <div className="flex justify-center items-center">
         <a href="/allNews">
           <div className="inline-flex items-center gap-[16px] bg-[#ECEBE3] p-[16px] rounded-[50px] cursor-pointer mt-8">
-            <span className="text-[#333] font-medium text-[16px] ">
+            <span className="text-[#333] font-medium text-[16px]">
               Бүгдийн харах
             </span>
-            <ArrowRigth color="#333" />
+            <ArrowRight color="#333" /> {/* Corrected typo here too */}
           </div>
         </a>
       </div>

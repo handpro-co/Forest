@@ -70,7 +70,8 @@ const VideoNews: React.FC = () => {
   }, [categoryId, newsId]);
 
   const relatedNews = newsData.filter((news) => news.id !== currentNews?.id);
-
+  console.log(currentNews);
+  
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
 
@@ -78,9 +79,8 @@ const VideoNews: React.FC = () => {
     <div className="w-[100vw] flex flex-col items-center">
       <div className="w-[100%] lg:w-[80%]">
         {currentNews && (
-          <div className="w-full lg:w-[65%] mt-[50px] flex flex-col gap-[64px]">
+          <div className="w-full lg:w-[65%] mt-[50px] flex flex-col gap-[32px]">
             <div className="flex flex-col gap-[24px]">
-              <div className="border-t-[1px] border-[#94D1B0] border-dashed" />
               <div className="flex justify-between items-end">
                 <div className="flex items-center gap-[8px]">
                   <span className="text-[#14B75F] text-[14px] font-500">
@@ -114,10 +114,11 @@ const VideoNews: React.FC = () => {
                 {currentNews.title}
               </div>
             </div>
+            <div className="border-t-[1px] border-[#94D1B0] border-dashed" />
 
-            <div className="w-full flex flex-col gap-[48px]">
+            <div className="w-full flex flex-col gap-[32px]">
               <div className="text-base leading-[22px] text-[#666666]">
-                {currentNews.intro}
+                {currentNews.intro ? currentNews.intro : "Интро олдсонгүй "}
               </div>
               <div className="w-full">
                 {currentNews.image ? (

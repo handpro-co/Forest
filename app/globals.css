@@ -1,10 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-/* :root{
-  back
-} */
 
+
+
+@font-face {
+  font-family: 'Gip';
+  src: url('/font/GIP-regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+body {
+  font-family: 'Gip', sans-serif; 
+}
+::-webkit-scrollbar {
+  display: none;
+}
 * {
   margin: 0;
 }
