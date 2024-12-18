@@ -2,17 +2,17 @@ import Logo from "./layout/Logo";
 
 const Footer: React.FC = () => {
   return (
-    <div className="w-full   flex flex-col items-center gap-[64px] pt-[48px] px-[24px] pb-[24px] mt-[50px]">
-      <div className="w-full border-b-[1px] border-[#ECEBE3]" />
+    <div className="w-full   flex flex-col items-center gap-[32px] pt-[48px] px-[24px] pb-[24px] mt-[50px]">
+      <div className="w-full border-b-[1px] border-dashed border-[#14B75F]" />
       <div className="w-full flex justify-between py-[24px]  flex-col lg:flex-row gap-[64px] md:gap-[20px]">
         <div className="w-auto flex flex-col gap-[40px]">
           <Logo />
           <div className="flex flex-col gap-[20px]">
             <div className="text-[32px] font-semibold  text-[#333333]">
-              Тэрбум мод
+              Амьдралын орчинг сайжруулна
             </div>
             <div className="text-[32px] font-semibold  text-[#14B75F]">
-              Таны тарих нэг модноос эхэлнэ.
+              Ногоон ирээдүйг бүтээцгээе.
             </div>
           </div>
         </div>
@@ -55,7 +55,7 @@ const Footer: React.FC = () => {
           </div>
         </div>
       </div>
-      <div className="text-center text-[12px]  text-[#333333]">
+      <div className="text-center text-[14px]  text-[#606885]">
         Засгийн газрын хэрэгжүүлэгч агентлаг Ойн газар. Бүх эрх хуулиар
         хамгаалагдсан. 2024 он.
       </div>

@@ -2,13 +2,15 @@ import React from "react";
 
 interface SumProps {
   color?: string;
+  width?: string;
+  height?: string;
 }
 
-const Sum: React.FC<SumProps> = ({ color }) => {
+const Sum: React.FC<SumProps> = ({ color, width, height }) => {
   return (
     <svg
-      width="16"
-      height="16"
+      width={width ? width : "16px"}
+      height={height ? height : "16px"}
       viewBox="0 0 16 16"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

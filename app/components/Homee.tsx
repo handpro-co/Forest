@@ -21,28 +21,28 @@ const data = [
 const Homee: React.FC = () => {
   return (
     <div
-      className="flex flex-col justify-center w-full h-[80vh] bg-cover bg-center rounded-[24px] px-[56px] gap-[96px]"
+      className="flex flex-col justify-center w-full h-[80vh] bg-cover bg-center rounded-[24px] px-[24px] py-[24px] md:py-0 md:px-[56px] md:gap-[96px]  "
       style={{ backgroundImage: `url(${photo.src})` }}
     >
-      <div className="flex text-[56px] font-600 font-bold text-[#fff] lg:w-[30%]">
+      <div className="flex text-[32px] font-600 font-bold text-[#fff] lg:w-[30%] md:text-[56px]">
         Амьдралын орчинг сайжруулна
       </div>
-      <div className="w-auto flex flex-col gap-[40px]">
-        <div className=" flex  gap-[32px]">
+      <div className="w-auto flex flex-col ">
+        <div className=" flex flex-wrap gap-0  md:gap-[32px]">
           {data.map((item, index) => (
             <HomeeText key={index} title={item.title} text={item.text} />
           ))}
         </div>
-        <div>
-          <button className="bg-[#14B75F] pl-[24px] pr-[8px] pt-[8px] pb-[8px] rounded-[32px] flex gap-[12px]">
-            <span className="text-[#fff] font-500 text-[16px]">
-              Үйлчилгээ авах
-            </span>
-            <div className="w-[32px] h-[32px] bg-[#fff] rounded-[50%] flex justify-center items-center rotate-90">
-              <ArrowRigth color="#333" />
-            </div>
-          </button>
-        </div>
+      </div>
+      <div>
+        <button className="bg-[#14B75F] pl-[24px] pr-[8px] pt-[8px] pb-[8px] rounded-[32px] flex gap-[12px]">
+          <span className="text-[#fff] font-500 text-[16px]">
+            Үйлчилгээ авах
+          </span>
+          <div className="w-[32px] h-[32px] bg-[#fff] rounded-[50%] flex justify-center items-center rotate-90">
+            <ArrowRigth color="#333" />
+          </div>
+        </button>
       </div>
     </div>
   );

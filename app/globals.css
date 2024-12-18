@@ -2,16 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
 @font-face {
-  font-family: 'Gip';
-  src: url('/font/GIP-regular.otf') format('opentype');
+  font-family: "Roboto";
+  src: url("/font/Roboto-Medium.ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Gip";
+  src: url("/font/GIP-regular.otf") format("opentype");
   font-weight: normal;
   font-style: normal;
 }
 body {
-  font-family: 'Gip', sans-serif; 
+  font-family: "Gip", sans-serif;
 }
 ::-webkit-scrollbar {
   display: none;
@@ -38,7 +42,6 @@ body {
   color: #333333;
   opacity: 0.6;
 }
-/* Custom spin animation for infinite rotation */
 @keyframes spin-slow {
   0% {
     transform: rotate(0deg);

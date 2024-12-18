@@ -113,7 +113,7 @@ const Chatgpt: React.FC = () => {
   return (
     <>
       {show ? (
-        <div className="z-[201] shadow-md fixed bottom-[5%] pt-[24px] px-[12px] pb-[12px] flex flex-col justify-between rounded-[16px] right-[5%] w-[90%] h-[80%] bg-[#fff] md:w-[50%] md:h-[50%] lg:w-[40%] lg:h-[50%] 2xl:w-[25%] 2xl:h-[50%]">
+        <div className="z-[201] shadow-md fixed bottom-[5%] right-[5%] pt-[24px] px-[12px] pb-[12px] flex flex-col justify-between rounded-[16px] right-[5%] w-[90%] h-[80%] bg-[#fff] md:w-[50%] md:h-[50%] lg:w-[40%] lg:h-[50%] 2xl:w-[25%] 2xl:h-[50%]">
           <div className="w-full h-[9%] bg-white border-b-[1px] pb-[10px] border-[#F4F4F4] flex justify-between">
             <div className="w-full flex gap-[8px] items-center">
               <img
@@ -200,7 +200,7 @@ const Chatgpt: React.FC = () => {
           </div>
         </div>
       ) : (
-        <div className="fixed bottom-[5%] right-[5%] flex items-center gap-[10px] z-[200]">
+        <div className="fixed bottom-[5%] right-[5%] flex items-center  z-[999]">
           <div>
             <div
               onClick={showChatGpt}
@@ -209,7 +209,7 @@ const Chatgpt: React.FC = () => {
                 backgroundSize: "cover",
                 backgroundPosition: "center",
               }}
-              className="w-[76px] h-[76px] z-[12] rounded-[50%] shadow-lg cursor-pointer duration-200 hover:scale-110"
+              className="w-[76px] h-[76px] z-[12] rounded-[50%] animate-spin-slow shadow-lg cursor-pointer duration-200 hover:scale-110"
             />
           </div>
         </div>

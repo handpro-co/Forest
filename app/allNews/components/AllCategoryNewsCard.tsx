@@ -7,6 +7,7 @@ import NewsCard from "../../components/layout/NewsCard";
 import Sum from "../../icons/SumIcon";
 import { fetchCategories } from "@/app/components/data/fetchCategory";
 import { fetchNews } from "@/app/components/data/fetchNews";
+import CategoryDropdown from "./categoryDropDown";
 
 interface NewsDataType {
   date: string;
@@ -27,6 +28,7 @@ const AllNewsCards: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const itemsPerPage = 16;
   const [catchIndex, setCatchIndex] = useState<number>(0);
+  const [isDropdownVisible, setDropdownVisible] = useState(false);
 
   const categoryListRef = useRef<HTMLDivElement>(null); // Reference to category list
 
@@ -90,16 +92,18 @@ const AllNewsCards: React.FC = () => {
     setCatchIndex(index);
     fetchNewsForCategory(categories[index].id);
 
-    // Scroll the category list to ensure the active category is visible
     if (categoryListRef.current) {
       const categoryItem = categoryListRef.current.children[
         index
       ] as HTMLElement;
-      categoryItem?.scrollIntoView({ behavior: "smooth", inline: "center" });
+      categoryItem?.scrollIntoView({
+        behavior: "smooth",
+        inline: "center",
+        block: "nearest",
+      });
     }
   };
 
-  // Pagination logic
   const indexOfLastNews = currentPage * itemsPerPage;
   const indexOfFirstNews = indexOfLastNews - itemsPerPage;
   const currentNews = newsData.slice(indexOfFirstNews, indexOfLastNews);
@@ -112,14 +116,15 @@ const AllNewsCards: React.FC = () => {
 
   const handleNextCategory = () => {
     if (catchIndex < categories.length - 1) {
-      setSelectedCategoryIndex(catchIndex + 1);
       setCatchIndex(catchIndex + 1);
-      fetchNewsForCategory(categories[catchIndex + 1].id);
       if (categoryListRef.current) {
-        const categoryItem = categoryListRef.current.children[catchIndex + 1] as HTMLElement;
+        const categoryItem = categoryListRef.current.children[
+          catchIndex + 1
+        ] as HTMLElement;
         categoryItem?.scrollIntoView({
           behavior: "smooth",
           inline: "center",
+          block: "nearest",
         });
       }
     }
@@ -127,24 +132,23 @@ const AllNewsCards: React.FC = () => {
 
   const handlePrevCategory = () => {
     if (catchIndex > 0) {
-      setSelectedCategoryIndex(catchIndex - 1);
       setCatchIndex(catchIndex - 1);
-      fetchNewsForCategory(categories[catchIndex - 1].id);
-         if (categoryListRef.current) {
-           const categoryItem = categoryListRef.current.children[
+      if (categoryListRef.current) {
+        const categoryItem = categoryListRef.current.children[
           catchIndex - 1
-           ] as HTMLElement;
-           categoryItem?.scrollIntoView({
-             behavior: "smooth",
-             inline: "center",
-           });
-         }
+        ] as HTMLElement;
+        categoryItem?.scrollIntoView({
+          behavior: "smooth",
+          inline: "center",
+          block: "nearest",
+        });
+      }
     }
   };
 
   return (
-    <div className="w-full h-auto flex flex-col gap-[50px]">
-      <div className="w-full flex items-center justify-between px-4">
+    <div className="w-full h-auto flex flex-col gap-[50px] mt-[50px]">
+      <div className="w-full hidden items-center justify-between px-4 md:flex">
         <button
           onClick={handlePrevCategory}
           className="min-w-[40px] h-[40px] rounded-[50%] bg-[#F2F5EB] flex justify-center items-center cursor-pointer transform rotate-180"
@@ -154,7 +158,7 @@ const AllNewsCards: React.FC = () => {
 
         <div
           ref={categoryListRef}
-          className="flex gap-[16px] flex-nowrap justify-start overflow-x-auto scrollbar-thin scrollbar-thumb-[#ccc] scrollbar-track-[#f0f0f0] hover:scrollbar-thumb-[#aaa] py-2 px-4 rounded-lg"
+          className="flex gap-[16px] flex-nowrap justify-start overflow-x-auto  py-2 px-4 rounded-lg"
         >
           {categories.length > 0 ? (
             categories.map((category, i) => (
@@ -178,8 +182,14 @@ const AllNewsCards: React.FC = () => {
           <ArrowRigth color="#333333" />
         </button>
       </div>
+      <div className="flex md:hidden ">
+        <CategoryDropdown
+          onClick={handleCategoryClick}
+          categories={categories}
+        />
+      </div>
 
-      <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-x-[16px] gap-y-[50px]">
+      <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-x-[4px] gap-y-[50px]">
         {currentNews.map((news, i) => (
           <div key={i}>
             <NewsCard image={news.image} date={news.date} title={news.title} />
@@ -189,6 +199,7 @@ const AllNewsCards: React.FC = () => {
 
       <div className="w-full flex justify-center lg:justify-end">
         <div className="flex">
+          {/* Previous Button */}
           <button
             onClick={() => handlePageChange(currentPage - 1)}
             disabled={currentPage === 1}
@@ -199,8 +210,26 @@ const AllNewsCards: React.FC = () => {
             </div>
           </button>
 
-          {Array.from({ length: totalPages }, (_, index) => index + 1).map(
-            (page) => (
+          {/* Page Numbers */}
+          {(() => {
+            const maxVisiblePages = 5;
+            let startPage = Math.max(
+              1,
+              Math.min(
+                currentPage - Math.floor(maxVisiblePages / 2),
+                totalPages - maxVisiblePages + 1
+              )
+            );
+            const endPage = Math.min(
+              startPage + maxVisiblePages - 1,
+              totalPages
+            );
+            const pageNumbers = Array.from(
+              { length: endPage - startPage + 1 },
+              (_, index) => startPage + index
+            );
+
+            return pageNumbers.map((page) => (
               <button
                 key={page}
                 onClick={() => handlePageChange(page)}
@@ -212,9 +241,10 @@ const AllNewsCards: React.FC = () => {
               >
                 {page}
               </button>
-            )
-          )}
+            ));
+          })()}
 
+          {/* Next Button */}
           <button
             onClick={() => handlePageChange(currentPage + 1)}
             disabled={currentPage === totalPages}

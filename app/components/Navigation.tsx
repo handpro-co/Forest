@@ -23,6 +23,7 @@ import {
   isAccLink,
   isInvert,
 } from "./hook/accessibility";
+import Frame from "../icons/Frame";
 
 type Option = {
   optionId: number | string;
@@ -73,12 +74,12 @@ const Navigation: React.FC = () => {
 
     switch (index) {
       case 0:
-        setIsColorInvert((prevAcci) => !prevAcci);        
+        setIsColorInvert((prevAcci) => !prevAcci);
         break;
       case 1:
         setIsLink((prevAcci) => !prevAcci);
         break;
-      case 2: 
+      case 2:
         setIsCursor((prevAcci) => !prevAcci);
         break;
       case 3:
@@ -97,7 +98,7 @@ const Navigation: React.FC = () => {
   };
 
   return (
-    <nav className="w-full border-b-[1px] border-[#ECEBE3] h-[80px] fixed top-0 flex justify-between items-center px-[24px] py-[18px] bg-[#fff] z-[999] 2xl:w-[85%]">
+    <nav className="w-full border-b-[1px] border-[#ECEBE3] h-[80px] fixed top-0 flex justify-between items-center px-[24px] py-[18px] bg-[#fff] z-[999] ">
       <div className="h-[44px] flex gap-[32px] sm:w-[80%] md:w-[60%] lg:w-[40%] xl:w-[30%] 2xl:w-[25%]">
         <a href="./">
           <Logo />
@@ -181,9 +182,7 @@ const Navigation: React.FC = () => {
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-label="Toggle mobile menu"
           >
-            <span className="block w-[25px] h-[3px] bg-[#333] mb-[4px]" />
-            <span className="block w-[25px] h-[3px] bg-[#333] mb-[4px]" />
-            <span className="block w-[25px] h-[3px] bg-[#333]" />
+            <Frame />
           </button>
 
           {isMenuOpen && (
