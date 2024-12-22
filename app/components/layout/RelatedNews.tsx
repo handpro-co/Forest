@@ -3,10 +3,11 @@ import ArrowRigth from "@/app/icons/ArrowRigth";
 import NewsCard from "./NewsCard";
 
 interface NewsItem {
-  id: number;
-  image: string;
   date: string;
   title: string;
+  image: string;
+  body: string;
+  category: string;
 }
 
 interface Props {
@@ -60,7 +61,7 @@ const RelatedNews: React.FC<Props> = ({ newsData }) => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[16px]">
         {paginatedNews.map((item, index) => (
           <div key={index}>
-            <a href={`/PhotoNews/?id=${item.id}`}>
+            <a href={`/PhotoNews/?id=${item.category}`}>
               <NewsCard
                 image={item.image}
                 date={item.date}
