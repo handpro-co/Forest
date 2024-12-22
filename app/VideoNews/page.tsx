@@ -12,6 +12,7 @@ interface NewsDataType {
   date: string;
   title: string;
   intro: string;
+  body: string;
   image: string;
 }
 
@@ -21,9 +22,15 @@ const VideoNews: React.FC = () => {
 
   const categoryId = 1014;
   const [newsData, setNewsData] = useState<NewsDataType[]>([]);
-  const [currentNews, setCurrentNews] = useState<NewsDataType | any>(null);
+  const [currentNews, setCurrentNews] = useState<NewsDataType | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
+
+  // Function to convert HTML entities to actual characters
+  function convertHtmlEntities(str: string) {
+    const doc = new DOMParser().parseFromString(str, "text/html");
+    return doc.body.textContent || ""; // Return decoded text
+  }
 
   const fetchNewsForCategory = async (id: number) => {
     setLoading(true);
@@ -39,6 +46,7 @@ const VideoNews: React.FC = () => {
             date: newsItem.c_date,
             title: newsItem.title,
             intro: newsItem.intro,
+            body: newsItem.body,
             image: newsItem.image || "",
           });
         });
@@ -46,15 +54,21 @@ const VideoNews: React.FC = () => {
 
       setNewsData(newsArray);
 
+      // Select the current news based on the `newsId` query param or fallback to the last one
       const selectedNews = newsId
         ? newsArray.find((news) => news.id == Number(newsId))
         : newsArray[newsArray.length - 1] || null;
-      console.log(newsArray);
 
-      console.log(selectedNews);
-      console.log(Number(newsId));
-
-      setCurrentNews(selectedNews);
+      if (selectedNews) {
+        const convertedBody = convertHtmlEntities(selectedNews.body);
+        const secondConvertedBody = convertHtmlEntities(convertedBody);
+        setCurrentNews({
+          ...selectedNews,
+          body: secondConvertedBody, // Update body with decoded HTML
+        });
+      } else {
+        setCurrentNews(null);
+      }
     } catch (error) {
       setError(
         "Error fetching news: " +
@@ -69,9 +83,9 @@ const VideoNews: React.FC = () => {
     fetchNewsForCategory(categoryId);
   }, [categoryId, newsId]);
 
+  // Filter related news to exclude the current news
   const relatedNews = newsData.filter((news) => news.id !== currentNews?.id);
-  console.log(currentNews);
-  
+
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
 
@@ -115,10 +129,9 @@ const VideoNews: React.FC = () => {
               </div>
             </div>
             <div className="border-t-[1px] border-[#94D1B0] border-dashed" />
-
             <div className="w-full flex flex-col gap-[32px]">
               <div className="text-base leading-[22px] text-[#666666]">
-                {currentNews.intro ? currentNews.intro : "Интро олдсонгүй "}
+                {currentNews.intro || "Интро олдсонгүй "}
               </div>
               <div className="w-full">
                 {currentNews.image ? (
@@ -133,6 +146,10 @@ const VideoNews: React.FC = () => {
                   </div>
                 )}
               </div>
+              <div
+                className="w-full text-[#666666]"
+                dangerouslySetInnerHTML={{ __html: currentNews.body }}
+              />
             </div>
           </div>
         )}
