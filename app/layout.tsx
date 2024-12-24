@@ -20,22 +20,23 @@ interface Props {
 }
 
 const RootLayout: React.FC<Props> = ({ children }) => {
-  const [showAI, setShowAI] = useState<boolean>(false);
+  const [showAI] = useState<boolean>(false);
 
-  const [screenColor, setScreenColor] = useAtom(isInvert);
-  const [screenAcc, setScreenAcc] = useAtom(isAcc);
-  const [isLeading, setIsLeading] = useAtom(isAccLeading);
-  const [isLetter, setIsLetter] = useAtom(isAccLetter);
-  const [isCursor, setIsCursor] = useAtom(isAccCursor);
-  const [isLink, setIsLink] = useAtom(isAccLink);
+  const [screenColor] = useAtom(isInvert);
+  const [screenAcc] = useAtom(isAcc);
+  const [isLeading] = useAtom(isAccLeading);
+  const [isLetter] = useAtom(isAccLetter);
+  const [isCursor] = useAtom(isAccCursor);
+  const [isLink] = useAtom(isAccLink);
 
   useEffect(() => {
+    console.log("hello biatch");
     const links = document.querySelectorAll("a");
     links.forEach((link) => {
       link.style.textDecoration = isLink ? "underline" : "none";
     });
-
-    document.body.style.filter = screenColor ? "invert(90%)" : "invert(0)";
+    document.getElementsByTagName;
+    document.body.style.filter = screenColor ? "invert(90%)" : "";
     document.body.style.fontSize = screenAcc ? "20px" : "16px";
     document.body.style.lineHeight = isLeading ? "2.5" : "normal";
     document.body.style.letterSpacing = isLetter ? "2px" : "normal";

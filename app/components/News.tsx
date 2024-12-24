@@ -31,7 +31,6 @@ const AllNewsCards: React.FC = () => {
 
   const categoryListRef = useRef<HTMLDivElement>(null); // Reference to category list
 
-
   // Fetch categories and initial news (on load)
   useEffect(() => {
     const fetchData = async () => {
@@ -100,7 +99,6 @@ const AllNewsCards: React.FC = () => {
 
     const selectedCategory = categories[index].id;
 
-
     if (categoryListRef.current) {
       const categoryItem = categoryListRef.current.children[
         index
@@ -110,7 +108,6 @@ const AllNewsCards: React.FC = () => {
         inline: "center",
       });
     }
-
   };
 
   // Pagination logic
@@ -119,15 +116,15 @@ const AllNewsCards: React.FC = () => {
   const currentNews = newsData.slice(indexOfFirstNews, indexOfLastNews);
   console.log("currentNews", currentNews);
 
-  // const handlePageChange = (page: number) => {
+ // const handlePageChange = (page: number) => {
   //   setCurrentPage(page);
   // };
 
-  const totalPages = Math.ceil(newsData.length / itemsPerPage);
+ const totalPages = Math.ceil(newsData.length / itemsPerPage);
 
   const jumpPage = ({ categoryId }: any, { p }: any): void => {
     if (p !== null && p !== undefined) {
-      switch (parseInt(categoryId, 10)) {
+      switch (parseInt(categoryId)) {
         case 1014:
           window.location.href = `/VideoNews?id=${p}`;
           break;

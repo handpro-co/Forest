@@ -37,7 +37,7 @@ const CategoryDropdown: React.FC<CategoryDropdownProps> = ({
   };
 
   return (
-    <div className="w-full flex flex-col gap-[20px]">
+    <div className="w-full flex flex-col ">
       <button
         onClick={() => setDropdownVisible(!isDropdownVisible)}
         className="w-full "
