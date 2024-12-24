@@ -1,12 +1,12 @@
 "use client";
-
 import CategoryItem from "./layout/Catergory_Button";
 import React, { useEffect, useState, useRef } from "react";
 import ArrowRight from "../icons/ArrowRigth";
 import NewsCard from "./layout/NewsCard";
 import { fetchCategories } from "@/app/components/data/fetchCategory";
 import { fetchNews } from "@/app/components/data/fetchNews";
-
+import Lottie from "lottie-react";
+import loadingAnimation from "@/lotties/loading-icon.json";
 interface NewsDataType {
   date: string;
   title: string;
@@ -114,8 +114,6 @@ const AllNewsCards: React.FC = () => {
     if (selectedPath !== null) {
       setPath(selectedPath); // Set `path` to the proper value from `newsData`
 
-      console.log("Selected path:", selectedPath); // Debugging log
-
       switch (parseInt(categoryId, 10)) {
         case 1014:
           window.location.href = `/VideoNews?id=${selectedPath}`;
@@ -133,7 +131,7 @@ const AllNewsCards: React.FC = () => {
           window.location.href = `/BasicNews?id=${selectedPath}`;
           break;
         default:
-          console.error("Invalid category ID:", categoryId);
+          window.location.href = `/News?id=${selectedPath}&categoryId=${categoryId}`;
           break;
       }
     } else {
@@ -144,10 +142,10 @@ const AllNewsCards: React.FC = () => {
   return (
     <div className="w-full h-auto flex flex-col gap-[50px]">
       {/* Category Navigation */}
-      <div className="w-full flex items-center justify-between px-4">
+      <div className="w-full flex items-center  justify-center px-4">
         {/* Categories with smooth horizontal scroll */}
         <div
-          className="flex gap-[16px] flex-nowrap justify-start overflow-x-auto scrollbar-thin scrollbar-thumb-[#ccc] scrollbar-track-[#f0f0f0] hover:scrollbar-thumb-[#aaa] py-2 px-4 rounded-lg"
+          className="flex gap-[16px] flex-nowrap justify-start overflow-x-auto  py-2 px-4 rounded-lg"
           ref={categoryListRef} // Attach ref to the scroll container
         >
           {categories.length > 0 ? (
@@ -161,7 +159,13 @@ const AllNewsCards: React.FC = () => {
               />
             ))
           ) : (
-            <p>No categories available</p>
+            <div className="w-full h-[100px] flex items-center justify-center">
+              <Lottie
+                className="w-full h-full flex items-center justify-center"
+                animationData={loadingAnimation}
+                loop={true}
+              />
+            </div>
           )}
         </div>
       </div>

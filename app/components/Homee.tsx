@@ -35,8 +35,8 @@ const Homee: React.FC = () => {
         </div>
       </div>
       <div>
-        <button className="bg-[#14B75F] pl-[24px] pr-[8px] pt-[8px] pb-[8px] rounded-[32px] flex gap-[12px]">
-          <span className="text-[#fff] font-500 text-[16px]">
+        <button className="bg-[#14B75F] flex items-center justify-center pl-[24px] pr-[8px] pt-[8px] pb-[8px] rounded-[32px] flex gap-[12px]">
+          <span className="text-[#fff]  font-500 text-[16px]">
             Үйлчилгээ авах
           </span>
           <div className="w-[32px] h-[32px] bg-[#fff] rounded-[50%] flex justify-center items-center rotate-90">

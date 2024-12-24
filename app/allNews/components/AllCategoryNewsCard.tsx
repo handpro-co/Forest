@@ -8,12 +8,14 @@ import Sum from "../../icons/SumIcon";
 import { fetchCategories } from "@/app/components/data/fetchCategory";
 import { fetchNews } from "@/app/components/data/fetchNews";
 import CategoryDropdown from "./categoryDropDown";
-
+import { useSearchParams } from "next/navigation";
 interface NewsDataType {
   date: string;
   title: string;
   image: string;
-  category: string;
+  body: string;
+  intro: string;
+  id: string;
 }
 
 interface CategoryType {
@@ -28,7 +30,11 @@ const AllNewsCards: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const itemsPerPage = 16;
   const [catchIndex, setCatchIndex] = useState<number>(0);
-  const [isDropdownVisible, setDropdownVisible] = useState(false);
+  // const [isDropdownVisible, setDropdownVisible] = useState(false);
+  const searchParams = useSearchParams();
+  const newsCategoryId = searchParams.get("id");
+  const [catchCategory, setCatchCategory] = useState(1);
+  // const [catchNewsId, setCatchNewsId] = useState<string>("");
 
   const categoryListRef = useRef<HTMLDivElement>(null); // Reference to category list
 
@@ -49,7 +55,7 @@ const AllNewsCards: React.FC = () => {
 
         setCategories(categoriesArray);
 
-        if (categoriesArray.length > 0) {
+        if (categoriesArray.length > 0 && newsCategoryId === null) {
           fetchNewsForCategory(categoriesArray[0].id);
         }
       } catch (error) {
@@ -73,12 +79,13 @@ const AllNewsCards: React.FC = () => {
             date: newsItem.c_date,
             title: newsItem.title,
             image: newsItem.image,
-            category: newsItem.name || "Unknown",
+            id: newsItem.id,
+            body: newsItem.body,
+            intro: newsItem.intro,
           });
         });
       }
 
-      // Set news data
       setNewsData(newsArray);
     } catch (error) {
       console.error("Error fetching news:", error);
@@ -86,8 +93,38 @@ const AllNewsCards: React.FC = () => {
     }
   };
 
+  useEffect(() => {
+    const propsCatchIdFetchData = (newsCategoryId: string | null) => {
+      console.log(newsCategoryId);
+
+      if (newsCategoryId) {
+        const selectedCategoryIndex = categories.findIndex(
+          (category, i) => Number(category.id) === Number(newsCategoryId)
+        );
+        const selectedCategory = categories.find(
+          (category, i) => Number(category.id) === Number(newsCategoryId)
+        );
+        console.log(selectedCategory);
+
+        if (
+          selectedCategory !== undefined &&
+          selectedCategoryIndex !== undefined
+        ) {
+          setSelectedCategoryIndex(selectedCategoryIndex);
+          setCatchCategory(categories[selectedCategoryIndex].id);
+          setCurrentPage(1);
+          setCatchIndex(selectedCategoryIndex);
+          fetchNewsForCategory(categories[selectedCategoryIndex].id);
+        }
+      }
+    };
+
+    propsCatchIdFetchData(newsCategoryId); // Call the function with the current newsCategoryId
+  }, [newsCategoryId, categories]);
+
   const handleCategoryClick = (index: number) => {
     setSelectedCategoryIndex(index);
+    setCatchCategory(categories[index].id);
     setCurrentPage(1);
     setCatchIndex(index);
     fetchNewsForCategory(categories[index].id);
@@ -146,6 +183,34 @@ const AllNewsCards: React.FC = () => {
     }
   };
 
+  const jumpPage = ({ categoryData, newsData }: any): void => {
+    const selectedPath = newsData?.id;
+    if (selectedPath !== null) {
+      switch (parseInt(categoryData, 10)) {
+        case 1014:
+          window.location.href = `/VideoNews?id=${selectedPath}`;
+          break;
+        case 1013:
+          window.location.href = `/PhotoNews?id=${selectedPath}`;
+          break;
+        case 2018:
+          window.location.href = `/socialNews?id=${selectedPath}`;
+          break;
+        case 2022:
+          window.location.href = `/imageOnly?id=${selectedPath}`;
+          break;
+        case 1:
+          window.location.href = `/BasicNews?id=${selectedPath}`;
+          break;
+        default:
+          window.location.href = `/News?id=${selectedPath}&categoryId=${categoryData}`;
+          break;
+      }
+    } else {
+      console.error("Invalid parameter for 'path':", selectedPath);
+    }
+  };
+
   return (
     <div className="w-full h-auto flex flex-col gap-[50px] mt-[50px]">
       <div className="w-full hidden items-center justify-between px-4 md:flex">
@@ -191,9 +256,17 @@ const AllNewsCards: React.FC = () => {
 
       <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-x-[4px] gap-y-[50px]">
         {currentNews.map((news, i) => (
-          <div key={i}>
+          <a
+            onClick={() => {
+              jumpPage({
+                newsData: news,
+                categoryData: catchCategory,
+              });
+            }}
+            key={i}
+          >
             <NewsCard image={news.image} date={news.date} title={news.title} />
-          </div>
+          </a>
         ))}
       </div>
 

@@ -5,6 +5,7 @@ import { useState, useEffect, useRef, ChangeEvent, KeyboardEvent } from "react";
 import { io, Socket } from "socket.io-client";
 import { marked } from "marked";
 import Be from "@/public/iconAI.png";
+import AiIcon from "@/app/icons/ai_icon";
 const socket: Socket = io("https://backendlg-kznv.onrender.com/", {
   transports: ["websocket"],
 });
@@ -114,15 +115,11 @@ const Chatgpt: React.FC = () => {
     <>
       {show ? (
         <div className="z-[201] shadow-md fixed bottom-[5%] right-[5%] pt-[24px] px-[12px] pb-[12px] flex flex-col justify-between rounded-[16px] right-[5%] w-[90%] h-[80%] bg-[#fff] md:w-[50%] md:h-[50%] lg:w-[40%] lg:h-[50%] 2xl:w-[25%] 2xl:h-[50%]">
-          <div className="w-full h-[9%] bg-white border-b-[1px] pb-[10px] border-[#F4F4F4] flex justify-between">
+          <div className="w-full h-[6%] bg-white border-b-[1px] pb-[10px] border-[#F4F4F4] flex justify-between">
             <div className="w-full flex gap-[8px] items-center">
-              <img
-                src={Bear}
-                className="w-[36px] h-[36px] bg-center object-cover rounded-[50%]"
-                alt="Logo"
-              />
+              <AiIcon />
               <div className="text-[#113032] text-[16px] font-bold ">
-                Ойн Охин
+                Ойн туслах
               </div>
             </div>
             <div className="flex items-center gap-[15px]">
@@ -139,6 +136,18 @@ const Chatgpt: React.FC = () => {
 
           <div className="w-full flex flex-col justify-end h-[85%] overflow-hidden bg-[#fff] gap-[10px]">
             <div className="w-full h-full overflow-y-auto">
+              {messages.length > 0 ? null : (
+                <div className="w-full h-full flex flex-col gap-[18px] items-center justify-center bg-[radial-gradient(circle,_rgba(20,183,95,0.3)_5%,_#fff_60%)]">
+                  <img
+                    className="w-[88px] h-[88px] rounded-full"
+                    src={Bear}
+                    alt=""
+                  />
+                  <p className="text-[#787878] text-center font-semibold">
+                    Таньд юугаар туслах вэ ?
+                  </p>
+                </div>
+              )}
               {messages.map((item, i) => (
                 <div key={i} className="flex flex-col w-full">
                   <div className="flex justify-end">
@@ -151,14 +160,9 @@ const Chatgpt: React.FC = () => {
                     )}
                   </div>
                   <div className="flex gap-[8px] items-start">
-                    <div
-                      style={{
-                        backgroundImage: Bear ? `url(${Bear})` : "",
-                        backgroundSize: "cover",
-                        backgroundPosition: "center",
-                      }}
-                      className="w-[26px] h-[26px] rounded-[50%] shadow-2xl"
-                    ></div>
+                    <div className="w-[32px] h-[32px] rounded-[50%] shadow-2xl border-[#D9F2E4] border-[0.5px] flex items-center  justify-center mt-[5px]">
+                      <AiIcon />
+                    </div>
                     <div className="mt-[5px] w-auto max-w-[70%] inline bg-[#fff] border-[1px] border-[#f4f4f4] pr-[15px] pl-[15px] pt-[12px] pb-[12px] rounded-[20px]">
                       {item.isTyping ? (
                         <div className="flex font-regular gap-[8px] items-start">
@@ -201,7 +205,7 @@ const Chatgpt: React.FC = () => {
         </div>
       ) : (
         <div className="fixed bottom-[5%] right-[5%] flex items-center  z-[999]">
-          <div>
+          <div className="w-[150px] h-[150px]  bg-[radial-gradient(circle,_rgba(20,183,95,0.3)_5%,_rgba(255,255,255,0)_60%)] flex justify-center items-center rounded-[50%] cursor-pointer">
             <div
               onClick={showChatGpt}
               style={{
@@ -209,7 +213,7 @@ const Chatgpt: React.FC = () => {
                 backgroundSize: "cover",
                 backgroundPosition: "center",
               }}
-              className="w-[76px] h-[76px] z-[12] rounded-[50%] animate-spin-slow shadow-lg cursor-pointer duration-200 hover:scale-110"
+              className="w-[76px] h-[76px] z-[12] rounded-[50%] animate-spin-slow shadow-lg cursor-pointer duration-200 hover:scale-105"
             />
           </div>
         </div>
