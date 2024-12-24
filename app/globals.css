@@ -57,3 +57,46 @@ body {
 body.inverted {
   filter: invert(100%);
 }
+.dot {
+  width: 10px;
+  height: 10px;
+  background-color: rgb(186, 186, 186);
+  border-radius: 50%;
+  display: inline-block;
+  animation: bounce 1.4s infinite ease-in-out;
+  margin-left: 4px;
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.dot-1 {
+  animation-delay: 0s;
+}
+
+.dot-2 {
+  animation-delay: 0.15s;
+}
+
+.dot-3 {
+  animation-delay: 0.3s;
+}
+figure {
+  width: 100px;
+  height: 100px;
+}
+oembed iframe {
+  width: 100%;
+  height: auto;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+

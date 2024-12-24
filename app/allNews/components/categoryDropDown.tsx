@@ -2,7 +2,8 @@
 import React, { useState, useEffect } from "react";
 import CategoryItem from "@/app/components/layout/Catergory_Button"; // Ensure correct import path
 import Sum from "@/app/icons/SumIcon";
-
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 interface Category {
   id: number;
   name: string;
@@ -69,7 +70,11 @@ const CategoryDropdown: React.FC<CategoryDropdownProps> = ({
                 </div>
               ))
             ) : (
-              <p>No categories available</p>
+              <SkeletonTheme baseColor="gray" highlightColor="#fff">
+                <Skeleton count={1} height={40} />
+                <Skeleton count={1} height={40} />
+                <Skeleton count={1} height={40} />
+              </SkeletonTheme>
             )}
           </div>
         </div>

@@ -6,12 +6,16 @@ import { LuPrinter } from "react-icons/lu";
 import { TbBrandFacebook } from "react-icons/tb";
 import RelatedVideoNews from "@/app/components/layout/RelatedVideoNews";
 import { fetchNews } from "../components/data/fetchNews";
-
+import convertTextTOHtml from "@/app/components/convert/convertHtml";
+import convertHTMLToVideo from "@/app/components/convert/convertHTMLVideo";
+import Skeleton from "react-loading-skeleton";
+import parse from "html-react-parser";
 interface NewsDataType {
   id: number;
   date: string;
   title: string;
   intro: string;
+  body: string | any;
   image: string;
 }
 
@@ -21,7 +25,7 @@ const VideoNews: React.FC = () => {
 
   const categoryId = 1014;
   const [newsData, setNewsData] = useState<NewsDataType[]>([]);
-  const [currentNews, setCurrentNews] = useState<NewsDataType | any>(null);
+  const [currentNews, setCurrentNews] = useState<NewsDataType | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
 
@@ -39,6 +43,7 @@ const VideoNews: React.FC = () => {
             date: newsItem.c_date,
             title: newsItem.title,
             intro: newsItem.intro,
+            body: newsItem.body,
             image: newsItem.image || "",
           });
         });
@@ -46,15 +51,22 @@ const VideoNews: React.FC = () => {
 
       setNewsData(newsArray);
 
+      // Select the current news based on the `newsId` query param or fallback to the last one
       const selectedNews = newsId
         ? newsArray.find((news) => news.id == Number(newsId))
         : newsArray[newsArray.length - 1] || null;
-      console.log(newsArray);
 
-      console.log(selectedNews);
-      console.log(Number(newsId));
+      if (selectedNews) {
+        const seconddddd = convertTextTOHtml(selectedNews.body);
+        console.log(convertHTMLToVideo(seconddddd));
 
-      setCurrentNews(selectedNews);
+        setCurrentNews({
+          ...selectedNews,
+          body: parse(convertHTMLToVideo(seconddddd)),
+        });
+      } else {
+        setCurrentNews(null);
+      }
     } catch (error) {
       setError(
         "Error fetching news: " +
@@ -69,9 +81,9 @@ const VideoNews: React.FC = () => {
     fetchNewsForCategory(categoryId);
   }, [categoryId, newsId]);
 
+  // Filter related news to exclude the current news
   const relatedNews = newsData.filter((news) => news.id !== currentNews?.id);
-  console.log(currentNews);
-  
+
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
 
@@ -111,14 +123,13 @@ const VideoNews: React.FC = () => {
                 </div>
               </div>
               <div className="text-2xl font-bold leading-[40.96px] text-[#333333]">
-                {currentNews.title}
+                {currentNews.title || <Skeleton count={20} />}
               </div>
             </div>
             <div className="border-t-[1px] border-[#94D1B0] border-dashed" />
-
             <div className="w-full flex flex-col gap-[32px]">
               <div className="text-base leading-[22px] text-[#666666]">
-                {currentNews.intro ? currentNews.intro : "Интро олдсонгүй "}
+                {currentNews.intro || <Skeleton count={20} />}
               </div>
               <div className="w-full">
                 {currentNews.image ? (
@@ -133,6 +144,10 @@ const VideoNews: React.FC = () => {
                   </div>
                 )}
               </div>
+              <div
+                className="w-full text-[#666666]"
+                dangerouslySetInnerHTML={{ __html: currentNews.body }}
+              />
             </div>
           </div>
         )}

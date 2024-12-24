@@ -13,9 +13,10 @@ interface NewsItem {
 
 interface Props {
   newsData: NewsItem[];
+  categoryId: string | null;
 }
 
-const RelatedNews: React.FC<Props> = ({ newsData }) => {
+const RelatedNewsNoPage: React.FC<Props> = ({ newsData, categoryId }) => {
   const itemsPerPage = 3;
   const [currentPage, setCurrentPage] = useState(0);
 
@@ -55,7 +56,7 @@ const RelatedNews: React.FC<Props> = ({ newsData }) => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[16px]">
         {paginatedNews.map((item, index) => (
           <div key={index}>
-            <a href={`/PhotoNews/?id=${item.id}`}>
+            <a href={`/News?id=${item.id}&categoryId=${categoryId}`}>
               <NewsCard
                 image={item.image}
                 date={item.date}
@@ -88,4 +89,4 @@ const RelatedNews: React.FC<Props> = ({ newsData }) => {
   );
 };
 
-export default RelatedNews;
+export default RelatedNewsNoPage;

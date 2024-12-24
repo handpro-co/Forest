@@ -24,12 +24,15 @@ const navigationOptionsData = (): MockData[] => {
       id: 2,
       title: "Мэдээлэл",
       options: [
-        { optionId: "VideoNews", name: "Видео мэдзэ" },
-        { optionId: "PhotoNews", name: "Фото мэдээ" },
-        { optionId: "BasicNews", name: "Энгийн мэдээ" },
-        { optionId: "imageOnly", name: "Арга хэмжаа" },
-        { optionId: "socialNews", name: "Цахим сэтгүүл, судалгааны тайлан" },
-        { optionId: "Feedback", name: "Сэтгэл ханамжийн судалгаа" },
+        { optionId: "allNews?id=1014", name: "Видео мэдзэ" },
+        { optionId: "allNews?id=1013", name: "Фото мэдээ" },
+        { optionId: "allNews?id=1", name: "Энгийн мэдээ" },
+        { optionId: "allNews?id=2022", name: "Арга хэмжээ" },
+        {
+          optionId: "allNews?id=2018",
+          name: "Цахим сэтгүүл, судалгааны тайлан",
+        },
+        { optionId: "/", name: "Сэтгэл ханамжийн судалгаа" },
       ],
     },
     {

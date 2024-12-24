@@ -59,9 +59,7 @@ const FeedBack: React.FC = () => {
                     key={emoji.id}
                     onClick={() => handleEmojiClick(emoji.id)}
                     className={`relative flex flex-col bg-[#F5F4F0] p-[16px] w-[100px] items-center gap-[16px] rounded-[16px] cursor-pointer ${
-                      selectedEmoji === emoji.id
-                        ? "border-[3px] border-[#14B75F]"
-                        : ""
+                      selectedEmoji === emoji.id ? "ring-4 ring-[#14B75F]" : ""
                     }`}
                   >
                     {/* Correct Icon */}

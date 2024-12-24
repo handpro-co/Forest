@@ -20,8 +20,6 @@ interface Props {
 }
 
 const RootLayout: React.FC<Props> = ({ children }) => {
-  const [showAI] = useState<boolean>(false);
-
   const [screenColor] = useAtom(isInvert);
   const [screenAcc] = useAtom(isAcc);
   const [isLeading] = useAtom(isAccLeading);
@@ -29,20 +27,42 @@ const RootLayout: React.FC<Props> = ({ children }) => {
   const [isCursor] = useAtom(isAccCursor);
   const [isLink] = useAtom(isAccLink);
 
+  // useEffect(() => {
+  //   document.body.querySelectorAll("oembed").forEach((oembed) => {
+  //     const url = oembed.getAttribute("url");
+  //     if (url) {
+  //       const iframe = document.createElement("iframe");
+  //       iframe.src = url;
+  //       iframe.width = "100%";
+  //       iframe.height = "315";
+  //       iframe.style.borderRadius = "8px";
+  //       iframe.style.border = "2px solid #ccc";
+  //       oembed.replaceWith(iframe);
+  //     } else {
+  //       console.error("URL attribute is missing on oembed element.");
+  //     }
+  //   });
+  // }, []);
+
   useEffect(() => {
-    console.log("hello biatch");
     const links = document.querySelectorAll("a");
     links.forEach((link) => {
       link.style.textDecoration = isLink ? "underline" : "none";
     });
-    document.getElementsByTagName;
-    document.body.style.filter = screenColor ? "invert(90%)" : "";
-    document.body.style.fontSize = screenAcc ? "20px" : "16px";
-    document.body.style.lineHeight = isLeading ? "2.5" : "normal";
-    document.body.style.letterSpacing = isLetter ? "2px" : "normal";
-    document.body.style.cursor = isCursor
-      ? `url(/assets/Cursor.svg) 16 16, auto`
-      : "auto";
+    const main = document.getElementById("main");
+    if (main) {
+      main.style.lineHeight = isLeading ? "2.5" : "normal";
+      main.style.letterSpacing = isLetter ? "2px" : "normal";
+      main.style.filter = screenColor ? "invert(90%)" : "invert(0)";
+      main.style.fontSize = screenAcc ? "20px" : "16px";
+      document.body.style.cursor = isCursor
+        ? `url(/assets/Cursor.svg) 16 16, auto`
+        : "auto";
+    }
+
+    // main.style.cursor = isCursor ? "pointer" : "auto";vb
+    // document.body.style.lineHeight = isLeading ? "2.5" : "normal";
+    // document.body.style.letterSpacing = isLetter ? "2px" : "normal";
   }, [screenAcc, isLeading, isLetter, isCursor, isLink, screenColor]);
 
   return (
@@ -50,7 +70,10 @@ const RootLayout: React.FC<Props> = ({ children }) => {
       <body className="w-full flex flex-col items-center mx-auto 2xl:w-[80%]">
         <Navigation />
         <AI />
-        <div className="z-[99] w-full mt-[80px] px-[20px] flex flex-col items-center gap-[150px] lg:gap-[50px]">
+        <div
+          id="main"
+          className="z-[99] w-full mt-[80px] px-[20px] flex flex-col items-center gap-[150px] lg:gap-[50px]"
+        >
           {children}
         </div>
         <Footer />
