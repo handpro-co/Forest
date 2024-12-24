@@ -20,14 +20,12 @@ interface Props {
 }
 
 const RootLayout: React.FC<Props> = ({ children }) => {
-  const [showAI, setShowAI] = useState<boolean>(false);
-
-  const [screenColor, setScreenColor] = useAtom(isInvert);
-  const [screenAcc, setScreenAcc] = useAtom(isAcc);
-  const [isLeading, setIsLeading] = useAtom(isAccLeading);
-  const [isLetter, setIsLetter] = useAtom(isAccLetter);
-  const [isCursor, setIsCursor] = useAtom(isAccCursor);
-  const [isLink, setIsLink] = useAtom(isAccLink);
+  const [screenColor] = useAtom(isInvert);
+  const [screenAcc] = useAtom(isAcc);
+  const [isLeading] = useAtom(isAccLeading);
+  const [isLetter] = useAtom(isAccLetter);
+  const [isCursor] = useAtom(isAccCursor);
+  const [isLink] = useAtom(isAccLink);
 
   useEffect(() => {
     const links = document.querySelectorAll("a");
@@ -35,13 +33,19 @@ const RootLayout: React.FC<Props> = ({ children }) => {
       link.style.textDecoration = isLink ? "underline" : "none";
     });
 
-    document.body.style.filter = screenColor ? "invert(90%)" : "invert(0)";
-    document.body.style.fontSize = screenAcc ? "20px" : "16px";
-    document.body.style.lineHeight = isLeading ? "2.5" : "normal";
-    document.body.style.letterSpacing = isLetter ? "2px" : "normal";
-    document.body.style.cursor = isCursor
-      ? `url(/assets/Cursor.svg) 16 16, auto`
-      : "auto";
+    const main = document.getElementById("main");
+    if (main) {
+      main.style.lineHeight = isLeading ? "2.5" : "normal";
+      main.style.letterSpacing = isLetter ? "2px" : "normal";
+      main.style.filter = screenColor ? "invert(90%)" : "invert(0)";
+      main.style.fontSize = screenAcc ? "20px" : "16px";
+      document.body.style.cursor = isCursor
+        ? `url(/assets/Cursor.svg) 16 16, auto`
+        : "auto";
+    }
+    // main.style.cursor = isCursor ? "pointer" : "auto";vb
+    // document.body.style.lineHeight = isLeading ? "2.5" : "normal";
+    // document.body.style.letterSpacing = isLetter ? "2px" : "normal";
   }, [screenAcc, isLeading, isLetter, isCursor, isLink, screenColor]);
 
   return (
@@ -49,7 +53,10 @@ const RootLayout: React.FC<Props> = ({ children }) => {
       <body className="w-full flex flex-col items-center mx-auto 2xl:w-[80%]">
         <Navigation />
         <AI />
-        <div className="z-[99] w-full mt-[80px] px-[20px] flex flex-col items-center gap-[150px] lg:gap-[50px]">
+        <div
+          id="main"
+          className="z-[99] w-full mt-[80px] px-[20px] flex flex-col items-center gap-[150px] lg:gap-[50px]"
+        >
           {children}
         </div>
         <Footer />

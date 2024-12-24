@@ -6,7 +6,8 @@ import { LuPrinter } from "react-icons/lu";
 import { TbBrandFacebook } from "react-icons/tb";
 import RelatedVideoNews from "@/app/components/layout/RelatedVideoNews";
 import { fetchNews } from "../components/data/fetchNews";
-
+import convertTextTOHtml from "@/app/components/convert/convertHtml";
+import convertHTMLToVideo from "@/app/components/convert/convertHTMLVideo";
 interface NewsDataType {
   id: number;
   date: string;
@@ -25,12 +26,6 @@ const VideoNews: React.FC = () => {
   const [currentNews, setCurrentNews] = useState<NewsDataType | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
-
-  // Function to convert HTML entities to actual characters
-  function convertHtmlEntities(str: string) {
-    const doc = new DOMParser().parseFromString(str, "text/html");
-    return doc.body.textContent || ""; // Return decoded text
-  }
 
   const fetchNewsForCategory = async (id: number) => {
     setLoading(true);
@@ -60,11 +55,12 @@ const VideoNews: React.FC = () => {
         : newsArray[newsArray.length - 1] || null;
 
       if (selectedNews) {
-        const convertedBody = convertHtmlEntities(selectedNews.body);
-        const secondConvertedBody = convertHtmlEntities(convertedBody);
+        const seconddddd = convertTextTOHtml(selectedNews.body);
+        console.log(convertHTMLToVideo(seconddddd));
+
         setCurrentNews({
           ...selectedNews,
-          body: secondConvertedBody, // Update body with decoded HTML
+          body: convertHTMLToVideo(seconddddd),
         });
       } else {
         setCurrentNews(null);

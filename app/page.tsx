@@ -6,7 +6,6 @@ import Homee from "./components/Homee";
 const Home: React.FC = () => {
   return (
     <>
-    
       <Homee />
       <AnimateLogos />
       <Service />

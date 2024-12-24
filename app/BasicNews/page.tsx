@@ -13,13 +13,13 @@ interface NewsDataType {
   title: string;
   image: string;
   body: string;
-  category: string;
+  id: string;
+  intro: string;
 }
 
 const BasicNews: React.FC = () => {
   const searchParams = useSearchParams();
   const news_id = searchParams.get("id"); // Get the dynamic parameter from the URL
-
   const [newsData, setNewsData] = useState<NewsDataType[]>([]); // State to hold all news data
   const [currentNews, setCurrentNews] = useState<NewsDataType | null>(null); // State to hold the selected news item
 
@@ -41,43 +41,37 @@ const BasicNews: React.FC = () => {
               title: newsItem.title,
               image: newsItem.image,
               body: newsItem.body,
-              category: newsItem.id.toString(), // Ensure category is a string
+              intro: newsItem.intro,
+              id: newsItem.id.toString(), // Ensure category is a string
             });
           });
         }
 
-        // Set the full news data
         setNewsData(newsArray);
 
-        // Find the current news based on the `news_id`
-        const foundNews = newsArray.find((news) => news.category === news_id);
+        const foundNews = newsArray.find((news) => news.id === news_id);
 
-        if (foundNews) {
-          // Check and log the body before and after conversion
-          console.log("Before Conversion:", foundNews.body);
-
-          const convertedBody = convertHtmlEntities(foundNews.body);
-
-          // Log the converted body to check if it has been decoded properly
-          console.log("After Conversion:", convertedBody);
-
-          // Set the current news with the decoded body
-          setCurrentNews({
-            ...foundNews,
-            body: convertedBody, // Update the body with the decoded content
-          });
+        if (!news_id) {
+          setCurrentNews(newsArray[newsArray.length - 1]);
         } else {
-          setCurrentNews(null);
+          if (foundNews) {
+            const convertedBody = convertHtmlEntities(foundNews.body);
+            const secondConvertedBody = convertHtmlEntities(convertedBody);
+            setCurrentNews({
+              ...foundNews,
+              body: secondConvertedBody,
+            });
+          } else {
+            setCurrentNews(null);
+          }
         }
       } catch (error) {
         console.error("Error fetching news:", error);
-        setNewsData([]); // In case of error, reset the news data
+        setNewsData([]);
       }
     };
 
-    if (news_id) {
-      fetchNewsForCategory(1); // Pass the default ID (or get from context)
-    }
+    fetchNewsForCategory(1); // Pass the default ID (or get from context)
   }, [news_id]); // Dependency array makes sure it runs whenever `news_id` changes
 
   return (

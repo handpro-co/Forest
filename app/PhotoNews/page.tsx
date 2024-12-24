@@ -1,31 +1,32 @@
 "use client";
-
+import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { fetchNews } from "../components/data/fetchNews";
 import { LuPrinter } from "react-icons/lu";
 import { TbBrandFacebook } from "react-icons/tb";
 import RelatedNews from "@/app/components/layout/RelatedNews";
-import { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation"; // Import useSearchParams
-import { fetchNews } from "../components/data/fetchNews";
+import converthtml from "@/app/components/convert/convertHtml";
 
 interface NewsDataType {
-  id: number; // Added id to the interface
+  id: string;
   date: string;
   title: string;
   intro: string;
+  body: string;
   image: string;
 }
 
 const PhotoNews: React.FC = () => {
-  const searchParams = useSearchParams(); // Get query params
-  const newsId = searchParams.get("id"); // Extract 'id' query parameter
+  const searchParams = useSearchParams();
+  const newsId = searchParams.get("id");
 
-  const categoryId = 1013; // Set your category ID
+  const categoryId = 1013; // This is fixed, no need to include in dependency list
   const [newsData, setNewsData] = useState<NewsDataType[]>([]);
   const [currentNews, setCurrentNews] = useState<NewsDataType | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
 
-  // Fetch news for the category
+  // Fetch news for a specific category
   const fetchNewsForCategory = async (id: number) => {
     setLoading(true);
     setError("");
@@ -40,6 +41,7 @@ const PhotoNews: React.FC = () => {
             date: newsItem.c_date,
             title: newsItem.title,
             intro: newsItem.intro,
+            body: newsItem.body,
             image: newsItem.image,
           });
         });
@@ -47,19 +49,12 @@ const PhotoNews: React.FC = () => {
 
       setNewsData(newsArray);
 
-      // If no id is provided, show the latest news
+      // Select the current news based on the newsId (or the last item if no ID)
       if (!newsId) {
         setCurrentNews(newsArray[newsArray.length - 1] || null);
       } else {
-        // Find the current news based on the query id
-        const selectedNews = newsArray.find(
-          (news) => news.id == Number(newsId)
-        );
-        
-        
+        const selectedNews = newsArray.find((news) => news.id === newsId);
         setCurrentNews(selectedNews || null);
-        console.log(currentNews);
-        
       }
     } catch (error) {
       setError(
@@ -71,12 +66,23 @@ const PhotoNews: React.FC = () => {
     }
   };
 
-  // Fetch news when the component mounts or newsId changes
+  // Only fetch news data once when the component is mounted
   useEffect(() => {
     fetchNewsForCategory(categoryId);
-  }, [categoryId, newsId]);
+  }, [categoryId]); // Only run once when the component is mounted
 
-  // Filter related news
+  // Effect to handle HTML conversion and set the body only if needed
+  useEffect(() => {
+    if (currentNews && currentNews.body && !currentNews.body.includes("<")) {
+      // Check if the body is already in HTML format
+      setCurrentNews({
+        ...currentNews,
+        body: converthtml(currentNews.body),
+      });
+      console.log(converthtml(currentNews.body)); // For debugging
+    }
+  }, [currentNews?.body]); // Only run if the `body` of `currentNews` changes
+
   const relatedNews = newsData.filter((news) => news.id !== currentNews?.id);
 
   if (loading) {
@@ -90,7 +96,6 @@ const PhotoNews: React.FC = () => {
   return (
     <div className="w-[100vw] flex flex-col items-center">
       <div className="w-[100%] lg:w-[80%]">
-        {/* Render the current news */}
         {currentNews && (
           <>
             {currentNews.image && (
@@ -137,21 +142,22 @@ const PhotoNews: React.FC = () => {
                 </div>
               </div>
               <div className="w-full flex flex-col gap-[48px]">
-                <div className="text-[16px] text-[#666666]">
-                  {currentNews.intro}
-                </div>
+                <div className=" text-[#666666]">{currentNews.intro}</div>
                 <div className="w-full flex flex-col gap-5">
                   <img
                     src={currentNews.image}
                     className="w-full rounded-[16px]"
                     alt={`news-${currentNews.title}`}
                   />
+                  <div
+                    className=" text-[#666666]"
+                    dangerouslySetInnerHTML={{ __html: currentNews.body }}
+                  />
                 </div>
               </div>
             </div>
           </>
         )}
-        {/* Render Related News */}
         <div>
           <RelatedNews newsData={relatedNews} />
         </div>

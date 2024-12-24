@@ -24,6 +24,7 @@ import {
   isInvert,
 } from "./hook/accessibility";
 import Frame from "../icons/Frame";
+import Link from "next/link";
 
 type Option = {
   optionId: number | string;
@@ -92,7 +93,6 @@ const Navigation: React.FC = () => {
         setIsAccLetterSpace((prevAcci) => !prevAcci);
         break;
       default:
-        console.log("Other accessibility setting clicked");
         break;
     }
   };
@@ -198,15 +198,19 @@ const Navigation: React.FC = () => {
               <div className="text-[15px] font-[500] text-[#333333]  text-center p-[8px] hover:bg-[#ECEBE3]">
                 Холбоо барих
               </div>
-              <div className="flex justify-center items-center md:hidden">
-                <Navigation_contact_us_button />
-              </div>
+              <a href="./Feedback">
+                <div className="flex justify-center items-center md:hidden">
+                  <Navigation_contact_us_button />
+                </div>
+              </a>
             </div>
           )}
         </li>
-        <li className="hidden md:flex">
-          <Navigation_contact_us_button />
-        </li>
+        <a href="./Feedback">
+          <li className="hidden md:flex">
+            <Navigation_contact_us_button />
+          </li>
+        </a>
       </ul>
     </nav>
   );
