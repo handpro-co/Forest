@@ -1,6 +1,6 @@
 "use client";
 import "./globals.css";
-
+import "react-loading-skeleton/dist/skeleton.css";
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
 import AI from "./AI/page";

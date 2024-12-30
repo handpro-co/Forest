@@ -12,7 +12,7 @@ interface NewsItem {
 }
 
 interface Props {
-  newsData: NewsItem[];
+  newsData: NewsItem[] | null;
 }
 
 const RelatedNews: React.FC<Props> = ({ newsData }) => {
