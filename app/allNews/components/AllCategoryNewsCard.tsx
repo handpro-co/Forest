@@ -9,8 +9,9 @@ import { fetchCategories } from "@/app/components/data/fetchCategory";
 import { fetchNews } from "@/app/components/data/fetchNews";
 import CategoryDropdown from "./categoryDropDown";
 import { useSearchParams } from "next/navigation";
-import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
+import SkeletonLoaderCategory from "@/app/components/skeleton/skeletonLoaderCategory";
+import SkeletonLoaderNewsBox from "@/app/components/skeleton/skeletonLoaderNewsBox";
+
 interface NewsDataType {
   date: string;
   title: string;
@@ -32,11 +33,9 @@ const AllNewsCards: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const itemsPerPage = 16;
   const [catchIndex, setCatchIndex] = useState<number>(0);
-  // const [isDropdownVisible, setDropdownVisible] = useState(false);
   const searchParams = useSearchParams();
   const newsCategoryId = searchParams.get("id");
   const [catchCategory, setCatchCategory] = useState(1);
-  // const [catchNewsId, setCatchNewsId] = useState<string>("");
 
   const categoryListRef = useRef<HTMLDivElement>(null); // Reference to category list
 
@@ -101,10 +100,10 @@ const AllNewsCards: React.FC = () => {
 
       if (newsCategoryId) {
         const selectedCategoryIndex = categories.findIndex(
-          (category, i) => Number(category.id) === Number(newsCategoryId)
+          (category) => Number(category.id) === Number(newsCategoryId)
         );
         const selectedCategory = categories.find(
-          (category, i) => Number(category.id) === Number(newsCategoryId)
+          (category) => Number(category.id) === Number(newsCategoryId)
         );
         console.log(selectedCategory);
 
@@ -227,23 +226,19 @@ const AllNewsCards: React.FC = () => {
           ref={categoryListRef}
           className="flex gap-[16px] flex-nowrap justify-start overflow-x-auto  py-2 px-4 rounded-lg"
         >
-          {categories.length > 0 ? (
-            categories.map((category, i) => (
-              <CategoryItem
-                key={category.id}
-                category={category.name}
-                index={i}
-                selectedCategoryIndex={selectedCategoryIndex}
-                onClick={handleCategoryClick}
-              />
-            ))
-          ) : (
-            <SkeletonTheme baseColor="#eeeeee" highlightColor="gray">
-              <Skeleton count={1} height={30} />
-              <Skeleton count={1} height={30} />{" "}
-              <Skeleton count={1} height={30} />{" "}
-            </SkeletonTheme>
-          )}
+          {categories.length > 0
+            ? categories.map((category, i) => (
+                <CategoryItem
+                  key={category.id}
+                  category={category.name}
+                  index={i}
+                  selectedCategoryIndex={selectedCategoryIndex}
+                  onClick={handleCategoryClick}
+                />
+              ))
+            : Array.from({ length: 10 }, (_, index) => (
+                <SkeletonLoaderCategory key={index} />
+              ))}
         </div>
 
         <button
@@ -261,20 +256,33 @@ const AllNewsCards: React.FC = () => {
       </div>
 
       <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-x-[4px] gap-y-[50px]">
-        {currentNews.map((news, i) => (
-          <a
-            onClick={() => {
-              jumpPage({
-                newsData: news,
-                categoryData: catchCategory,
-              });
-            }}
-            key={i}
-          >
-            <NewsCard image={news.image} date={news.date} title={news.title} />
-          </a>
-        ))}
+        {currentNews.length > 0
+          ? currentNews.map((news, i) => (
+              <a
+                onClick={() => {
+                  jumpPage({
+                    newsData: news,
+                    categoryData: catchCategory,
+                  });
+                }}
+                key={i}
+              >
+                <NewsCard
+                  image={news.image}
+                  date={news.date}
+                  title={news.title}
+                />
+              </a>
+            ))
+          : Array.from({ length: 10 }).map((_, i) => (
+              <SkeletonLoaderNewsBox key={i} />
+            ))}
       </div>
+      {newsData.length === 0 && (
+        <div className="w-full flex justify-center items-center">
+          <p className="text-[#828282] text-[16px]">No News Found</p>
+        </div>
+      )}
 
       <div className="w-full flex justify-center lg:justify-end">
         <div className="flex">

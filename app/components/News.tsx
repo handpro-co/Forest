@@ -7,6 +7,8 @@ import { fetchCategories } from "@/app/components/data/fetchCategory";
 import { fetchNews } from "@/app/components/data/fetchNews";
 import Lottie from "lottie-react";
 import loadingAnimation from "@/lotties/loading-icon.json";
+import SkeletonLoaderNewsBox from "./skeleton/skeletonLoaderNewsBox";
+import SkeletonLoaderCategory from "./skeleton/skeletonLoaderCategory";
 interface NewsDataType {
   date: string;
   title: string;
@@ -30,7 +32,6 @@ const AllNewsCards: React.FC = () => {
   const [categoryId, setCategoryId] = useState<number>(1);
 
   const categoryListRef = useRef<HTMLDivElement>(null);
-
 
   useEffect(() => {
     const fetchData = async () => {
@@ -107,9 +108,7 @@ const AllNewsCards: React.FC = () => {
   const indexOfFirstNews = indexOfLastNews - itemsPerPage;
   const currentNews = newsData.slice(indexOfFirstNews, indexOfLastNews);
 
-
- const totalPages = Math.ceil(newsData.length / itemsPerPage);
-
+  const totalPages = Math.ceil(newsData.length / itemsPerPage);
 
   const jumpPage = ({ categoryId, newsData }: any): void => {
     const selectedPath = newsData?.category || null; // Get the category or ID for the path
@@ -151,40 +150,42 @@ const AllNewsCards: React.FC = () => {
           className="flex gap-[16px] flex-nowrap justify-start overflow-x-auto  py-2 px-4 rounded-lg"
           ref={categoryListRef} // Attach ref to the scroll container
         >
-          {categories.length > 0 ? (
-            categories.map((category, i) => (
-              <CategoryItem
-                key={category.id} // Use the unique id as the key
-                category={category.name} // Pass the category name as a prop
-                index={i}
-                selectedCategoryIndex={selectedCategoryIndex}
-                onClick={handleCategoryClick}
-              />
-            ))
-          ) : (
-            <div className="w-full h-[100px] flex items-center justify-center">
-              <Lottie
-                className="w-full h-full flex items-center justify-center"
-                animationData={loadingAnimation}
-                loop={true}
-              />
-            </div>
-          )}
+          {categories.length > 0
+            ? categories.map((category, i) => (
+                <CategoryItem
+                  key={category.id} // Use the unique id as the key
+                  category={category.name} // Pass the category name as a prop
+                  index={i}
+                  selectedCategoryIndex={selectedCategoryIndex}
+                  onClick={handleCategoryClick}
+                />
+              ))
+            : Array.from({ length: 10 }, (_, index) => (
+                <SkeletonLoaderCategory key={index} />
+              ))}
         </div>
       </div>
 
       {/* News Cards */}
       <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-[4px]">
-        {currentNews.slice(0, 4).map((news, i) => (
-          <a
-            onClick={() => {
-              jumpPage({ categoryId: categoryId, newsData: news });
-            }}
-            key={i}
-          >
-            <NewsCard image={news.image} date={news.date} title={news.title} />
-          </a>
-        ))}
+        {currentNews.length > 0
+          ? currentNews.slice(0, 4).map((news, i) => (
+              <a
+                onClick={() => {
+                  jumpPage({ categoryId: categoryId, newsData: news });
+                }}
+                key={i}
+              >
+                <NewsCard
+                  image={news.image}
+                  date={news.date}
+                  title={news.title}
+                />
+              </a>
+            ))
+          : Array.from({ length: 4 }).map((_, index) => (
+              <SkeletonLoaderNewsBox key={index} />
+            ))}
       </div>
 
       <div className="flex justify-center items-center">
@@ -193,7 +194,7 @@ const AllNewsCards: React.FC = () => {
             <span className="text-[#333] font-medium text-[16px]">
               Бүгдийн харах
             </span>
-            <ArrowRight color="#333" /> {/* Corrected typo here too */}
+            <ArrowRight color="#333" />
           </div>
         </a>
       </div>

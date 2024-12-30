@@ -1,14 +1,12 @@
 "use client";
-import Banner from "./components/photos/Banner.png";
 import { LuPrinter } from "react-icons/lu";
 import { TbBrandFacebook } from "react-icons/tb";
 import RelatedNews from "@/app/components/layout/RelatedNews";
 import { useEffect, useState } from "react";
 import { fetchNews } from "../components/data/fetchNews";
 import { useSearchParams } from "next/navigation";
-import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
-// Define the shape of the fetched news data
+import SkeletonLoader from "../components/skeleton/skeletonLoader";
+
 interface NewsDataType {
   date: string;
   title: string;
@@ -20,19 +18,19 @@ interface NewsDataType {
 
 const BasicNews: React.FC = () => {
   const searchParams = useSearchParams();
-  const news_id = searchParams.get("id"); // Get the dynamic parameter from the URL
-  const [newsData, setNewsData] = useState<NewsDataType[]>([]); // State to hold all news data
-  const [currentNews, setCurrentNews] = useState<NewsDataType | null>(null); // State to hold the selected news item
+  const news_id = searchParams.get("id");
+  const [newsData, setNewsData] = useState<NewsDataType[]>([]);
+  const [currentNews, setCurrentNews] = useState<NewsDataType | null>(null);
 
   function convertHtmlEntities(str: string) {
     const doc = new DOMParser().parseFromString(str, "text/html");
-    return doc.body.textContent || ""; // Return decoded text
+    return doc.body.textContent || "";
   }
 
   useEffect(() => {
     const fetchNewsForCategory = async (id: number) => {
       try {
-        const fetchedNews = await fetchNews({ id }); // Fetch news for the category
+        const fetchedNews = await fetchNews({ id });
         const newsArray: NewsDataType[] = [];
 
         if (fetchedNews?.Value) {
@@ -43,7 +41,7 @@ const BasicNews: React.FC = () => {
               image: newsItem.image,
               body: newsItem.body,
               intro: newsItem.intro,
-              id: newsItem.id.toString(), // Ensure category is a string
+              id: newsItem.id.toString(),
             });
           });
         }
@@ -72,80 +70,75 @@ const BasicNews: React.FC = () => {
       }
     };
 
-    fetchNewsForCategory(1); // Pass the default ID (or get from context)
-  }, [news_id]); // Dependency array makes sure it runs whenever `news_id` changes
+    fetchNewsForCategory(1);
+  }, [news_id]);
 
   return (
     <div className="w-[100vw] flex flex-col items-center">
       <div className="w-[80%]">
-        {/* Show Banner Image */}
-        {currentNews?.image ? (
-          <img
-            className="w-full rounded-[16px] h-[50vh] object-cover"
-            src={currentNews?.image} // Default to Banner if no image is available
-            alt="Banner"
-          />
-        ) : (
-          <SkeletonTheme baseColor="gray" highlightColor="#fff">
-            <Skeleton count={1} height={300} />
-          </SkeletonTheme>
-        )}
-        <div className="w-full lg:w-[65%] mt-[50px] flex flex-col gap-[64px]">
-          <div className="flex flex-col gap-[24px]">
-            <div className="border-t-[1px] border-[#94D1B0] border-dashed" />
-            <div className="flex justify-between items-end">
-              <div className="flex items-center gap-[8px]">
-                <span className="flex items-center text-[#14B75F] text-[14px] font-500">
-                  {currentNews?.date || ""}
-                </span>
-                <div className="flex flex-col gap-[2px] justify-center items-center">
-                  <span className="w-[2px] h-[2px] bg-[#14B75F] rounded-[50%]" />
-                  <span className="w-[2px] h-[2px] bg-[#14B75F] rounded-[50%]" />
-                  <span className="w-[2px] h-[2px] bg-[#14B75F] rounded-[50%]" />
-                </div>
-                <span className="flex items-center text-[#14B75F] text-[14px] font-500">
-                  Агентлагын мэдээ
-                </span>
-              </div>
-              <div className="flex gap-[12px]">
-                <div className="flex gap-[8px]">
-                  <TbBrandFacebook style={{ color: "#666666" }} />
-                  <span className="text-[14px] font-500 text-[#666666]">
-                    Хуваалцах
-                  </span>
-                </div>
-                <div className="flex gap-[8px]">
-                  <LuPrinter style={{ color: "#666666" }} />
-                  <span className="text-[14px] font-500 text-[#666666]">
-                    Хуваалцах
-                  </span>
-                </div>
-              </div>
-            </div>
-            <div className="text-[32px] text-[#333333] font-700">
-              {currentNews?.title || (
-                <SkeletonTheme baseColor="gray" highlightColor="">
-                  <Skeleton count={1} height={30} />
-                </SkeletonTheme>
-              )}
-            </div>
-          </div>
-          <div className="w-full">
-            {currentNews?.body ? (
-              <p
-                className="font-normal text-[#666666]"
-                dangerouslySetInnerHTML={{ __html: currentNews.body }}
+        {currentNews ? (
+          <>
+            {currentNews?.image && (
+              <img
+                className="w-full rounded-[16px] h-[50vh] object-cover"
+                src={currentNews?.image}
+                alt="Banner"
               />
-            ) : (
-              <SkeletonTheme baseColor="#eeeeee" highlightColor="#ffffff">
-                <Skeleton count={10} height={20} />
-              </SkeletonTheme>
             )}
-          </div>
-        </div>
-        <div>
-          <RelatedNews newsData={newsData} />
-        </div>
+            <div className="w-full lg:w-[65%] mt-[50px] flex flex-col gap-[64px]">
+              <div className="flex flex-col gap-[24px]">
+                <div className="border-t-[1px] border-[#94D1B0] border-dashed" />
+                <div className="flex justify-between items-end">
+                  <div className="flex items-center gap-[8px]">
+                    <span className="flex items-center text-[#14B75F] text-[14px] font-500">
+                      {currentNews?.date || ""}
+                    </span>
+                    <div className="flex flex-col gap-[2px] justify-center items-center">
+                      <span className="w-[2px] h-[2px] bg-[#14B75F] rounded-[50%]" />
+                      <span className="w-[2px] h-[2px] bg-[#14B75F] rounded-[50%]" />
+                      <span className="w-[2px] h-[2px] bg-[#14B75F] rounded-[50%]" />
+                    </div>
+                    <span className="flex items-center text-[#14B75F] text-[14px] font-500">
+                      Агентлагын мэдээ
+                    </span>
+                  </div>
+                  <div className="flex gap-[12px]">
+                    <div className="flex gap-[8px]">
+                      <TbBrandFacebook style={{ color: "#666666" }} />
+                      <span className="text-[14px] font-500 text-[#666666]">
+                        Хуваалцах
+                      </span>
+                    </div>
+                    <div className="flex gap-[8px]">
+                      <LuPrinter style={{ color: "#666666" }} />
+                      <span className="text-[14px] font-500 text-[#666666]">
+                        Хуваалцах
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div className="text-[32px] text-[#333333] font-700">
+                  {currentNews?.title}
+                </div>
+              </div>
+              <div className="w-full">
+                {currentNews?.body ? (
+                  <p
+                    className="font-normal text-[#666666]"
+                    dangerouslySetInnerHTML={{ __html: currentNews.body }}
+                  />
+                ) : (
+                  <div></div>
+                )}
+              </div>
+            </div>
+            <div>
+              <RelatedNews newsData={newsData} />
+            </div>
+          </>
+        ) : (
+          <SkeletonLoader />
+        )}
       </div>
     </div>
   );

@@ -12,7 +12,7 @@ import Lottie from "lottie-react";
 import { useReactToPrint } from "react-to-print";
 import { useRef } from "react";
 import RelatedNewsNoPage from "../components/layout/RelatedNewsNoPage";
-import Skeleton from "react-loading-skeleton";
+import SkeletonLoader from "../components/skeleton/skeletonLoader";
 interface NewsDataType {
   date: string;
   title: string;
@@ -111,71 +111,75 @@ const News: React.FC = () => {
   return (
     <div className="w-[100vw] flex flex-col items-center">
       <div className="w-[80%]">
-        <img
-          src={currentNews.image}
-          alt="Banner"
-          className="w-full rounded-[16px] h-[50vh] object-cover"
-        />
-
-        <div className="w-full lg:w-[65%] mt-[50px] flex flex-col gap-[64px]">
-          <div className="flex flex-col gap-[24px]">
-            <div className="border-t border-[#94D1B0] border-dashed" />
-            <div className="flex justify-between items-end">
-              <div className="flex items-center gap-[8px]">
-                <span className="text-[#14B75F] text-sm font-medium leading-[16.48px]">
-                  {currentNews?.date}
-                </span>
-                <div className="flex flex-col gap-[2px] items-center">
-                  <span className="w-[2px] h-[2px] bg-[#14B75F] rounded-full" />
-                  <span className="w-[2px] h-[2px] bg-[#14B75F] rounded-full" />
-                  <span className="w-[2px] h-[2px] bg-[#14B75F] rounded-full" />
+        {currentNews ? (
+          <>
+            <img
+              src={currentNews.image}
+              alt="Banner"
+              className="w-full rounded-[16px] h-[50vh] object-cover"
+            />
+            <div className="w-full lg:w-[65%] mt-[50px] flex flex-col gap-[64px]">
+              <div className="flex flex-col gap-[24px]">
+                <div className="border-t border-[#94D1B0] border-dashed" />
+                <div className="flex justify-between items-end">
+                  <div className="flex items-center gap-[8px]">
+                    <span className="text-[#14B75F] text-sm font-medium leading-[16.48px]">
+                      {currentNews?.date}
+                    </span>
+                    <div className="flex flex-col gap-[2px] items-center">
+                      <span className="w-[2px] h-[2px] bg-[#14B75F] rounded-full" />
+                      <span className="w-[2px] h-[2px] bg-[#14B75F] rounded-full" />
+                      <span className="w-[2px] h-[2px] bg-[#14B75F] rounded-full" />
+                    </div>
+                    <span className="text-[#14B75F] text-sm font-medium leading-[16.48px]">
+                      {currentCategory?.name}
+                    </span>
+                  </div>
+                  <div className="flex gap-[12px]">
+                    <div className="flex gap-[8px] items-center">
+                      <TbBrandFacebook className="text-[#666666]" />
+                      <span className="text-sm font-medium text-[#666666]">
+                        Хуваалцах
+                      </span>
+                    </div>
+                    <div
+                      onClick={handlePrint}
+                      className="flex gap-[8px] cursor-pointer items-center"
+                    >
+                      <LuPrinter className="text-[#666666]" />
+                      <span className="text-sm font-medium text-[#666666]">
+                        Хэвлэх
+                      </span>
+                    </div>
+                  </div>
                 </div>
-                <span className="text-[#14B75F] text-sm font-medium leading-[16.48px]">
-                  {currentCategory?.name}
-                </span>
+                <div className="text-2xl font-bold text-[#333333]">
+                  {currentNews?.title}
+                </div>
               </div>
-              <div className="flex gap-[12px]">
-                <div className="flex gap-[8px] items-center">
-                  <TbBrandFacebook className="text-[#666666]" />
-                  <span className="text-sm font-medium text-[#666666]">
-                    Хуваалцах
-                  </span>
-                </div>
+
+              <div className="w-full flex flex-col gap-[48px]">
                 <div
-                  onClick={handlePrint}
-                  className="flex gap-[8px] cursor-pointer items-center"
+                  ref={contentRef}
+                  className="w-full grid grid-cols-1 h-[500px] text-[#666666]"
+                  dangerouslySetInnerHTML={{
+                    __html: currentNews?.body || "",
+                  }}
                 >
-                  <LuPrinter className="text-[#666666]" />
-                  <span className="text-sm font-medium text-[#666666]">
-                    Хэвлэх
-                  </span>
+                  {/* {parse(`${currentNews?.body}`)} */}
                 </div>
               </div>
             </div>
-            <div className="text-2xl font-bold text-[#333333]">
-              {currentNews?.title || <Skeleton count={10} />}
+            <div>
+              <RelatedNewsNoPage
+                newsData={sendRelatedNews}
+                categoryId={categoryId}
+              />
             </div>
-          </div>
-
-          <div className="w-full flex flex-col gap-[48px]">
-            <div
-              ref={contentRef}
-              className="w-full grid grid-cols-1 h-[500px] text-[#666666]"
-              dangerouslySetInnerHTML={{
-                __html: currentNews?.body || "",
-              }}
-            >
-              {/* {parse(`${currentNews?.body}`)} */}
-            </div>
-          </div>
-        </div>
-
-        <div>
-          <RelatedNewsNoPage
-            newsData={sendRelatedNews}
-            categoryId={categoryId}
-          />
-        </div>
+          </>
+        ) : (
+          <SkeletonLoader />
+        )}
       </div>
     </div>
   );
