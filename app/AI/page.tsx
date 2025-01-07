@@ -40,9 +40,9 @@ const Chatgpt: React.FC = () => {
   };
 
   const formatResponse = async (text: string): Promise<string> => {
-    let cleanedText = text.replace(/【[^】]*?】/g, "");
+    const cleanedText = text.replace(/【[^】]*?】/g, "");
 
-    let parsedHtml = await marked.parse(cleanedText);
+    const parsedHtml = await marked.parse(cleanedText);
 
     return parsedHtml;
   };
@@ -66,9 +66,10 @@ const Chatgpt: React.FC = () => {
       }
     };
 
-    // Ensure formatResponse is awaited if it's asynchronous
     const formattedResponse = await formatResponse(response);
     typing(0, formattedResponse);
+    console.log(showChat);
+    
   };
 
   useEffect(() => {

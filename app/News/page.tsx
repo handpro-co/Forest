@@ -17,7 +17,7 @@ interface NewsDataType {
   date: string;
   title: string;
   image: string;
-  body: string | any;
+  body: string | null;
   intro: string;
   id: string;
 }
@@ -46,7 +46,7 @@ const News: React.FC = () => {
       const fetchedNews = await fetchNews({ id: categoryConvertedId });
       const newsArray: NewsDataType[] = [];
       if (fetchedNews?.Value) {
-        Object.values(fetchedNews.Value).forEach((newsItem: any) => {
+        Object.values(fetchedNews.Value).forEach((newsItem: NewsDataType) => {
           newsArray.push({
             date: newsItem.c_date,
             title: newsItem.title,
@@ -79,12 +79,14 @@ const News: React.FC = () => {
         const categoriesArray: CategoryType[] = [];
 
         if (fetchedCategories?.Value) {
-          Object.values(fetchedCategories.Value).forEach((category: any) => {
-            categoriesArray.push({
-              id: category.id,
-              name: category.name,
-            });
-          });
+          Object.values(fetchedCategories.Value).forEach(
+            (category: CategoryType) => {
+              categoriesArray.push({
+                id: category.id,
+                name: category.name,
+              });
+            }
+          );
         }
         if (categoriesArray.length > 0) {
           const currentCategoryData = categoriesArray.find((category) => {

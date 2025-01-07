@@ -5,10 +5,9 @@ import ArrowRight from "../icons/ArrowRigth";
 import NewsCard from "./layout/NewsCard";
 import { fetchCategories } from "@/app/components/data/fetchCategory";
 import { fetchNews } from "@/app/components/data/fetchNews";
-import Lottie from "lottie-react";
-import loadingAnimation from "@/lotties/loading-icon.json";
 import SkeletonLoaderNewsBox from "./skeleton/skeletonLoaderNewsBox";
 import SkeletonLoaderCategory from "./skeleton/skeletonLoaderCategory";
+
 interface NewsDataType {
   date: string;
   title: string;
@@ -40,12 +39,14 @@ const AllNewsCards: React.FC = () => {
         const categoriesArray: CategoryType[] = [];
 
         if (fetchedCategories?.Value) {
-          Object.values(fetchedCategories.Value).forEach((category: any) => {
-            categoriesArray.push({
-              id: category.id,
-              name: category.name || "Unknown",
-            });
-          });
+          Object.values(fetchedCategories.Value).forEach(
+            (category: CategoryType) => {
+              categoriesArray.push({
+                id: category.id,
+                name: category.name || "Unknown",
+              });
+            }
+          );
         }
         setCategories(categoriesArray);
 
@@ -68,12 +69,12 @@ const AllNewsCards: React.FC = () => {
       const newsArray: NewsDataType[] = [];
 
       if (fetchedNews?.Value) {
-        Object.values(fetchedNews.Value).forEach((newsItem: any) => {
+        Object.values(fetchedNews.Value).forEach((newsItem: NewsDataType) => {
           newsArray.push({
             date: newsItem.c_date,
             title: newsItem.title,
             image: newsItem.image,
-            category: newsItem.id || "Unknown",
+            category: newsItem.id || 0, // Ensure category is a number, not a string
           });
         });
       }
@@ -91,8 +92,6 @@ const AllNewsCards: React.FC = () => {
     setCurrentPage(1);
     fetchNewsForCategory(categories[index].id);
 
-    const selectedCategory = categories[index].id;
-
     if (categoryListRef.current) {
       const categoryItem = categoryListRef.current.children[
         index
@@ -108,15 +107,18 @@ const AllNewsCards: React.FC = () => {
   const indexOfFirstNews = indexOfLastNews - itemsPerPage;
   const currentNews = newsData.slice(indexOfFirstNews, indexOfLastNews);
 
-  const totalPages = Math.ceil(newsData.length / itemsPerPage);
-
-  const jumpPage = ({ categoryId, newsData }: any): void => {
-    const selectedPath = newsData?.category || null; // Get the category or ID for the path
+  const jumpPage = ({
+    categoryId,
+    newsData,
+  }: {
+    categoryId: number;
+    newsData: NewsDataType;
+  }) => {
+    const selectedPath = newsData.category || null; // Get the category or ID for the path
 
     if (selectedPath !== null) {
-      setPath(selectedPath); // Set `path` to the proper value from `newsData`
-
-      switch (parseInt(categoryId, 10)) {
+      setPath(selectedPath);
+      switch (categoryId) {
         case 1014:
           window.location.href = `/VideoNews?id=${selectedPath}`;
           break;
@@ -134,20 +136,21 @@ const AllNewsCards: React.FC = () => {
           break;
         default:
           window.location.href = `/News?id=${selectedPath}&categoryId=${categoryId}`;
+          console.log(path);
           break;
       }
     } else {
-      console.error("Invalid parameter for 'path':", selectedPath); // Added check for undefined or null path
+      console.error("Invalid parameter for 'path':", selectedPath);
     }
   };
 
   return (
     <div className="w-full h-auto flex flex-col gap-[50px]">
       {/* Category Navigation */}
-      <div className="w-full flex items-center  justify-center px-4">
+      <div className="w-full flex items-center justify-center px-4">
         {/* Categories with smooth horizontal scroll */}
         <div
-          className="flex gap-[16px] flex-nowrap justify-start overflow-x-auto  py-2 px-4 rounded-lg"
+          className="flex gap-[16px] flex-nowrap justify-start overflow-x-auto py-2 px-4 rounded-lg"
           ref={categoryListRef} // Attach ref to the scroll container
         >
           {categories.length > 0

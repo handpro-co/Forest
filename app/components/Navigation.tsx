@@ -13,7 +13,6 @@ import Navigation_click_option_screen from "./layout/Navigation_click_option_scr
 import { useEffect, useState } from "react";
 
 import { IoAccessibility } from "react-icons/io5";
-import cursorImg from "@/public/cursor-png-1127.png";
 import { useAtom } from "jotai";
 import {
   isAcc,
@@ -24,7 +23,6 @@ import {
   isInvert,
 } from "./hook/accessibility";
 import Frame from "../icons/Frame";
-import Link from "next/link";
 
 type Option = {
   optionId: number | string;
@@ -93,6 +91,14 @@ const Navigation: React.FC = () => {
         setIsAccLetterSpace((prevAcci) => !prevAcci);
         break;
       default:
+        console.log(
+          isLink,
+          screeenAcci,
+          isLeading,
+          isAccLetterSpace,
+          isCursor,
+          isColorInvert
+        );
         break;
     }
   };

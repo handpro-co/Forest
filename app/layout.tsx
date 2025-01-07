@@ -4,7 +4,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
 import AI from "./AI/page";
-import { useState, useEffect } from "react";
+import {  useEffect } from "react";
 import { useAtom } from "jotai";
 import {
   isAcc,

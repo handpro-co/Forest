@@ -15,10 +15,17 @@ interface NewsDataType {
   date: string;
   title: string;
   intro: string;
-  body: string | any;
+  body: string | null;
   image: string;
 }
-
+interface NewsDataTypre {
+  id: number;
+  c_date: string;
+  title: string;
+  intro: string;
+  body: string | null;
+  image: string;
+}
 const VideoNews: React.FC = () => {
   const searchParams = useSearchParams();
   const newsId = searchParams.get("id");
@@ -37,7 +44,7 @@ const VideoNews: React.FC = () => {
       const newsArray: NewsDataType[] = [];
 
       if (fetchedNews?.Value) {
-        Object.values(fetchedNews.Value).forEach((newsItem: any) => {
+        Object.values(fetchedNews.Value).forEach((newsItem: NewsDataTypre) => {
           newsArray.push({
             id: newsItem.id,
             date: newsItem.c_date,

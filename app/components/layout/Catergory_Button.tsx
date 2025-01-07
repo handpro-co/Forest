@@ -1,11 +1,11 @@
-import React, { Children } from "react";
-
+import React from "react";
+import { ReactNode } from "react";
 interface CategoryItemProps {
   category?: string | undefined;
   index?: number;
   selectedCategoryIndex?: number;
   onClick?: (index: number) => void;
-  children?: HTMLObjectElement | any;
+  children?: ReactNode;
 }
 
 const CategoryItem: React.FC<CategoryItemProps> = ({

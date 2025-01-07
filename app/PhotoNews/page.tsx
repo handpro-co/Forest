@@ -35,7 +35,7 @@ const PhotoNews: React.FC = () => {
       const newsArray: NewsDataType[] = [];
 
       if (fetchedNews?.Value) {
-        Object.values(fetchedNews.Value).forEach((newsItem: any) => {
+        Object.values(fetchedNews.Value).forEach((newsItem: NewsDataType) => {
           newsArray.push({
             id: newsItem.id,
             date: newsItem.c_date,

@@ -21,6 +21,14 @@ interface NewsDataType {
   id: string;
 }
 
+interface NewsDataTyper {
+  c_date: string;
+  title: string;
+  image: string;
+  body: string;
+  intro: string;
+  id: string;
+}
 interface CategoryType {
   id: number;
   name: string;
@@ -46,10 +54,14 @@ const AllNewsCards: React.FC = () => {
         const categoriesArray: CategoryType[] = [];
 
         if (fetchedCategories?.Value) {
-          Object.values(fetchedCategories.Value).forEach((category: any) => {
+          Object.values(fetchedCategories.Value).forEach((category) => {
+            const typedCategory = category as {
+              id: number;
+              name: string;
+            };
             categoriesArray.push({
-              id: category.id,
-              name: category.name || "Unknown",
+              id: typedCategory.id,
+              name: typedCategory.name || "Unknown",
             });
           });
         }
@@ -67,7 +79,7 @@ const AllNewsCards: React.FC = () => {
     };
 
     fetchData();
-  }, []);
+  }, [newsCategoryId]);
 
   const fetchNewsForCategory = async (id: number) => {
     try {
@@ -75,14 +87,15 @@ const AllNewsCards: React.FC = () => {
       const newsArray: NewsDataType[] = [];
 
       if (fetchedNews?.Value) {
-        Object.values(fetchedNews.Value).forEach((newsItem: any) => {
+        Object.values(fetchedNews.Value).forEach((newsItem) => {
+          const typedNewsItem = newsItem as NewsDataTyper; // Type assertion
           newsArray.push({
-            date: newsItem.c_date,
-            title: newsItem.title,
-            image: newsItem.image,
-            id: newsItem.id,
-            body: newsItem.body,
-            intro: newsItem.intro,
+            date: typedNewsItem.c_date,
+            title: typedNewsItem.title,
+            image: typedNewsItem.image,
+            id: typedNewsItem.id,
+            body: typedNewsItem.body,
+            intro: typedNewsItem.intro,
           });
         });
       }
@@ -184,7 +197,13 @@ const AllNewsCards: React.FC = () => {
     }
   };
 
-  const jumpPage = ({ categoryData, newsData }: any): void => {
+  const jumpPage = ({
+    categoryData,
+    newsData,
+  }: {
+    categoryData: string;
+    newsData: NewsDataType;
+  }) => {
     const selectedPath = newsData?.id;
     if (selectedPath !== null) {
       switch (parseInt(categoryData, 10)) {
@@ -224,7 +243,7 @@ const AllNewsCards: React.FC = () => {
 
         <div
           ref={categoryListRef}
-          className="flex gap-[16px] flex-nowrap justify-start overflow-x-auto  py-2 px-4 rounded-lg"
+          className="flex gap-[16px] flex-nowrap justify-start overflow-x-auto py-2 px-4 rounded-lg"
         >
           {categories.length > 0
             ? categories.map((category, i) => (
@@ -248,7 +267,7 @@ const AllNewsCards: React.FC = () => {
           <ArrowRigth color="#333333" />
         </button>
       </div>
-      <div className="w-full flex md:hidden ">
+      <div className="w-full flex md:hidden">
         <CategoryDropdown
           onClick={handleCategoryClick}
           categories={categories}
@@ -262,7 +281,7 @@ const AllNewsCards: React.FC = () => {
                 onClick={() => {
                   jumpPage({
                     newsData: news,
-                    categoryData: catchCategory,
+                    categoryData: catchCategory.toString(),
                   });
                 }}
                 key={i}
@@ -300,7 +319,7 @@ const AllNewsCards: React.FC = () => {
           {/* Page Numbers */}
           {(() => {
             const maxVisiblePages = 5;
-            let startPage = Math.max(
+            const startPage = Math.max(
               1,
               Math.min(
                 currentPage - Math.floor(maxVisiblePages / 2),
@@ -320,10 +339,10 @@ const AllNewsCards: React.FC = () => {
               <button
                 key={page}
                 onClick={() => handlePageChange(page)}
-                className={`w-[32px] h-[32px] flex justify-center items-center rounded-[50%] ${
+                className={`w-[32px] h-[32px] flex justify-center items-center rounded-[50%] mx-2 ${
                   currentPage === page
-                    ? "bg-[#14B75F] text-[#fff]"
-                    : "text-[#5E6775] hover:bg-[#F2F5EB]"
+                    ? "bg-[#828282] text-white"
+                    : "text-[#828282] bg-[#F2F5EB]"
                 }`}
               >
                 {page}
@@ -337,7 +356,7 @@ const AllNewsCards: React.FC = () => {
             disabled={currentPage === totalPages}
             className="px-4 py-2 text-[#333333] rounded-md disabled:opacity-50"
           >
-            <div className="transform rotate-[-90deg]">
+            <div className="transform rotate-90">
               <Sum />
             </div>
           </button>
