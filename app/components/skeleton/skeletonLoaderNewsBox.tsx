@@ -3,7 +3,7 @@ const SkeletonLoaderNewsBox = () => {
   return (
     <div className="w-full flex flex-col rounded-[20px] p-2 flex gap-5">
       <Skeleton
-        containerClassName="w-full h-[200px] 2xl:h-[300px]"
+        containerClassName="w-full h-[170px] 2xl:h-[200px] 2xl:h-[300px]"
         borderRadius={20}
         count={1}
         height={"100%"}

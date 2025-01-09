@@ -6,9 +6,11 @@ const Home: React.FC = () => {
   return (
     <>
       <Homee />
-      <AnimateLogos />
-      <Service />
-      <News />
+      <div className="flex flex-col gap-[50px] w-[90%]">
+        <AnimateLogos />
+        <Service />
+        <News />
+      </div>
     </>
   );
 };

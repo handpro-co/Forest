@@ -4,7 +4,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
 import AI from "./AI/page";
-import {  useEffect } from "react";
+import { useEffect } from "react";
 import { useAtom } from "jotai";
 import {
   isAcc,
@@ -27,23 +27,6 @@ const RootLayout: React.FC<Props> = ({ children }) => {
   const [isCursor] = useAtom(isAccCursor);
   const [isLink] = useAtom(isAccLink);
 
-  // useEffect(() => {
-  //   document.body.querySelectorAll("oembed").forEach((oembed) => {
-  //     const url = oembed.getAttribute("url");
-  //     if (url) {
-  //       const iframe = document.createElement("iframe");
-  //       iframe.src = url;
-  //       iframe.width = "100%";
-  //       iframe.height = "315";
-  //       iframe.style.borderRadius = "8px";
-  //       iframe.style.border = "2px solid #ccc";
-  //       oembed.replaceWith(iframe);
-  //     } else {
-  //       console.error("URL attribute is missing on oembed element.");
-  //     }
-  //   });
-  // }, []);
-
   useEffect(() => {
     const links = document.querySelectorAll("a");
     links.forEach((link) => {
@@ -59,20 +42,16 @@ const RootLayout: React.FC<Props> = ({ children }) => {
         ? `url(/assets/Cursor.svg) 16 16, auto`
         : "auto";
     }
-
-    // main.style.cursor = isCursor ? "pointer" : "auto";vb
-    // document.body.style.lineHeight = isLeading ? "2.5" : "normal";
-    // document.body.style.letterSpacing = isLetter ? "2px" : "normal";
   }, [screenAcc, isLeading, isLetter, isCursor, isLink, screenColor]);
 
   return (
     <html lang="en">
-      <body className="w-full flex flex-col items-center mx-auto 2xl:w-[80%]">
+      <body className="w-full flex flex-col items-center mx-auto ">
         <Navigation />
         <AI />
         <div
           id="main"
-          className="z-[99] w-full mt-[80px] px-[20px] flex flex-col items-center gap-[150px] lg:gap-[50px]"
+          className="z-[99] w-full mt-[100px] flex flex-col items-center gap-[50px] "
         >
           {children}
         </div>

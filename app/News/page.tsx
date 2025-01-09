@@ -104,8 +104,8 @@ const News: React.FC = () => {
 
   if (!currentNews) {
     return (
-      <div className="w-[200px] h-[200px]">
-        <Lottie animationData={loadingIcon} loop={true} />
+      <div className="w-[80%]">
+        <SkeletonLoader />
       </div>
     );
   }
@@ -179,9 +179,7 @@ const News: React.FC = () => {
               />
             </div>
           </>
-        ) : (
-          <SkeletonLoader />
-        )}
+        ) : null}
       </div>
     </div>
   );
