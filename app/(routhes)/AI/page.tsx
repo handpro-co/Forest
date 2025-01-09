@@ -69,7 +69,6 @@ const Chatgpt: React.FC = () => {
     const formattedResponse = await formatResponse(response);
     typing(0, formattedResponse);
     console.log(showChat);
-    
   };
 
   useEffect(() => {
@@ -210,11 +209,11 @@ const Chatgpt: React.FC = () => {
             <div
               onClick={showChatGpt}
               style={{
-                backgroundImage: `url(${Bear})`,
+                backgroundImage: `url(/icon/oinAvatar.gif)`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
               }}
-              className="w-[76px] h-[76px] z-[12] rounded-[50%] animate-spin-slow shadow-lg cursor-pointer duration-200 hover:scale-105"
+              className="w-[76px] h-[76px] z-[12] rounded-[50%]  shadow-lg cursor-pointer duration-200 hover:scale-105"
             />
           </div>
         </div>

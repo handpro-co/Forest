@@ -16,7 +16,7 @@ const AnimateLogos: React.FC = () => {
   }, []);
 
   return (
-    <div className="w-full   h-[84px]">
+    <div className="w-full mt-[50px]  h-[84px]">
       <div className="text-[26px] font-semibold text-[#333333] text-center">
         Хамтрагч байгууллагууд
       </div>

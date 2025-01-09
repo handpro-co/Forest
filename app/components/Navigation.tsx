@@ -104,7 +104,7 @@ const Navigation: React.FC = () => {
   };
 
   return (
-    <nav className="w-full border-b-[1px] border-[#ECEBE3] h-[80px] fixed top-0 flex justify-between items-center px-[24px] py-[18px] bg-[#fff] z-[999] ">
+    <nav className="w-full h-[70px] border-b-[1px] border-[#ECEBE3] h-[80px] fixed top-0 flex justify-between items-center px-[24px] py-[18px] bg-[#fff] z-[999] ">
       <div className="h-[44px] flex gap-[32px] sm:w-[80%] md:w-[60%] lg:w-[40%] xl:w-[30%] 2xl:w-[25%]">
         <a href="./">
           <Logo />
