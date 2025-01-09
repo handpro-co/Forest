@@ -3,7 +3,7 @@ import "./globals.css";
 import "react-loading-skeleton/dist/skeleton.css";
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
-import AI from "./AI/page";
+import AI from "./(routhes)/AI/page";
 import { useEffect } from "react";
 import { useAtom } from "jotai";
 import {

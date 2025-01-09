@@ -1,18 +1,10 @@
 import { useState } from "react";
 import ArrowRigth from "@/app/icons/ArrowRigth";
 import NewsCard from "./NewsCard";
-
-interface NewsItem {
-  date: string;
-  title: string;
-  image: string;
-  body: string | null;
-  id: string;
-  intro: string;
-}
+import { NewsDataType } from "@/app/types/types";
 
 interface Props {
-  newsData: NewsItem[];
+  newsData: NewsDataType[];
   categoryId: string | null;
 }
 

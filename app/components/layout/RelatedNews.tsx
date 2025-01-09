@@ -1,18 +1,10 @@
 import { useState } from "react";
 import ArrowRigth from "@/app/icons/ArrowRigth";
 import NewsCard from "./NewsCard";
-
-interface NewsItem {
-  date: string;
-  title: string;
-  image: string;
-  body: string;
-  id: string;
-  intro: string;
-}
+import { NewsDataType } from "@/app/types/types";
 
 interface Props {
-  newsData: NewsItem[] | null;
+  newsData: NewsDataType[] | null;
 }
 
 const RelatedNews: React.FC<Props> = ({ newsData }) => {

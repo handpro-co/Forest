@@ -1,8 +1,8 @@
 import ArrowRigth from "../icons/ArrowRigth";
-import QRIcon from "../ServiceIconPNG/qrIcon.png";
-import Shield from "../ServiceIconPNG/plusShield.png";
-import correctShield from "../ServiceIconPNG/correctShield.png";
-import Ud from "../ServiceIconPNG/feather.png";
+import QRIcon from "./ServiceIconPNG/qrIcon.png";
+import Shield from "./ServiceIconPNG/plusShield.png";
+import correctShield from "./ServiceIconPNG/correctShield.png";
+import Ud from "./ServiceIconPNG/feather.png";
 const Service: React.FC = () => {
   return (
     <div className="mt-[84px] w-full">

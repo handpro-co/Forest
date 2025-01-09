@@ -20,7 +20,7 @@ const SkeletonLoader = () => {
               </div>
               {/* Static Text Skeleton */}
               <span className="flex items-center text-[#14B75F] text-[14px] font-500">
-                Агентлагын мэдээ
+                <Skeleton width={100} height={20} />
               </span>
             </div>
 
