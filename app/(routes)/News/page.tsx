@@ -2,14 +2,14 @@
 import { LuPrinter } from "react-icons/lu";
 import { TbBrandFacebook } from "react-icons/tb";
 import { useSearchParams } from "next/navigation";
-import { fetchNews } from "../../components/data/fetchNews";
-import { fetchCategories } from "../../components/data/fetchCategory";
+import { fetchNews } from "../../components/data/fetchNews.ts";
+import { fetchCategories } from "../../components/data/fetchCategory.ts";
 import parse from "html-react-parser";
 import { useEffect, useState } from "react";
 import { useReactToPrint } from "react-to-print";
 import { useRef } from "react";
-import RelatedNewsNoPage from "../../components/layout/RelatedNewsNoPage";
-import SkeletonLoader from "../../components/skeleton/skeletonLoader";
+import RelatedNewsNoPage from "../../components/layout/RelatedNewsNoPage.tsx";
+import SkeletonLoader from "../../components/skeleton/skeletonLoader.tsx";
 import useExtractUrls from "@/app/components/changeUrl/extractUrl.ts";
 import {
   NewsDataTyper,
