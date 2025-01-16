@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { fetchNews } from "../../components/data/fetchNews";
 import { LuPrinter } from "react-icons/lu";
@@ -83,6 +83,10 @@ const PhotoNews: React.FC = () => {
       </div>
     );
   }
+  const fl = false;
+  if (fl) {
+    console.log(error);
+  }
   return (
     <div className="w-[100vw] flex flex-col items-center">
       <div className="w-[100%] lg:w-[80%]">
@@ -156,5 +160,10 @@ const PhotoNews: React.FC = () => {
     </div>
   );
 };
+const Photo: React.FC = () => (
+  <Suspense fallback={<SkeletonLoader />}>
+    <PhotoNews />
+  </Suspense>
+);
 
-export default PhotoNews;
+export default Photo;

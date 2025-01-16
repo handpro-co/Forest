@@ -5,12 +5,11 @@ import { useSearchParams } from "next/navigation";
 import { fetchNews } from "../../components/data/fetchNews.ts";
 import { fetchCategories } from "../../components/data/fetchCategory.ts";
 import parse from "html-react-parser";
-import { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { useReactToPrint } from "react-to-print";
 import { useRef } from "react";
 import RelatedNewsNoPage from "../../components/layout/RelatedNewsNoPage.tsx";
 import SkeletonLoader from "../../components/skeleton/skeletonLoader.tsx";
-import useExtractUrls from "@/app/components/changeUrl/extractUrl.ts";
 import {
   NewsDataTyper,
   NewsDataType,
@@ -100,8 +99,6 @@ const News: React.FC = () => {
 
     fetchData();
   }, []);
-  const sendbody = parse(currentNews?.body || "").toString();
-  const transformedBody = useExtractUrls(sendbody);
 
   if (loading) {
     return (
@@ -168,9 +165,7 @@ const News: React.FC = () => {
                   dangerouslySetInnerHTML={{
                     __html: currentNews.body,
                   }}
-                >
-                  {/* {parse(`${currentNews?.body}`)} */}
-                </div>
+                ></div>
               </div>
             </div>
             <div>
@@ -185,5 +180,10 @@ const News: React.FC = () => {
     </div>
   );
 };
+const SocialNews: React.FC = () => (
+  <Suspense fallback={<SkeletonLoader />}>
+    <News />
+  </Suspense>
+);
 
-export default News;
+export default SocialNews;

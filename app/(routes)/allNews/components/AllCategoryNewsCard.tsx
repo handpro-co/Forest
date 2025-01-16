@@ -89,7 +89,6 @@ const AllNewsCards: React.FC = () => {
 
   useEffect(() => {
     const propsCatchIdFetchData = (newsCategoryId: string | null) => {
-      console.log(newsCategoryId);
 
       if (newsCategoryId) {
         const selectedCategoryIndex = categories.findIndex(
@@ -98,8 +97,6 @@ const AllNewsCards: React.FC = () => {
         const selectedCategory = categories.find(
           (category) => Number(category.id) === Number(newsCategoryId)
         );
-        console.log(selectedCategory);
-
         if (
           selectedCategory !== undefined &&
           selectedCategoryIndex !== undefined

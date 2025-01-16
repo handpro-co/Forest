@@ -7,12 +7,13 @@ import { fetchCategories } from "@/app/components/data/fetchCategory";
 import { fetchNews } from "@/app/components/data/fetchNews";
 import SkeletonLoaderNewsBox from "./skeleton/skeletonLoaderNewsBox";
 import SkeletonLoaderCategory from "./skeleton/skeletonLoaderCategory";
+import { NewsDataTyper } from "../types/types";
 
 interface NewsDataType {
   date: string;
   title: string;
   image: string;
-  category: number;
+  category: string | number;
 }
 
 interface CategoryType {
@@ -27,7 +28,7 @@ const AllNewsCards: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const itemsPerPage = 16;
 
-  const [path, setPath] = useState<string | null>(null); // path should be a string or null
+  const [path, setPath] = useState<string | number | null>(null); // path should be a string or null
   const [categoryId, setCategoryId] = useState<number>(1);
 
   const categoryListRef = useRef<HTMLDivElement>(null);
@@ -39,7 +40,7 @@ const AllNewsCards: React.FC = () => {
         const categoriesArray: CategoryType[] = [];
 
         if (fetchedCategories?.Value) {
-          Object.values(fetchedCategories.Value).forEach(
+          (Object.values(fetchedCategories.Value) as CategoryType[]).forEach(
             (category: CategoryType) => {
               categoriesArray.push({
                 id: category.id,
@@ -69,14 +70,16 @@ const AllNewsCards: React.FC = () => {
       const newsArray: NewsDataType[] = [];
 
       if (fetchedNews?.Value) {
-        Object.values(fetchedNews.Value).forEach((newsItem: NewsDataType) => {
-          newsArray.push({
-            date: newsItem.c_date,
-            title: newsItem.title,
-            image: newsItem.image,
-            category: newsItem.id || 0, // Ensure category is a number, not a string
-          });
-        });
+        (Object.values(fetchedNews.Value) as NewsDataTyper[]).forEach(
+          (newsItem: NewsDataTyper) => {
+            newsArray.push({
+              date: newsItem.c_date,
+              title: newsItem.title,
+              image: newsItem.image,
+              category: newsItem.id || 0, // Ensure category is a number, not a string
+            });
+          }
+        );
       }
 
       setNewsData(newsArray);

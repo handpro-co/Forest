@@ -1,12 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { LuPrinter } from "react-icons/lu";
 import { TbBrandFacebook } from "react-icons/tb";
 import RelatedVideoNews from "@/app/components/layout/RelatedVideoNews";
 import { fetchNews } from "../../components/data/fetchNews";
-import Skeleton from "react-loading-skeleton";
 import parse from "html-react-parser";
 import { NewsDataType, NewsDataTyper } from "@/app/types/types";
 import SkeletonLoader from "@/app/components/skeleton/skeletonLoader";
@@ -153,5 +152,10 @@ const VideoNews: React.FC = () => {
     </div>
   );
 };
+const Video: React.FC = () => (
+  <Suspense fallback={<SkeletonLoader />}>
+    <VideoNews />
+  </Suspense>
+);
 
-export default VideoNews;
+export default Video;

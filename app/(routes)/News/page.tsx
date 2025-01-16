@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { fetchNews } from "../../components/data/fetchNews.ts";
 import { fetchCategories } from "../../components/data/fetchCategory.ts";
 import parse from "html-react-parser";
-import { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { useReactToPrint } from "react-to-print";
 import { useRef } from "react";
 import RelatedNewsNoPage from "../../components/layout/RelatedNewsNoPage.tsx";
@@ -168,9 +168,8 @@ const News: React.FC = () => {
                   dangerouslySetInnerHTML={{
                     __html: transformedBody,
                   }}
-                >
-                  {/* {parse(`${currentNews?.body}`)} */}
-                </div>
+                />
+                <div>{parse(`${currentNews?.body}`)}</div>
               </div>
             </div>
             <div>
@@ -186,4 +185,10 @@ const News: React.FC = () => {
   );
 };
 
-export default News;
+const New: React.FC = () => (
+  <Suspense fallback={<SkeletonLoader />}>
+    <News />
+  </Suspense>
+);
+
+export default New;

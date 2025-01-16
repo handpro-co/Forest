@@ -51,7 +51,7 @@ const Homee: React.FC = () => {
         </video>
       )}
 
-      <div className="flex flex-col justify-center items-center lg:items-start w-full h-[90vh] bg-cover bg-center rounded-[24px] px-0 md:px-[56px] py-6 md:py-12 md:px-12 gap-[72px] md:gap-12">
+      <div className="flex flex-col justify-center items-center lg:items-start w-full h-[90vh] bg-cover bg-center rounded-[24px] px-[20px] md:px-[56px] py-6 md:py-12 md:px-12 gap-[72px] md:gap-12">
         <div className="text-center lg:text-left text-white font-bold text-[32px] md:text-[52px] lg:text-[48px] xl:text-[56px] w-full md:w-2/3 xl:w-2/5 2xl:w-2/5">
           Амьдралын орчинг сайжруулна
         </div>

@@ -51,7 +51,7 @@ const RootLayout: React.FC<Props> = ({ children }) => {
         <AI />
         <div
           id="main"
-          className="z-[99] w-full mt-[70px] flex flex-col items-center gap-[50px] "
+          className="z-[99] w-full mt-[70px] flex flex-col items-center gap-[100px] lg:gap-[150px] "
         >
           {children}
         </div>

@@ -2,7 +2,7 @@
 import { LuPrinter } from "react-icons/lu";
 import { TbBrandFacebook } from "react-icons/tb";
 import RelatedNews from "@/app/components/layout/RelatedNews";
-import { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { fetchNews } from "../../components/data/fetchNews";
 import { useSearchParams } from "next/navigation";
 import SkeletonLoader from "../../components/skeleton/skeletonLoader";
@@ -138,5 +138,10 @@ const BasicNews: React.FC = () => {
     </div>
   );
 };
+const BasicNewsWrapper: React.FC = () => (
+  <Suspense fallback={<SkeletonLoader />}>
+    <BasicNews />
+  </Suspense>
+);
 
-export default BasicNews;
+export default BasicNewsWrapper;
