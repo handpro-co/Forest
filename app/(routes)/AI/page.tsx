@@ -114,7 +114,7 @@ const Chatgpt: React.FC = () => {
   return (
     <>
       {show ? (
-        <div className="z-[201] shadow-md fixed bottom-[5%] right-[5%] pt-[24px] px-[12px] pb-[12px] flex flex-col justify-between rounded-[16px] right-[5%] w-[90%] h-[80%] bg-[#fff] md:w-[50%] md:h-[50%] lg:w-[40%] lg:h-[50%] 2xl:w-[25%] 2xl:h-[50%]">
+        <div className="z-[999] md:z-[201] shadow-md fixed   pt-[24px] px-[12px] pb-[12px] flex flex-col justify-between rounded-[16px]  w-full h-full sm:bottom-[5%] sm:right-[5%] bg-[#fff] sm:w-[50%] sm:h-[70%] md:w-[50%] md:h-[70%] lg:w-[40%] lg:h-[70%] 2xl:w-[35%] 2xl:h-[70%]">
           <div className="w-full h-[6%] bg-white border-b-[1px] pb-[10px] border-[#F4F4F4] flex justify-between">
             <div className="w-full flex gap-[8px] items-center">
               <AiIcon />

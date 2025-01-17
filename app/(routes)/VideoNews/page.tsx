@@ -82,12 +82,12 @@ const VideoNews: React.FC = () => {
   if (error) return <div>{error}</div>;
 
   return (
-    <div className="w-[100vw] flex flex-col items-center">
+    <div className="w-[100vw] flex flex-col px-[20px] items-center">
       <div className="w-[100%] lg:w-[80%]">
         {currentNews && (
           <div className="w-full lg:w-[65%] mt-[50px] flex flex-col gap-[32px]">
             <div className="flex flex-col gap-[24px]">
-              <div className="flex justify-between items-end">
+              <div className="flex flex-wrap gap-[14px] justify-between items-end">
                 <div className="flex items-center gap-[8px]">
                   <span className="text-[#14B75F] text-[14px] font-500">
                     {currentNews.date}
@@ -116,7 +116,7 @@ const VideoNews: React.FC = () => {
                   </div>
                 </div>
               </div>
-              <div className="text-2xl font-bold leading-[40.96px] text-[#333333]">
+              <div className="text-[24px] md:text-[32px] font-bold leading-[40.96px] text-[#333333]">
                 {currentNews.title}
               </div>
             </div>

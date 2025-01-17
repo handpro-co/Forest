@@ -16,12 +16,12 @@ const AnimateLogos: React.FC = () => {
   }, []);
 
   return (
-    <div className="w-full mt-[50px]  h-[84px]">
-      <div className="text-[26px] font-semibold text-[#333333] text-center">
+    <div className=" w-full mt-[50px]  h-[84px]">
+      <div className="text-[26px] font-semibold mb-[30px] text-[#333333] text-center">
         Хамтрагч байгууллагууд
       </div>
       <div className="overflow-hidden w-full h-[84px]">
-        <div className="flex animate-scroll-reverse h-full gap-[20px]">
+        <div className="flex  animate-scroll-reverse h-full gap-[20px]">
           {[...imgs, ...imgs].concat(imgs).map((image, index) => (
             <img
               key={`${image.id}-${index}`}

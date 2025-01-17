@@ -88,13 +88,13 @@ const PhotoNews: React.FC = () => {
     console.log(error);
   }
   return (
-    <div className="w-[100vw] flex flex-col items-center">
+    <div className="w-[100vw] px-[20px] flex flex-col items-center">
       <div className="w-[100%] lg:w-[80%]">
         {currentNews && (
           <>
             {currentNews.image && (
               <img
-                className="w-full rounded-[16px] h-[50vh] object-cover"
+                className="w-full rounded-[16px] mt-[20px] h-[50vh] object-cover"
                 src={currentNews.image}
                 alt="Banner"
               />
@@ -102,7 +102,7 @@ const PhotoNews: React.FC = () => {
             <div className="w-full lg:w-[65%] mt-[50px] flex flex-col gap-[64px]">
               <div className="flex flex-col gap-[24px]">
                 <div className="border-t-[1px] border-[#94D1B0] border-dashed" />
-                <div className="flex justify-between items-end">
+                <div className="flex flex-wrap gap-[14px] justify-between items-end">
                   <div className="flex items-center gap-[8px]">
                     <span className="text-[#14B75F] text-[14px] font-500">
                       {currentNews.date}
@@ -131,7 +131,7 @@ const PhotoNews: React.FC = () => {
                     </div>
                   </div>
                 </div>
-                <div className="text-[32px] text-[#333333] font-700">
+                <div className=" text-[24px] md:text-[32px] text-[#333333] font-700">
                   {currentNews.title}
                 </div>
               </div>

@@ -83,7 +83,7 @@ const BasicNews: React.FC = () => {
             <div className="w-full lg:w-[65%] mt-[50px] flex flex-col gap-[64px]">
               <div className="flex flex-col gap-[24px]">
                 <div className="border-t-[1px] border-[#94D1B0] border-dashed" />
-                <div className="flex justify-between items-end">
+                <div className="flex flex-wrap gap-[14px] justify-between items-end">
                   <div className="flex items-center gap-[8px]">
                     <span className="flex items-center text-[#14B75F] text-[14px] font-500">
                       {currentNews?.date || ""}
@@ -112,7 +112,7 @@ const BasicNews: React.FC = () => {
                     </div>
                   </div>
                 </div>
-                <div className="text-[32px] text-[#333333] font-700">
+                <div className="text-[24px] md:text-[32px] text-[#333333] font-700">
                   {currentNews?.title}
                 </div>
               </div>

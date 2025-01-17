@@ -33,7 +33,12 @@ const FeedBack: React.FC = () => {
           <div className="flex flex-col gap-[16px]">
             {/* Back Button */}
             <div className="flex items-center gap-[16px] cursor-pointer">
-              <div className="w-[50px] h-[50px] bg-[#ECEBE3] flex justify-center items-center rounded-full transform rotate-180">
+              <div
+                onClick={() => {
+                  window.location.href = "/";
+                }}
+                className="w-[50px] h-[50px] bg-[#ECEBE3] flex justify-center items-center rounded-full transform rotate-180"
+              >
                 <ArrowRigth color="#333333" />
               </div>
               <div className="text-[#666666] font-medium text-[16px] leading-[18.83px]">

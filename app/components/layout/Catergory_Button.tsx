@@ -20,7 +20,7 @@ const CategoryItem: React.FC<CategoryItemProps> = ({
       onClick={() => onClick?.(index ?? 0)} // Use optional chaining to safely call onClick
       className={`${
         selectedCategoryIndex === index ? "bg-[#DEFF94]" : ""
-      } text-[#333] py-[20px] px-[24px] rounded-[12px] cursor-pointer  whitespace-nowrap hover:bg-[#ECEBE3] flex items-center justify-between`}
+      } text-[#333] py-[20px] px-[24px] rounded-[12px] cursor-pointer   whitespace-nowrap hover:bg-[#ECEBE3] flex items-center justify-between`}
     >
       {category ? category : "Category not found"}
       {children ? children : null}

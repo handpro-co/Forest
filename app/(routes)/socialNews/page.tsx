@@ -116,12 +116,12 @@ const News: React.FC = () => {
             <img
               src={currentNews.image}
               alt="Banner"
-              className="w-full rounded-[16px] h-[50vh] object-cover"
+              className="w-full mt-[20px] rounded-[16px] h-[50vh] object-cover"
             />
             <div className="w-full lg:w-[65%] mt-[50px] flex flex-col gap-[64px]">
               <div className="flex flex-col gap-[24px]">
                 <div className="border-t border-[#94D1B0] border-dashed" />
-                <div className="flex justify-between items-end">
+                <div className="flex flex-wrap gap-[14px] justify-between items-end">
                   <div className="flex items-center gap-[8px]">
                     <span className="text-[#14B75F] text-sm font-medium leading-[16.48px]">
                       {currentNews?.date}
@@ -153,7 +153,7 @@ const News: React.FC = () => {
                     </div>
                   </div>
                 </div>
-                <div className="text-2xl font-bold text-[#333333]">
+                <div className="text-[24px] md:text-[32px] font-bold text-[#333333]">
                   {currentNews?.title}
                 </div>
               </div>

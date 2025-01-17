@@ -38,10 +38,10 @@ const CategoryDropdown: React.FC<CategoryDropdownProps> = ({
   };
 
   return (
-    <div className="w-full flex flex-col ">
+    <div className="w-full flex flex-col items-center ">
       <button
         onClick={() => setDropdownVisible(!isDropdownVisible)}
-        className="w-full "
+        className="w-[90%] "
       >
         <CategoryItem
           category={
@@ -53,7 +53,7 @@ const CategoryDropdown: React.FC<CategoryDropdownProps> = ({
       </button>
 
       {isDropdownVisible && (
-        <div className="relative w-full">
+        <div className="relative w-[90%]">
           <div className="h-[50vh] w-full overflow-auto shadow-lg pt-[10px] rounded-[8px]  bg-white flex flex-col ">
             {categories.length > 0 ? (
               categories.map((category, i) => (

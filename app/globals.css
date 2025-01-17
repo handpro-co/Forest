@@ -34,7 +34,7 @@ body {
 
 .animate-scroll-reverse {
   display: flex;
-  animation: scroll-reverse 25s linear infinite;
+  animation: scroll-reverse 15s linear infinite;
   width: calc(200%);
 }
 
