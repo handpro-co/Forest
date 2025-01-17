@@ -22,7 +22,7 @@ const data = [
 
 const Homee: React.FC = () => {
   const [videoSrc, setVideoSrc] = useState<string>("");
-  const [mute, setMute] = useState<boolean>(false);
+  const [mute, setMute] = useState<boolean>(true);
   useEffect(() => {
     const getVideoByTime = () => {
       const currentHour = new Date().getHours();

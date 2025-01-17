@@ -209,7 +209,7 @@ const Chatgpt: React.FC = () => {
             <div
               onClick={showChatGpt}
               style={{
-                backgroundImage: `url(/icon/oinAvatar.gif)`,
+                backgroundImage: `url(/icon/oinAvatar.GIF)`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
               }}
