@@ -6,6 +6,7 @@ import Footer from "./components/Footer";
 import AI from "./(routes)/AI/page";
 import { useEffect } from "react";
 import { useAtom } from "jotai";
+import { GiSoundOn, GiSoundOff } from "react-icons/gi";
 import {
   isAcc,
   isAccLetter,
@@ -13,6 +14,7 @@ import {
   isAccCursor,
   isAccLink,
   isInvert,
+  isMute,
 } from "./components/hook/accessibility";
 
 interface Props {
@@ -26,7 +28,7 @@ const RootLayout: React.FC<Props> = ({ children }) => {
   const [isLetter] = useAtom(isAccLetter);
   const [isCursor] = useAtom(isAccCursor);
   const [isLink] = useAtom(isAccLink);
-
+  const [mute, setMute] = useAtom(isMute);
   useEffect(() => {
     const links = document.querySelectorAll("a");
     links.forEach((link) => {
@@ -49,6 +51,18 @@ const RootLayout: React.FC<Props> = ({ children }) => {
       <body className="w-full flex flex-col items-center mx-auto ">
         <Navigation />
         <AI />
+        <button
+          onClick={() => {
+            setMute(!mute);
+          }}
+          className="fixed flex items-center justify-center   h-[40px] w-[40px]  left-[50px] bottom-[50px] bg-black/40  rounded-full duration-100 hover:scale-110 z-[200]"
+        >
+          {mute ? (
+            <GiSoundOn className="text-white text-[40px]" />
+          ) : (
+            <GiSoundOff className="text-white text-[40px]" />
+          )}
+        </button>
         <div
           id="main"
           className="z-[99] w-full mt-[70px] flex flex-col items-center gap-[100px] lg:gap-[150px] "
