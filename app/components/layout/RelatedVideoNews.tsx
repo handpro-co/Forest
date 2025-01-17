@@ -32,7 +32,7 @@ const RelatedVideoNews: React.FC<Props> = ({ newsData }) => {
   };
 
   return (
-    <div className="w-[80%] flex flex-col gap-[24px] mt-[100px]">
+    <div className="w-[80%] flex flex-col gap-[24px] ">
       <div className="font-700 text-[24px] leading-[29.02px] text-[#333333]">
         Холбоотой мэдээлэл
       </div>

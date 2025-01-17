@@ -6,7 +6,8 @@ import { LuPrinter } from "react-icons/lu";
 import { TbBrandFacebook } from "react-icons/tb";
 import RelatedVideoNews from "@/app/components/layout/RelatedVideoNews";
 import { fetchNews } from "../../components/data/fetchNews";
-import parse from "html-react-parser";
+import parse, { HTMLReactParserOptions, Element } from "html-react-parser";
+import he from "he";
 import { NewsDataType, NewsDataTyper } from "@/app/types/types";
 import SkeletonLoader from "@/app/components/skeleton/skeletonLoader";
 
@@ -51,7 +52,7 @@ const VideoNews: React.FC = () => {
       if (selectedNews) {
         setCurrentNews({
           ...selectedNews,
-          body: parse(selectedNews.body).toString(),
+          body: he.decode(selectedNews.body),
         });
       } else {
         setCurrentNews(null);
@@ -80,6 +81,30 @@ const VideoNews: React.FC = () => {
       </div>
     );
   if (error) return <div>{error}</div>;
+
+  const options: HTMLReactParserOptions = {
+    replace: (domNode) => {
+      if ((domNode as Element).name === "oembed") {
+        const url = (domNode as Element).attribs.url;
+        console.log(url);
+
+        return (
+          <iframe
+            width="560"
+            height="315"
+            src={url}
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          />
+        );
+      }
+    },
+  };
+
+  const bodyString = currentNews?.body ?? "";
+
+  const parsed = parse(bodyString, options);
 
   return (
     <div className="w-[100vw] flex flex-col px-[20px] items-center">
@@ -140,8 +165,9 @@ const VideoNews: React.FC = () => {
               </div>
               <div
                 className="w-full text-[#666666]"
-                dangerouslySetInnerHTML={{ __html: parse(currentNews.body) }}
-              />
+                dangerouslySetInnerHTML={{ __html: parsed }}
+              ></div>
+              <div className="w-full text-[#666666]">{parsed}</div>
             </div>
           </div>
         )}
