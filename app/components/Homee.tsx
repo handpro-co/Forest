@@ -1,6 +1,7 @@
 "use client";
 import ArrowRigth from "../icons/ArrowRigth";
-import { AiOutlineSound } from "react-icons/ai";
+import { GiSoundOn } from "react-icons/gi";
+import { GiSoundOff } from "react-icons/gi";
 
 import HomeeText from "./layout/HomeeText";
 import { useEffect, useState } from "react";
@@ -51,7 +52,7 @@ const Homee: React.FC = () => {
         </video>
       )}
 
-      <div className="flex flex-col justify-center items-center lg:items-start w-full h-[90vh] bg-cover bg-center rounded-[24px] px-[20px] md:px-[56px] py-6 md:py-12 md:px-12 gap-[72px] md:gap-12">
+      <div className="flex relative flex-col justify-center items-center lg:items-start w-full h-[90vh] bg-cover bg-center rounded-[24px] px-[20px] md:px-[56px] py-6 md:py-12 md:px-12 gap-[72px] md:gap-12">
         <div className="text-center lg:text-left text-white font-bold text-[32px] md:text-[52px] lg:text-[48px] xl:text-[56px] w-full md:w-2/3 xl:w-2/5 2xl:w-2/5">
           Амьдралын орчинг сайжруулна
         </div>
@@ -60,9 +61,13 @@ const Homee: React.FC = () => {
           onClick={() => {
             setMute(!mute);
           }}
-          className="fixed flex items-center justify-center bottom-[20px] left-[20px] h-[40px] w-[40px] rounded-full scale-110 z-5"
+          className="absolute flex items-center justify-center  right-[50px] h-[40px] w-[40px]  top-[830px] rounded-full scale-110 z-5"
         >
-          <AiOutlineSound />
+          {mute ? (
+            <GiSoundOn className="text-white text-[40px]" />
+          ) : (
+            <GiSoundOff className="text-white text-[40px]" />
+          )}
         </button>
         <div className="w-full flex flex-wrap items-start justify-center mt-6 gap-4 md:mt-8 md:flex-row md:flex-wrap md:justify-start">
           {data.map((item, index) => (
