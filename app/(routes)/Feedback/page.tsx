@@ -34,15 +34,15 @@ const FeedBack: React.FC = () => {
   };
 
   const handleSubmit = async () => {
-    const selectedEmojiLabel = emojis.find(
-      (emoji) => emoji.id === selectedEmoji
-    )?.label;
-    const data = {
-      emoji: selectedEmojiLabel,
-      feedback,
-      name,
-      email,
-    };
+    // const selectedEmojiLabel = emojis.find(
+    //   (emoji) => emoji.id === selectedEmoji
+    // )?.label;
+    // const data = {
+    //   emoji: selectedEmojiLabel,
+    //   feedback,
+    //   name,
+    //   email,
+    // };
 
     // try {
     //   await axios.post("/api/sendcontact", data);
