@@ -20,6 +20,7 @@ const VideoNews: React.FC = () => {
   const [currentNews, setCurrentNews] = useState<NewsDataType | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
+  const [str, setStr] = useState(false);
 
   const fetchNewsForCategory = async (id: number) => {
     setLoading(true);
@@ -70,6 +71,14 @@ const VideoNews: React.FC = () => {
   useEffect(() => {
     fetchNewsForCategory(categoryId);
   }, [categoryId, newsId]);
+
+  useEffect(() => {
+    if (currentNews) {
+      const bodyString = currentNews.body ?? "";
+      const parsed = parse(bodyString, options);
+      setStr(typeof parsed === "string");
+    }
+  }, [currentNews]);
 
   // Filter related news to exclude the current news
   const relatedNews = newsData.filter((news) => news.id !== currentNews?.id);
@@ -163,11 +172,14 @@ const VideoNews: React.FC = () => {
                   </div>
                 )}
               </div>
-              <div
-                className="w-full text-[#666666]"
-                dangerouslySetInnerHTML={{ __html: parsed }}
-              ></div>
-              <div className="w-full text-[#666666]">{parsed}</div>
+              {str ? (
+                <div
+                  className="w-full text-[#666666]"
+                  dangerouslySetInnerHTML={{ __html: parsed as string }}
+                ></div>
+              ) : (
+                <div className="w-full text-[#666666]">{parsed}</div>
+              )}
             </div>
           </div>
         )}
@@ -178,6 +190,7 @@ const VideoNews: React.FC = () => {
     </div>
   );
 };
+
 const Video: React.FC = () => (
   <Suspense fallback={<SkeletonLoader />}>
     <VideoNews />
