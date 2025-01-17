@@ -4,6 +4,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
 import AI from "./(routes)/AI/page";
+import Finish from "@/app/components/finish-alert/finish";
 import { useEffect } from "react";
 import { useAtom } from "jotai";
 import { GiSoundOn, GiSoundOff } from "react-icons/gi";
@@ -15,6 +16,7 @@ import {
   isAccLink,
   isInvert,
   isMute,
+  isPopShow,
 } from "./components/hook/accessibility";
 
 interface Props {
@@ -28,6 +30,8 @@ const RootLayout: React.FC<Props> = ({ children }) => {
   const [isLetter] = useAtom(isAccLetter);
   const [isCursor] = useAtom(isAccCursor);
   const [isLink] = useAtom(isAccLink);
+  const [showAlert] = useAtom(isPopShow);
+
   const [mute, setMute] = useAtom(isMute);
   useEffect(() => {
     const links = document.querySelectorAll("a");
@@ -51,6 +55,8 @@ const RootLayout: React.FC<Props> = ({ children }) => {
       <body className="w-full flex flex-col items-center mx-auto ">
         <Navigation />
         <AI />
+        {showAlert ? <Finish /> : null}
+
         <button
           onClick={() => {
             setMute(!mute);

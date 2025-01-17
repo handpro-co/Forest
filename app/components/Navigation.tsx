@@ -175,9 +175,12 @@ const Navigation: React.FC = () => {
               options={item.options}
             />
           ))}
-          <div className="text-[15px] font-[500] text-[#333333] rounded-[12px]  items-center flex p-[8px] hover:bg-[#ECEBE3]">
+          <a
+            href="https://forest.gov.mn/website/contact_us.aspx"
+            className="text-[15px] font-[500] text-[#333333] rounded-[12px]  items-center flex p-[8px] hover:bg-[#ECEBE3]"
+          >
             Холбоо барих
-          </div>
+          </a>
         </li>
 
         <li className="xl:hidden flex items-center">
@@ -201,9 +204,12 @@ const Navigation: React.FC = () => {
                   />
                 </div>
               ))}
-              <div className="text-[15px] font-[500] text-[#333333]  text-center p-[8px] hover:bg-[#ECEBE3]">
+              <a
+                href="https://forest.gov.mn/website/contact_us.aspx"
+                className="text-[15px] font-[500] text-[#333333] cursor-pointer  text-center p-[8px] hover:bg-[#ECEBE3]"
+              >
                 Холбоо барих
-              </div>
+              </a>
               <a href="./Feedback">
                 <div className="flex justify-center items-center md:hidden">
                   <Navigation_contact_us_button />

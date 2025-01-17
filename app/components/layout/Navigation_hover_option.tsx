@@ -27,7 +27,7 @@ const Navigation_hover_option: React.FC<NavigationHoverOptionProps> = ({
           {options.map((option) => (
             <a
               key={option.name + option.optionId}
-              href={`./${option.optionId}`}
+              href={`${option.optionId}`}
             >
               <li className="rounded-[10px] p-[12px] text-[14px] font-[500] leading-[16.48px] text-[#666666] hover:text-[#333333] hover:bg-[#ECEBE3] whitespace-nowrap overflow-hidden text-ellipsis">
                 {option.name}
