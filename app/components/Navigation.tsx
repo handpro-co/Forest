@@ -11,6 +11,8 @@ import Navigation_contact_us_button from "./layout/Navigation_contact_us_button"
 import navigation_options_data from "@/app/components/data/navigation_options_data";
 import Navigation_click_option_screen from "./layout/Navigation_click_option_screen";
 import { useEffect, useState } from "react";
+import { CiLineHeight } from "react-icons/ci";
+import { RxLetterSpacing } from "react-icons/rx";
 
 import { IoAccessibility } from "react-icons/io5";
 import { useAtom } from "jotai";
@@ -40,8 +42,8 @@ const a11y_Data = [
   { icon: IoIosLink, title: "Холбоос тодруулах" },
   { icon: BsCursor, title: "Хулганы хэмжээ томруулах" },
   { icon: MdOutlineTextIncrease, title: "Үсгийн хэмжээ томруулах" },
-  { icon: TbBrightnessFilled, title: "Мөр хоорондын зай нэмэх" },
-  { icon: TbBrightnessFilled, title: "Үсэг хоорондын зай нэмэх" },
+  { icon: CiLineHeight, title: "Мөр хоорондын зай нэмэх" },
+  { icon: RxLetterSpacing, title: "Үсэг хоорондын зай нэмэх" },
 ];
 
 const Navigation: React.FC = () => {

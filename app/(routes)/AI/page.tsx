@@ -204,19 +204,24 @@ const Chatgpt: React.FC = () => {
           </div>
         </div>
       ) : (
-        <div className="fixed bottom-[5px] right-[10px] flex items-center  z-[999]">
-          <div className="w-[150px] h-[150px]  bg-[radial-gradient(circle,_rgba(20,183,95,0.3)_5%,_rgba(255,255,255,0)_60%)] flex justify-center items-center rounded-[50%] cursor-pointer">
-            <div
-              onClick={showChatGpt}
-              style={{
-                backgroundImage: `url(/icon/oinAvatar.GIF)`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-              }}
-              className="w-[76px] h-[76px] z-[12] rounded-[50%]  shadow-lg cursor-pointer duration-200 hover:scale-105"
-            />
+        <>
+          <div className="fixed bottom-[2px] right-[40px] text-white bg-black/30 p-1 rounded-lg z-[999]">
+            Ойн туслах
           </div>
-        </div>
+          <div className="fixed bottom-[5px] right-[10px] flex items-center  z-[999]">
+            <div className="w-[150px] h-[150px]  bg-[radial-gradient(circle,_rgba(20,183,95,0.3)_5%,_rgba(255,255,255,0)_60%)] flex justify-center items-center rounded-[50%] cursor-pointer">
+              <div
+                onClick={showChatGpt}
+                style={{
+                  backgroundImage: `url(/icon/oinAvatar.GIF)`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                }}
+                className="w-[76px] h-[76px] z-[12] rounded-[50%]  shadow-lg cursor-pointer duration-200 hover:scale-105"
+              />
+            </div>
+          </div>
+        </>
       )}
     </>
   );
