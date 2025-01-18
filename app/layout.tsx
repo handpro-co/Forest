@@ -18,7 +18,6 @@ import {
   isMute,
   isPopShow,
 } from "./components/hook/accessibility";
-
 interface Props {
   children: React.ReactNode;
 }
@@ -52,6 +51,9 @@ const RootLayout: React.FC<Props> = ({ children }) => {
 
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="/icon/iconLink.svg" />
+      </head>
       <body className="w-full flex flex-col items-center mx-auto ">
         <Navigation />
         <AI />
