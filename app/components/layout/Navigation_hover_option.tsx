@@ -5,7 +5,7 @@ type Option = {
 };
 
 type NavigationHoverOptionProps = {
-  title: string;
+  title?: string;
   options: Option[];
 };
 

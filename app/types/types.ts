@@ -21,3 +21,16 @@ export type CategoryType = {
   id: string;
   name: string;
 };
+export type DataItem = {
+  bigTitle?: { mn: string; en: string };
+  title?: { mn: string; en: string };
+  text?: { mn: string; en: string };
+  homeButton?: { mn: string; en: string };
+};
+
+export type DataWithItems = {
+  items: {
+    title: { mn: string; en: string };
+    text: { mn: string; en: string };
+  }[];
+};

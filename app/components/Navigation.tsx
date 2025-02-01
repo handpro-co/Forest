@@ -5,6 +5,7 @@ import { MdOutlineTextIncrease } from "react-icons/md";
 import { BsCursor } from "react-icons/bs";
 import { RiCloseLine } from "react-icons/ri";
 import USALogo from "@/app/icons/USALogo.png";
+import MGLLogo from "@/app/icons/MGLLogo.png";
 import Logo from "./layout/Logo";
 import Navigation_hover_option from "./layout/Navigation_hover_option";
 import Navigation_contact_us_button from "./layout/Navigation_contact_us_button";
@@ -24,6 +25,7 @@ import {
   isAccLink,
   isInvert,
 } from "./hook/accessibility";
+import { translate } from "./hook/language";
 import Frame from "../icons/Frame";
 
 type Option = {
@@ -33,7 +35,7 @@ type Option = {
 
 type MockData = {
   id: number;
-  title: string;
+  title?: { mn: string; en: string };
   options: Option[];
 };
 
@@ -58,10 +60,11 @@ const Navigation: React.FC = () => {
   const [isAccLetterSpace, setIsAccLetterSpace] = useAtom(isAccLetter);
   const [isCursor, setIsCursor] = useAtom(isAccCursor);
   const [isColorInvert, setIsColorInvert] = useAtom(isInvert);
-
+  const [language, setLanguage] = useAtom(translate);
   useEffect(() => {
     const data = navigation_options_data();
     setDatas(data);
+    console.log(data);
   }, []);
 
   const showModal = () => setShowA11y(!showA11y);
@@ -156,12 +159,15 @@ const Navigation: React.FC = () => {
           )}
 
           <button
+            onClick={() => {
+              setLanguage(language === "en" ? "mn" : "en");
+            }}
             className="w-[40px] h-[40px] rounded-[50%] overflow-hidden flex items-center justify-center bg-[#ECEBE3]"
             aria-label="USA logo"
           >
             <img
               className="w-[18px] h-[18px] object-contain"
-              src={USALogo.src}
+              src={language === "mn" ? USALogo.src : MGLLogo.src}
               alt="USA Logo"
             />
           </button>
@@ -173,7 +179,7 @@ const Navigation: React.FC = () => {
           {datas.map((item) => (
             <Navigation_hover_option
               key={item.id}
-              title={item.title}
+              title={language === "mn" ? item.title?.mn : item.title?.en}
               options={item.options}
             />
           ))}
@@ -181,7 +187,7 @@ const Navigation: React.FC = () => {
             href="https://forest.gov.mn/website/contact_us.aspx"
             className="text-[15px] font-[500] text-[#333333] rounded-[12px]  items-center flex p-[8px] hover:bg-[#ECEBE3]"
           >
-            Холбоо барих
+            {language === "mn" ? "Холбоо барих" : "Contact"}
           </a>
         </li>
 
@@ -197,26 +203,45 @@ const Navigation: React.FC = () => {
           </button>
 
           {isMenuOpen && (
-            <div className="absolute top-[80px] max-h-[90vh] overflow-y-auto left-0 bg-[#fff] w-full shadow-md p-[16px] z-[1000]">
+            <div className="absolute  top-[80px] max-h-[90vh] overflow-y-auto left-0 bg-[#fff] w-full shadow-md p-[16px] z-[1000]">
               {datas.map((item) => (
                 <div key={item.id} className="mb-[8px]">
                   <Navigation_click_option_screen
-                    title={item.title}
+                    title={language === "mn" ? item.title?.mn : item.title?.en}
                     options={item.options}
                   />
                 </div>
               ))}
-              <a
-                href="https://forest.gov.mn/website/contact_us.aspx"
-                className="text-[15px] font-[500] text-[#333333] cursor-pointer  text-center p-[8px] hover:bg-[#ECEBE3]"
-              >
-                Холбоо барих
-              </a>
+              <div className="w-full flex justify-center my-[5px]">
+                <a
+                  href="https://forest.gov.mn/website/contact_us.aspx"
+                  className="w-full text-[15px] font-[500] text-[#333333] cursor-pointer  text-center p-[8px] hover:bg-[#ECEBE3]"
+                >
+                  {language === "mn" ? "Холбоо барих" : "Contact"}
+                </a>
+              </div>
+
               <a href="./Feedback">
                 <div className="flex justify-center items-center md:hidden">
                   <Navigation_contact_us_button />
                 </div>
               </a>
+              <div className="w-full">
+                {" "}
+                <button
+                  onClick={() => {
+                    setLanguage(language === "en" ? "mn" : "en");
+                  }}
+                  className="mx-auto my-[5px] w-[40px] h-[40px] rounded-[50%] overflow-hidden flex items-center justify-center bg-[#ECEBE3]"
+                  aria-label="USA logo"
+                >
+                  <img
+                    className="w-[18px] h-[18px] object-contain"
+                    src={language === "mn" ? USALogo.src : MGLLogo.src}
+                    alt="USA Logo"
+                  />
+                </button>
+              </div>
             </div>
           )}
         </li>

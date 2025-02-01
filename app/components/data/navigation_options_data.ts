@@ -5,7 +5,10 @@ type Option = {
 
 type MockData = {
   id: number;
-  title: string;
+  title: {
+    mn: string; // Mongolian title
+    en: string; // English title
+  };
   options: Option[];
 };
 
@@ -13,7 +16,10 @@ const navigationOptionsData = (): MockData[] => {
   const data = [
     {
       id: 1,
-      title: "Ойн газар",
+      title: {
+        mn: "Ойн газар",
+        en: "Forest agency",
+      },
       options: [
         {
           optionId: "https://forest.gov.mn/website/page.aspx?mm_id=3&id=6",
@@ -31,9 +37,12 @@ const navigationOptionsData = (): MockData[] => {
     },
     {
       id: 2,
-      title: "Мэдээлэл",
+      title: {
+        mn: "Мэдээлэл",
+        en: "Information",
+      },
       options: [
-        { optionId: "allNews?id=1014", name: "Видео мэдзэ" },
+        { optionId: "allNews?id=1014", name: "Видео мэдээ" },
         { optionId: "allNews?id=1013", name: "Фото мэдээ" },
         { optionId: "allNews?id=1", name: "Энгийн мэдээ" },
         { optionId: "allNews?id=2022", name: "Арга хэмжээ" },
@@ -46,7 +55,10 @@ const navigationOptionsData = (): MockData[] => {
     },
     {
       id: 3,
-      title: "Хууль, эрх зүй",
+      title: {
+        mn: "Хууль, эрх зүй",
+        en: "Legal document",
+      },
       options: [
         {
           optionId: "https://forest.gov.mn/website/page.aspx?mm_id=1026&id=11",
@@ -78,7 +90,10 @@ const navigationOptionsData = (): MockData[] => {
     },
     {
       id: 4,
-      title: "Ил тод",
+      title: {
+        mn: "Ил тод байдал",
+        en: "Transparency",
+      },
       options: [
         {
           optionId: "allNews?id=2025",
@@ -97,7 +112,10 @@ const navigationOptionsData = (): MockData[] => {
     },
     {
       id: 5,
-      title: "Үйлчилгээ",
+      title: {
+        mn: "Үйлчилгээ",
+        en: "Service",
+      },
       options: [
         {
           optionId: "https://forest.gov.mn/website/QR_creater.aspx",

@@ -7,7 +7,7 @@ type Option = {
 };
 
 type NavigationClickOptionProps = {
-  title: string;
+  title?: string;
   options: Option[];
 };
 
