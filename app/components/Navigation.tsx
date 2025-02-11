@@ -6,7 +6,7 @@ import { BsCursor } from "react-icons/bs";
 import { RiCloseLine } from "react-icons/ri";
 import USALogo from "@/app/icons/USALogo.png";
 import MGLLogo from "@/app/icons/MGLLogo.png";
-import Logo from "./layout/Logo";
+// import Logo from "./layout/Logo";
 import Navigation_hover_option from "./layout/Navigation_hover_option";
 import Navigation_contact_us_button from "./layout/Navigation_contact_us_button";
 import navigation_options_data from "@/app/components/data/navigation_options_data";
@@ -112,7 +112,8 @@ const Navigation: React.FC = () => {
     <nav className="w-full h-[70px] border-b-[1px] border-[#ECEBE3] h-[80px] fixed top-0 flex justify-between items-center px-[24px] py-[18px] bg-[#fff] z-[999] ">
       <div className="h-[44px] flex gap-[32px] sm:w-[80%] md:w-[60%] lg:w-[40%] xl:w-[30%] 2xl:w-[25%]">
         <a href="./">
-          <Logo />
+          {/* <Logo /> */}
+          <img className="h-full" src="/icon/Oin-Gazriin-Logo.png" alt="" />{" "}
         </a>
 
         <div className="hidden md:flex h-[40px] items-center gap-[12px]">
