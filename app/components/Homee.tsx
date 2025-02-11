@@ -78,17 +78,19 @@ const Homee: React.FC = () => {
         </div>
 
         {/* Service Button */}
-        <div className="mt-6">
-          <button className="bg-[#14B75F] flex items-center justify-center px-6 py-2 rounded-full gap-4 shadow-md hover:bg-[#12a150] transition-all">
-            <span className="text-white font-medium text-lg">
-              {getLocalizedText((data[2] as DataItem).homeButton!)}{" "}
-              {/* Mapping based on language */}
-            </span>
-            <div className="w-8 h-8 bg-white rounded-full flex justify-center items-center transform rotate-90">
-              <ArrowRigth color="#333" />
-            </div>
-          </button>
-        </div>
+        {language === "en" ? null : (
+          <div className="mt-6">
+            <button className="bg-[#14B75F] flex items-center justify-center px-6 py-2 rounded-full gap-4 shadow-md hover:bg-[#12a150] transition-all">
+              <span className="text-white font-medium text-lg">
+                {getLocalizedText((data[2] as DataItem).homeButton!)}{" "}
+                {/* Mapping based on language */}
+              </span>
+              <div className="w-8 h-8 bg-white rounded-full flex justify-center items-center transform rotate-90">
+                <ArrowRigth color="#333" />
+              </div>
+            </button>
+          </div>
+        )}
       </div>
     </>
   );

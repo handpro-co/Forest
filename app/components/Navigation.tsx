@@ -64,7 +64,7 @@ const Navigation: React.FC = () => {
   useEffect(() => {
     const data = navigation_options_data();
     setDatas(data);
-    console.log(data);
+    // console.log(data);
   }, []);
 
   const showModal = () => setShowA11y(!showA11y);

@@ -18,7 +18,7 @@ const navigationOptionsData = (): MockData[] => {
       id: 1,
       title: {
         mn: "Ойн газар",
-        en: "Forest agency",
+        en: "About us",
       },
       options: [
         {
@@ -39,7 +39,7 @@ const navigationOptionsData = (): MockData[] => {
       id: 2,
       title: {
         mn: "Мэдээлэл",
-        en: "Information",
+        en: "Laws and regulations",
       },
       options: [
         { optionId: "allNews?id=1014", name: "Видео мэдээ" },
@@ -57,7 +57,7 @@ const navigationOptionsData = (): MockData[] => {
       id: 3,
       title: {
         mn: "Хууль, эрх зүй",
-        en: "Legal document",
+        en: "Forest Database",
       },
       options: [
         {
@@ -92,7 +92,7 @@ const navigationOptionsData = (): MockData[] => {
       id: 4,
       title: {
         mn: "Ил тод байдал",
-        en: "Transparency",
+        en: "International activities",
       },
       options: [
         {

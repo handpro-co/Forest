@@ -18,6 +18,7 @@ import {
   isMute,
   isPopShow,
 } from "./components/hook/accessibility";
+import { translate } from "./components/hook/language";
 interface Props {
   children: React.ReactNode;
 }
@@ -30,7 +31,7 @@ const RootLayout: React.FC<Props> = ({ children }) => {
   const [isCursor] = useAtom(isAccCursor);
   const [isLink] = useAtom(isAccLink);
   const [showAlert] = useAtom(isPopShow);
-
+  const [language] = useAtom(translate);
   const [mute, setMute] = useAtom(isMute);
   useEffect(() => {
     const links = document.querySelectorAll("a");
@@ -56,9 +57,8 @@ const RootLayout: React.FC<Props> = ({ children }) => {
       </head>
       <body className="w-full flex flex-col items-center mx-auto ">
         <Navigation />
-        <AI />
+        {language === "en" ? null : <AI />}
         {showAlert ? <Finish /> : null}
-
         <button
           onClick={() => {
             setMute(!mute);

@@ -5,28 +5,31 @@ import { DataItem, DataWithItems } from "@/app/types/types";
 export const data: (DataItem | DataWithItems)[] = [
   {
     bigTitle: {
-      mn: "Амьдралын орчинг сайжруулна",
+      mn: "ОЙ-ИРЭЭДҮЙ ХОЙЧ ҮЕДЭЭ ҮЛДЭЭХ АМЬД ӨВ",
       en: "Improve the living environment",
     },
   },
   {
     items: [
       {
-        title: { mn: "220 тэрбум", en: "220 billion" },
+        title: { mn: "8.5 хувь", en: "8.45 percent" },
         text: {
-          mn: "Монголын ойн сангийн нөөц",
-          en: "Forest fund resources of Mongolia",
+          mn: "Ойгоор бүрхэгдсэн талбай",
+          en: "Total forested area ",
         },
       },
       {
-        title: { mn: "640 сая", en: "640 million" },
-        text: { mn: "Ургаа мод m³", en: "Growing trees m³" },
+        title: { mn: "19 103 221 га", en: "19 103 221 m2" },
+        text: {
+          mn: "Монгол улсын ойн сангийн талбай",
+          en: "Mongolian forest reserve area",
+        },
       },
       {
         title: { mn: "84 сая", en: "84 million" },
         text: {
-          mn: "Мод Монгол улсад тарьж байна ",
-          en: "Trees being planted in Mongolia",
+          mn: `${`"Тэрбум мод" үндэсний хөдөлгөөн`}`,
+          en: "One billion tree national movement",
         },
       },
     ],

@@ -95,7 +95,7 @@ const VideoNews: React.FC = () => {
     replace: (domNode) => {
       if ((domNode as Element).name === "oembed") {
         const url = (domNode as Element).attribs.url;
-        console.log(url);
+        // console.log(url);
 
         return (
           <iframe
