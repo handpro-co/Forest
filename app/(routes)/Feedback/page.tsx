@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-// import axios from "axios";
+import axios from "axios";
 import FeedBackImage from "./components/photos/FeedBackPhoto.png";
 import ArrowRigth from "../../icons/ArrowRigth";
 import badEmoji from "./components/photos/badEmoji.png";
@@ -23,8 +23,13 @@ const FeedBack: React.FC = () => {
   const [selectedEmoji, setSelectedEmoji] = useState<number | null>(null);
   const [feedback, setFeedback] = useState("");
   const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [showAlert, setShowAlert] = useAtom(isPopShow);
+  const [showLengthError, setShowLengthError] = useState(false);
+  const [showNameError, setShowNameError] = useState(false);
+  const [showEmailError, setShowEmailError] = useState(false);
+  const [showPhoneError, setShowPhoneError] = useState(false);
   const fl = false;
   if (fl) {
     console.log(showAlert);
@@ -34,25 +39,47 @@ const FeedBack: React.FC = () => {
   };
 
   const handleSubmit = async () => {
-    // const selectedEmojiLabel = emojis.find(
-    //   (emoji) => emoji.id === selectedEmoji
-    // )?.label;
-    // const data = {
-    //   emoji: selectedEmojiLabel,
-    //   feedback,
-    //   name,
-    //   email,
-    // };
+    if (feedback.length > 10) {
+      setShowLengthError(false);
+      if (name.length > 3) {
+        setShowNameError(false);
+        if (email.length > 5) {
+          setShowEmailError(false);
 
-    // try {
-    //   await axios.post("/api/sendcontact", data);
-    // } catch (error) {
-    //   console.error("Error sending feedback:", error);
-    // }
-    setShowAlert(true);
-    setTimeout(() => {
-      setShowAlert(false);
-    }, 2000);
+          if (phone.length >= 8) {
+            setShowPhoneError(false);
+            await axios
+              .post("/api/feedback", {
+                name,
+                email,
+                feedback,
+                phone,
+                emojiId: selectedEmoji,
+              })
+              .then((response) => {
+                if (response.status === 200) {
+                  setShowAlert(true);
+                  setTimeout(() => {
+                    setShowAlert(false);
+                  }, 2000);
+                }
+              })
+              .catch((error) => {
+                console.error("Error submitting feedback:", error);
+                alert("Error submitting feedback: " + error.message);
+              });
+          } else {
+            setShowPhoneError(true);
+          }
+        } else {
+          setShowEmailError(true);
+        }
+      } else {
+        setShowNameError(true);
+      }
+    } else {
+      setShowLengthError(true);
+    }
   };
 
   return (
@@ -125,7 +152,11 @@ const FeedBack: React.FC = () => {
               </div>
               <div className="flex flex-col gap-[20px]">
                 <div className="leading-[20px] font-500">
-                  Санал хүсэлтээ бичнэ үү.
+                  Санал хүсэлтээ бичнэ үү.{" "}
+                  <span className="text-[#FF0000]">
+                    {" "}
+                    {showLengthError ? "*санал хүсэлтээ оруулна уу" : null}
+                  </span>
                 </div>
                 <div className="flex flex-col gap-[40px]">
                   <div className="flex flex-col gap-[16px]">
@@ -141,7 +172,13 @@ const FeedBack: React.FC = () => {
                     </div>
                     <div className="flex justify-between items-center ">
                       <div className="w-[45%] flex flex-col  gap-[4px]">
-                        <div>Нэр</div>
+                        <div>
+                          Нэр{" "}
+                          <span className="text-[#FF0000]">
+                            {" "}
+                            {showNameError ? "*нэр ээ оруулна уу" : null}
+                          </span>
+                        </div>
                         <input
                           className="w-full border-[#E2E2E2] bg-[#FBFBFB] border-[1px] rounded-[12px] py-[20px] px-[18px] h-[50px]  resize-none"
                           placeholder="Нэр"
@@ -150,7 +187,13 @@ const FeedBack: React.FC = () => {
                         />
                       </div>
                       <div className="w-[45%] flex flex-col gap-[4px]">
-                        <div>И-мэйл</div>
+                        <div>
+                          И-мэйл{" "}
+                          <span className="text-[#FF0000]">
+                            {" "}
+                            {showEmailError ? "*и-мэйл ээ оруулна уу" : null}
+                          </span>
+                        </div>
                         <input
                           className="w-full border-[#E2E2E2] bg-[#FBFBFB] border-[1px] rounded-[12px] py-[20px] px-[18px] h-[50px]  resize-none"
                           placeholder="И-мэйл"
@@ -159,6 +202,22 @@ const FeedBack: React.FC = () => {
                         />
                       </div>
                     </div>
+                    <div className="w-full flex flex-col gap-[4px]">
+                      <div>
+                        Утасны дугаар{" "}
+                        <span className="text-[#FF0000]">
+                          {" "}
+                          {showPhoneError ? "*утасны дугаар оруулна уу" : null}
+                        </span>
+                      </div>
+                      <input
+                        className="w-full border-[#E2E2E2] bg-[#FBFBFB] border-[1px] rounded-[12px] py-[20px] px-[18px] h-[50px]  resize-none"
+                        placeholder="Утасны дугаар"
+                        value={phone}
+                        type="number"
+                        onChange={(e) => setPhone(e.target.value)}
+                      />
+                    </div>
                   </div>
                   <button
                     onClick={handleSubmit}
@@ -166,6 +225,9 @@ const FeedBack: React.FC = () => {
                   >
                     Илгээх
                   </button>
+                  <span className="w-full text-center text-[#FF0000]">
+                    {showLengthError ? "Та гүйцэд бөглөнө үү! " : ""}
+                  </span>
                 </div>
               </div>
             </div>

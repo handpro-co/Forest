@@ -12,7 +12,7 @@ export const data: (DataItem | DataWithItems)[] = [
   {
     items: [
       {
-        title: { mn: "8.5 хувь", en: "8.45 percent" },
+        title: { mn: "8.45 хувь", en: "8.45 percent" },
         text: {
           mn: "Ойгоор бүрхэгдсэн талбай",
           en: "Total forested area ",

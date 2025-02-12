@@ -8,8 +8,8 @@ const Footer: React.FC = () => {
         <div className="w-auto flex flex-col gap-[40px]">
           <Logo />
           <div className="flex flex-col gap-[20px]">
-            <div className="text-[24px] md:text-[32px] font-semibold  text-[#333333]">
-              Амьдралын орчинг сайжруулна
+            <div className="text-[24px] md:text-[32px] font-semibold md:w-[70%]  text-[#333333]">
+              ОЙ-ИРЭЭДҮЙ ХОЙЧ ҮЕДЭЭ ҮЛДЭЭХ АМЬД ӨВ
             </div>
             <div className="text-[24px] md:text-[32px] font-semibold  text-[#14B75F]">
               Ногоон ирээдүйг бүтээцгээе.
