@@ -9,7 +9,7 @@ const SkeletonLoader = () => {
         <div className="flex flex-col gap-[24px]">
           <div className="border-t-[1px] border-[#94D1B0] border-dashed" />
 
-          <div className="flex justify-between items-end">
+          <div className="flex flex-wrap gap-4 justify-between items-end">
             <div className="flex items-center gap-[8px]">
               <Skeleton width={100} height={20} />
 
@@ -37,17 +37,17 @@ const SkeletonLoader = () => {
             </div>
           </div>
 
-          <Skeleton width={300} height={40} />
+          <Skeleton width={250} height={40} />
         </div>
 
-        <div className="w-full">
+        <div className="w-[70%]">
           <Skeleton count={10} height={16} />
         </div>
       </div>
 
       <div className="mt-[200px] flex flex-col gap-6">
-        <Skeleton count={1} height={26} width={"300px"} />
-        <div className="grid grid-cols-4 gap-[32px] ">
+        <Skeleton count={1} height={26} width={"250px"} />
+        <div className="w-[80%] grid  gap-[32px] grid-cols-1 md:grid-cols-2 lg:grid-cols-3 ">
           <SkeletonLoaderNewsBox />
           <SkeletonLoaderNewsBox />
           <SkeletonLoaderNewsBox />
