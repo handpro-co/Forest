@@ -39,47 +39,48 @@ const FeedBack: React.FC = () => {
   };
 
   const handleSubmit = async () => {
-    if (feedback.length > 10) {
-      setShowLengthError(false);
-      if (name.length > 3) {
-        setShowNameError(false);
-        if (email.length > 5) {
-          setShowEmailError(false);
+        // if () {
+          setShowAlert(true);
+          setTimeout(() => {
+            setShowAlert(false);
+          }, 2000);
+        // }
+    // if (feedback.length > 10) {
+    //   setShowLengthError(false);
+    //   if (name.length > 3) {
+    //     setShowNameError(false);
+    //     if (email.length > 5) {
+    //       setShowEmailError(false);
 
-          if (phone.length >= 8) {
-            setShowPhoneError(false);
-            await axios
-              .post("/api/feedback", {
-                name,
-                email,
-                feedback,
-                phone,
-                emojiId: selectedEmoji,
-              })
-              .then((response) => {
-                if (response.status === 200) {
-                  setShowAlert(true);
-                  setTimeout(() => {
-                    setShowAlert(false);
-                  }, 2000);
-                }
-              })
-              .catch((error) => {
-                console.error("Error submitting feedback:", error);
-                alert("Error submitting feedback: " + error.message);
-              });
-          } else {
-            setShowPhoneError(true);
-          }
-        } else {
-          setShowEmailError(true);
-        }
-      } else {
-        setShowNameError(true);
-      }
-    } else {
-      setShowLengthError(true);
-    }
+    //       if (phone.length >= 8) {
+    //         setShowPhoneError(false);
+    //         await axios
+    //           .post("/api/feedback", {
+    //             name,
+    //             email,
+    //             feedback,
+    //             phone,
+    //             emojiId: selectedEmoji,
+    //           })
+    //           .then((response) => {
+            
+    //           })
+    //           .catch((error) => {
+    //             console.error("Error submitting feedback:", error);
+    //             alert("Error submitting feedback: " + error.message);
+    //           });
+    //       } else {
+    //         setShowPhoneError(true);
+    //       }
+    //     } else {
+    //       setShowEmailError(true);
+    //     }
+    //   } else {
+    //     setShowNameError(true);
+    //   }
+    // } else {
+    //   setShowLengthError(true);
+    // }
   };
 
   return (
