@@ -1,4 +1,5 @@
 import ArrowRigth from "../icons/ArrowRigth";
+import Image from "next/image";
 import QRIcon from "./ServiceIconPNG/qrIcon.png";
 import Shield from "./ServiceIconPNG/plusShield.png";
 import correctShield from "./ServiceIconPNG/correctShield.png";
@@ -15,7 +16,7 @@ const Service: React.FC = () => {
           <div className="w-full flex flex-col p-[8px] gap-[8px] group cursor-pointer">
             <div className="w-full relative flex ">
               <div className="w-[70%]  bg-[#3A4135] flex items-center px-[16px] py-[12px] flex gap-[16px] rounded-tl-[20px] rounded-tr-[20px] rounded-br-[20px] rounded-bl-[4px] transition-all duration-1000 ease-in-out group-hover:w-full">
-                <img src={QRIcon.src} alt="QR Code Icon" />
+                <Image src={QRIcon.src} alt="QR Code Icon" width={24} height={24} />
                 <div className="text-[#fff]">QR үүсгэгч</div>
               </div>
               <div className="w-[56px] h-[56px] rounded-[50%] bg-[#3A4135] absolute right-0 flex items-center justify-center">
@@ -37,7 +38,12 @@ const Service: React.FC = () => {
             <div className="w-full flex flex-col p-[8px] gap-[8px] group cursor-pointer">
               <div className="w-full relative flex ">
                 <div className="w-[70%]  bg-[#3A4135] flex items-center px-[16px] py-[12px] flex gap-[16px] rounded-tl-[20px] rounded-tr-[20px] rounded-br-[20px] rounded-bl-[4px] transition-all duration-1000 ease-in-out group-hover:w-full">
-                  <img src={correctShield.src} alt="QR Code Icon" />
+                  <Image
+                    src={correctShield.src}
+                    alt="QR Code Icon"
+                    width={24}
+                    height={24}
+                  />
                   <div className="text-[#fff]">
                     Хилийн бүс зурваст нэвтрэх зөвшөөрөл
                   </div>
@@ -61,7 +67,7 @@ const Service: React.FC = () => {
           <div className="w-full flex flex-col p-[8px] gap-[8px] group cursor-pointer">
             <div className="w-full relative flex">
               <div className="w-[70%]  bg-[#3A4135] flex items-center px-[16px] py-[12px] flex gap-[16px] rounded-tl-[20px] rounded-tr-[20px] rounded-br-[20px] rounded-bl-[4px] transition-all duration-1000 ease-in-out group-hover:w-full">
-                <img src={Shield.src} alt="QR Code Icon" />
+                <Image src={Shield.src} alt="QR Code Icon" width={24} height={24} />
                 <div className="text-[#fff]">Тусгай зөвшөөрөлийн систем</div>
               </div>
               <div className="w-[56px] h-[56px] rounded-[50%] bg-[#3A4135] absolute right-0 flex items-center justify-center">
@@ -81,7 +87,7 @@ const Service: React.FC = () => {
             <div className="w-full flex flex-col p-[8px] gap-[8px] group cursor-pointer">
               <div className="w-full relative flex">
                 <div className="w-[70%]  bg-[#3A4135] flex items-center px-[16px] py-[12px] flex gap-[16px] rounded-tl-[20px] rounded-tr-[20px] rounded-br-[20px] rounded-bl-[4px] transition-all duration-1000 ease-in-out group-hover:w-full">
-                  <img src={Ud.src} alt="QR Code Icon" />
+                  <Image src={Ud.src} alt="QR Code Icon" width={24} height={24} />
                   <div className="text-[#fff]">
                     E-forest Ойн зөвшөөрлийн систем
                   </div>

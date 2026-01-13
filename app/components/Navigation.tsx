@@ -14,6 +14,7 @@ import Navigation_click_option_screen from "./layout/Navigation_click_option_scr
 import { useEffect, useState } from "react";
 import { CiLineHeight } from "react-icons/ci";
 import { RxLetterSpacing } from "react-icons/rx";
+import Image from "next/image";
 
 import { IoAccessibility } from "react-icons/io5";
 import { useAtom } from "jotai";
@@ -113,7 +114,14 @@ const Navigation: React.FC = () => {
       <div className="h-[44px] flex gap-[32px] sm:w-[80%] md:w-[60%] lg:w-[40%] xl:w-[30%] 2xl:w-[25%]">
         <a href="./">
           {/* <Logo /> */}
-          <img className="h-full" src="/icon/Oin-Gazriin-Logo.png" alt="" />{" "}
+          <Image
+            className="h-full w-auto"
+            src="/icon/Oin-Gazriin-Logo.png"
+            alt=""
+            width={160}
+            height={44}
+            priority
+          />{" "}
         </a>
 
         <div className="hidden md:flex h-[40px] items-center gap-[12px]">
@@ -166,10 +174,12 @@ const Navigation: React.FC = () => {
             className="w-[40px] h-[40px] rounded-[50%] overflow-hidden flex items-center justify-center bg-[#ECEBE3]"
             aria-label="USA logo"
           >
-            <img
+            <Image
               className="w-[18px] h-[18px] object-contain"
               src={language === "mn" ? USALogo.src : MGLLogo.src}
               alt="USA Logo"
+              width={18}
+              height={18}
             />
           </button>
         </div>
@@ -236,10 +246,12 @@ const Navigation: React.FC = () => {
                   className="mx-auto my-[5px] w-[40px] h-[40px] rounded-[50%] overflow-hidden flex items-center justify-center bg-[#ECEBE3]"
                   aria-label="USA logo"
                 >
-                  <img
+                  <Image
                     className="w-[18px] h-[18px] object-contain"
                     src={language === "mn" ? USALogo.src : MGLLogo.src}
                     alt="USA Logo"
+                    width={18}
+                    height={18}
                   />
                 </button>
               </div>

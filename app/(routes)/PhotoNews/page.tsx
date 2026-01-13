@@ -1,5 +1,6 @@
 "use client";
-import React, { Suspense, useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState, useCallback } from "react";
+import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import { fetchNews } from "../../components/data/fetchNews";
 import { LuPrinter } from "react-icons/lu";
@@ -20,7 +21,7 @@ const PhotoNews: React.FC = () => {
   const [error, setError] = useState<string>("");
 
   // Fetch news for a specific category
-  const fetchNewsForCategory = async (id: number) => {
+  const fetchNewsForCategory = useCallback(async (id: number) => {
     setLoading(true);
     setError("");
     try {
@@ -58,13 +59,13 @@ const PhotoNews: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [newsId]);
 
   const transformedBody = useExtractUrls(currentNews?.body || "");
 
   useEffect(() => {
     fetchNewsForCategory(categoryId);
-  }, [categoryId]);
+  }, [categoryId, fetchNewsForCategory]);
   useEffect(() => {
     if (currentNews && currentNews.body && !currentNews.body.includes("<")) {
       setCurrentNews({
@@ -72,7 +73,7 @@ const PhotoNews: React.FC = () => {
         body: parse(currentNews.body).toString(),
       });
     }
-  }, [currentNews?.body]);
+  }, [currentNews]);
 
   const relatedNews = newsData.filter((news) => news.id !== currentNews?.id);
 
@@ -93,11 +94,16 @@ const PhotoNews: React.FC = () => {
         {currentNews && (
           <>
             {currentNews.image && (
-              <img
-                className="w-full rounded-[16px] mt-[20px] h-[50vh] object-cover"
-                src={currentNews.image}
-                alt="Banner"
-              />
+              <div className="relative w-full h-[50vh] mt-[20px]">
+                <Image
+                  className="rounded-[16px] object-cover"
+                  src={currentNews.image}
+                  alt="Banner"
+                  fill
+                  sizes="100vw"
+                  unoptimized
+                />
+              </div>
             )}
             <div className="w-full lg:w-[65%] mt-[50px] flex flex-col gap-[64px]">
               <div className="flex flex-col gap-[24px]">
@@ -138,11 +144,16 @@ const PhotoNews: React.FC = () => {
               <div className="w-full flex flex-col gap-[48px]">
                 <div className=" text-[#666666]">{currentNews.intro}</div>
                 <div className="w-full flex flex-col gap-5">
-                  <img
-                    src={currentNews.image}
-                    className="w-full rounded-[16px]"
-                    alt={`news-${currentNews.title}`}
-                  />
+                  <div className="relative w-full h-[50vh]">
+                    <Image
+                      src={currentNews.image}
+                      className="rounded-[16px] object-cover"
+                      alt={`news-${currentNews.title}`}
+                      fill
+                      sizes="100vw"
+                      unoptimized
+                    />
+                  </div>
                   <div
                     id="news-body"
                     className=" text-[#666666]"

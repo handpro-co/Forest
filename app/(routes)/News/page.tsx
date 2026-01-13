@@ -6,6 +6,7 @@ import { fetchNews } from "../../components/data/fetchNews.ts";
 import { fetchCategories } from "../../components/data/fetchCategory.ts";
 import parse from "html-react-parser";
 import React, { Suspense, useEffect, useState } from "react";
+import Image from "next/image";
 import { useReactToPrint } from "react-to-print";
 import { useRef } from "react";
 import RelatedNewsNoPage from "../../components/layout/RelatedNewsNoPage.tsx";
@@ -66,7 +67,7 @@ const News: React.FC = () => {
     };
 
     fetchNewsData(categoryConvertedId);
-  }, [categoryId, newsId]);
+  }, [categoryConvertedId, newsId]);
 
   useEffect(() => {
     setLoading(true);
@@ -99,7 +100,7 @@ const News: React.FC = () => {
     };
 
     fetchData();
-  }, []);
+  }, [categoryId]);
   const sendbody = parse(currentNews?.body || "").toString();
   const transformedBody = useExtractUrls(sendbody);
 
@@ -116,11 +117,16 @@ const News: React.FC = () => {
       <div className="w-[80%]">
         {currentNews ? (
           <>
-            <img
-              src={currentNews.image}
-              alt="Banner"
-              className="w-full rounded-[16px] h-[50vh] object-cover"
-            />
+            <div className="relative w-full h-[50vh]">
+              <Image
+                src={currentNews.image}
+                alt="Banner"
+                className="rounded-[16px] object-cover"
+                fill
+                sizes="100vw"
+                unoptimized
+              />
+            </div>
             <div className="w-full lg:w-[65%] mt-[50px] flex flex-col gap-[64px]">
               <div className="flex flex-col gap-[24px]">
                 <div className="border-t border-[#94D1B0] border-dashed" />

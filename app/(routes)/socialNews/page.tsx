@@ -8,6 +8,7 @@ import parse from "html-react-parser";
 import React, { Suspense, useEffect, useState } from "react";
 import { useReactToPrint } from "react-to-print";
 import { useRef } from "react";
+import Image from "next/image";
 import RelatedNewsNoPage from "../../components/layout/RelatedNewsNoPage.tsx";
 import SkeletonLoader from "../../components/skeleton/skeletonLoader.tsx";
 import {
@@ -65,7 +66,7 @@ const News: React.FC = () => {
     };
 
     fetchNewsData(categoryConvertedId);
-  }, [categoryId, newsId]);
+  }, [categoryConvertedId, newsId]);
 
   useEffect(() => {
     setLoading(true);
@@ -98,7 +99,7 @@ const News: React.FC = () => {
     };
 
     fetchData();
-  }, []);
+  }, [categoryId]);
 
   if (loading) {
     return (
@@ -113,11 +114,16 @@ const News: React.FC = () => {
       <div className="w-[80%]">
         {currentNews ? (
           <>
-            <img
-              src={currentNews.image}
-              alt="Banner"
-              className="w-full mt-[20px] rounded-[16px] h-[50vh] object-cover"
-            />
+            <div className="relative w-full h-[50vh] mt-[20px]">
+              <Image
+                src={currentNews.image}
+                alt="Banner"
+                className="rounded-[16px] object-cover"
+                fill
+                sizes="100vw"
+                unoptimized
+              />
+            </div>
             <div className="w-full lg:w-[65%] mt-[50px] flex flex-col gap-[64px]">
               <div className="flex flex-col gap-[24px]">
                 <div className="border-t border-[#94D1B0] border-dashed" />

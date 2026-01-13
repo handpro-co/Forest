@@ -1,7 +1,15 @@
 "use client";
 import { MdOpenInNew, MdClose } from "react-icons/md";
 import { BsSend } from "react-icons/bs";
-import { useState, useEffect, useRef, ChangeEvent, KeyboardEvent } from "react";
+import {
+  useState,
+  useEffect,
+  useRef,
+  ChangeEvent,
+  KeyboardEvent,
+  useCallback,
+} from "react";
+import Image from "next/image";
 import { io, Socket } from "socket.io-client";
 import { marked } from "marked";
 import Be from "@/public/iconAI.png";
@@ -39,56 +47,62 @@ const Chatgpt: React.FC = () => {
     setShowChat(true);
   };
 
-  const formatResponse = async (text: string): Promise<string> => {
+  const formatResponse = useCallback(async (text: string): Promise<string> => {
     const cleanedText = text.replace(/【[^】]*?】/g, "");
 
     const parsedHtml = await marked.parse(cleanedText);
 
     return parsedHtml;
-  };
+  }, []);
 
-  const typeResponse = async (response: string): Promise<void> => {
-    const lastIndex = messages.length - 1;
-    const newMessages = [...messages];
+  const typeResponse = useCallback(
+    async (response: string): Promise<void> => {
+      const formattedResponse = await formatResponse(response);
+      const typing = (index: number, delay: number = 20): void => {
+        setMessages((prevMessages) => {
+          if (prevMessages.length === 0) return prevMessages;
+          const updatedMessages = [...prevMessages];
+          const lastIndex = updatedMessages.length - 1;
+          const current = updatedMessages[lastIndex];
 
-    const typing = async (
-      index: number,
-      text: string,
-      delay: number = 20
-    ): Promise<void> => {
-      if (index < text.length) {
-        newMessages[lastIndex].response += text.charAt(index);
-        setMessages([...newMessages]);
-        setTimeout(() => typing(index + 1, text, delay), delay);
-      } else {
-        newMessages[lastIndex].isTyping = false;
-        setMessages([...newMessages]);
-      }
-    };
+          if (!current) return prevMessages;
 
-    const formattedResponse = await formatResponse(response);
-    typing(0, formattedResponse);
-    console.log(showChat);
-  };
+          if (index < formattedResponse.length) {
+            updatedMessages[lastIndex] = {
+              ...current,
+              response: current.response + formattedResponse.charAt(index),
+              isTyping: true,
+            };
+          } else {
+            updatedMessages[lastIndex] = {
+              ...current,
+              isTyping: false,
+            };
+          }
+
+          return updatedMessages;
+        });
+
+        if (index < formattedResponse.length) {
+          setTimeout(() => typing(index + 1, delay), delay);
+        }
+      };
+
+      typing(0);
+      console.log(showChat);
+    },
+    [formatResponse, showChat]
+  );
 
   useEffect(() => {
     socket.on("response", (response: string) => {
-      setMessages((prevMessages) => {
-        const newMessages = [...prevMessages];
-        const lastMessage = newMessages[newMessages.length - 1];
-        if (lastMessage) {
-          lastMessage.isTyping = false;
-        }
-        return [...newMessages];
-      });
-
       typeResponse(response);
     });
 
     return () => {
       socket.off("response");
     };
-  }, [messages]);
+  }, [typeResponse]);
 
   const newChat = (): void => {
     setMessages([]);
@@ -138,10 +152,12 @@ const Chatgpt: React.FC = () => {
             <div className="w-full h-full overflow-y-auto">
               {messages.length > 0 ? null : (
                 <div className="w-full h-full flex flex-col gap-[18px] items-center justify-center bg-[radial-gradient(circle,_rgba(20,183,95,0.3)_5%,_#fff_60%)]">
-                  <img
+                  <Image
                     className="w-[88px] h-[88px] rounded-full"
                     src={Bear}
                     alt=""
+                    width={88}
+                    height={88}
                   />
                   <p className="text-[#787878] text-center font-semibold">
                     Таньд юугаар туслах вэ ?

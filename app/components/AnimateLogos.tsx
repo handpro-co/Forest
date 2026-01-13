@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import getAnimateBannerData from "./data/animate_banner_data";
 
 type Imgs = {
@@ -23,11 +24,13 @@ const AnimateLogos: React.FC = () => {
       <div className="overflow-hidden w-full h-[84px]">
         <div className="flex  animate-scroll-reverse h-full gap-[20px]">
           {[...imgs, ...imgs].concat(imgs).map((image, index) => (
-            <img
+            <Image
               key={`${image.id}-${index}`}
               src={image.img}
               alt="Partner Logo"
-              className="h-full"
+              className="h-full w-auto"
+              width={140}
+              height={84}
             />
           ))}
         </div>

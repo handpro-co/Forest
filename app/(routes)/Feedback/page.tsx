@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import axios from "axios";
+import Image from "next/image";
 import FeedBackImage from "./components/photos/FeedBackPhoto.png";
 import ArrowRigth from "../../icons/ArrowRigth";
 import badEmoji from "./components/photos/badEmoji.png";
@@ -39,48 +39,22 @@ const FeedBack: React.FC = () => {
   };
 
   const handleSubmit = async () => {
-        // if () {
-          setShowAlert(true);
-          setTimeout(() => {
-            setShowAlert(false);
-          }, 2000);
-        // }
-    // if (feedback.length > 10) {
-    //   setShowLengthError(false);
-    //   if (name.length > 3) {
-    //     setShowNameError(false);
-    //     if (email.length > 5) {
-    //       setShowEmailError(false);
+    const isFeedbackValid = feedback.trim().length > 10;
+    const isNameValid = name.trim().length > 3;
+    const isEmailValid = email.trim().length > 5;
+    const isPhoneValid = phone.trim().length >= 8;
 
-    //       if (phone.length >= 8) {
-    //         setShowPhoneError(false);
-    //         await axios
-    //           .post("/api/feedback", {
-    //             name,
-    //             email,
-    //             feedback,
-    //             phone,
-    //             emojiId: selectedEmoji,
-    //           })
-    //           .then((response) => {
-            
-    //           })
-    //           .catch((error) => {
-    //             console.error("Error submitting feedback:", error);
-    //             alert("Error submitting feedback: " + error.message);
-    //           });
-    //       } else {
-    //         setShowPhoneError(true);
-    //       }
-    //     } else {
-    //       setShowEmailError(true);
-    //     }
-    //   } else {
-    //     setShowNameError(true);
-    //   }
-    // } else {
-    //   setShowLengthError(true);
-    // }
+    setShowLengthError(!isFeedbackValid);
+    setShowNameError(!isNameValid);
+    setShowEmailError(!isEmailValid);
+    setShowPhoneError(!isPhoneValid);
+
+    if (isFeedbackValid && isNameValid && isEmailValid && isPhoneValid) {
+      setShowAlert(true);
+      setTimeout(() => {
+        setShowAlert(false);
+      }, 2000);
+    }
   };
 
   return (
@@ -132,17 +106,21 @@ const FeedBack: React.FC = () => {
                       {/* Correct Icon */}
                       {selectedEmoji === emoji.id && (
                         <div className="absolute top-[-10px] right-[-10px]">
-                          <img
+                          <Image
                             src={correctIcon.src}
                             alt="Selected"
+                            width={20}
+                            height={20}
                             className="w-[20px] h-[20px] rounded-full border-[2px] border-white"
                           />
                         </div>
                       )}
-                      <img
+                      <Image
                         className="w-[40px] h-[40px]"
                         src={emoji.src}
                         alt={emoji.label}
+                        width={40}
+                        height={40}
                       />
                       <div className="text-[#666666] font-medium text-[13px] leading-[15.13px]">
                         {emoji.label}
@@ -237,10 +215,12 @@ const FeedBack: React.FC = () => {
 
         {/* Right Section */}
         <div className="w-full lg:w-2/5 flex justify-center items-center p-4 lg:p-0">
-          <img
+          <Image
             src={FeedBackImage.src}
             alt="Feedback"
             className="max-w-full h-auto rounded-lg"
+            width={720}
+            height={720}
           />
         </div>
       </div>

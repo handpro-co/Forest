@@ -3,6 +3,7 @@ import { LuPrinter } from "react-icons/lu";
 import { TbBrandFacebook } from "react-icons/tb";
 import RelatedNews from "@/app/components/layout/RelatedNews";
 import React, { Suspense, useEffect, useState } from "react";
+import Image from "next/image";
 import { fetchNews } from "../../components/data/fetchNews";
 import { useSearchParams } from "next/navigation";
 import SkeletonLoader from "../../components/skeleton/skeletonLoader";
@@ -74,11 +75,16 @@ const BasicNews: React.FC = () => {
         {currentNews ? (
           <>
             {currentNews?.image && (
-              <img
-                className="w-full rounded-[16px] h-[50vh] object-cover"
-                src={currentNews?.image}
-                alt="Banner"
-              />
+              <div className="relative w-full h-[50vh]">
+                <Image
+                  className="rounded-[16px] object-cover"
+                  src={currentNews?.image}
+                  alt="Banner"
+                  fill
+                  sizes="100vw"
+                  unoptimized
+                />
+              </div>
             )}
             <div className="w-full lg:w-[65%] mt-[50px] flex flex-col gap-[64px]">
               <div className="flex flex-col gap-[24px]">

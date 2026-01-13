@@ -1,6 +1,12 @@
 "use client";
 
-import React, { Suspense, useEffect, useState } from "react";
+import React, {
+  Suspense,
+  useEffect,
+  useState,
+  useCallback,
+  useMemo,
+} from "react";
 import { useSearchParams } from "next/navigation";
 import { LuPrinter } from "react-icons/lu";
 import { TbBrandFacebook } from "react-icons/tb";
@@ -10,6 +16,7 @@ import parse, { HTMLReactParserOptions, Element } from "html-react-parser";
 import he from "he";
 import { NewsDataType, NewsDataTyper } from "@/app/types/types";
 import SkeletonLoader from "@/app/components/skeleton/skeletonLoader";
+import Image from "next/image";
 
 const VideoNews: React.FC = () => {
   const searchParams = useSearchParams();
@@ -22,7 +29,7 @@ const VideoNews: React.FC = () => {
   const [error, setError] = useState<string>("");
   const [str, setStr] = useState(false);
 
-  const fetchNewsForCategory = async (id: number) => {
+  const fetchNewsForCategory = useCallback(async (id: number) => {
     setLoading(true);
     setError("");
     try {
@@ -66,11 +73,34 @@ const VideoNews: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [newsId]);
+
+  const options: HTMLReactParserOptions = useMemo(
+    () => ({
+      replace: (domNode) => {
+        if ((domNode as Element).name === "oembed") {
+          const url = (domNode as Element).attribs.url;
+          // console.log(url);
+
+          return (
+            <iframe
+              width="560"
+              height="315"
+              src={url}
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            />
+          );
+        }
+      },
+    }),
+    []
+  );
 
   useEffect(() => {
     fetchNewsForCategory(categoryId);
-  }, [categoryId, newsId]);
+  }, [categoryId, fetchNewsForCategory]);
 
   useEffect(() => {
     if (currentNews) {
@@ -78,7 +108,7 @@ const VideoNews: React.FC = () => {
       const parsed = parse(bodyString, options);
       setStr(typeof parsed === "string");
     }
-  }, [currentNews]);
+  }, [currentNews, options]);
 
   // Filter related news to exclude the current news
   const relatedNews = newsData.filter((news) => news.id !== currentNews?.id);
@@ -90,26 +120,6 @@ const VideoNews: React.FC = () => {
       </div>
     );
   if (error) return <div>{error}</div>;
-
-  const options: HTMLReactParserOptions = {
-    replace: (domNode) => {
-      if ((domNode as Element).name === "oembed") {
-        const url = (domNode as Element).attribs.url;
-        // console.log(url);
-
-        return (
-          <iframe
-            width="560"
-            height="315"
-            src={url}
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          />
-        );
-      }
-    },
-  };
 
   const bodyString = currentNews?.body ?? "";
 
@@ -161,11 +171,16 @@ const VideoNews: React.FC = () => {
               </div>
               <div className="w-full">
                 {currentNews.image ? (
-                  <img
-                    src={currentNews.image}
-                    alt={currentNews.title}
-                    className="w-full rounded-[16px] object-cover"
-                  />
+                  <div className="relative w-full h-[50vh]">
+                    <Image
+                      src={currentNews.image}
+                      alt={currentNews.title}
+                      className="rounded-[16px] object-cover"
+                      fill
+                      sizes="100vw"
+                      unoptimized
+                    />
+                  </div>
                 ) : (
                   <div className="text-center text-red-500">
                     Image not available
